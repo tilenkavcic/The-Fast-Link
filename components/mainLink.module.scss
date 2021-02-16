@@ -1,0 +1,56 @@
+@import "../styles/variables.scss";
+
+.rectangle {
+	padding: 10px 20px;
+	margin: 10px 10px;
+
+	background: $whiteBackround;
+	box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.14), 0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+
+	-webkit-transition: all 0.1s ease-out;
+	transition: all 0.1s ease-out;
+	text-decoration: none;
+
+  color: $black;
+
+	&:hover,
+	&:focus {
+		box-shadow: 0px 16px 24px #806ddc, 0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
+		text-decoration: none;
+		background: $background;
+
+		.title {
+			color: $text;
+		}
+	}
+}
+
+.title {
+	font-style: normal;
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 21px;
+	text-align: center;
+
+	margin: 9px 9px;
+	color: var(--buttonText);
+}
+
+.pictureContainer {
+	align-self: center;
+
+	.picture {
+		position: static;
+		left: 23.31%;
+		right: 23.31%;
+		top: 30.71%;
+		bottom: 7.09%;
+
+		flex: none;
+		order: 1;
+		align-self: center;
+		flex-grow: 0;
+		margin: 0px 9px;
+	}
+}

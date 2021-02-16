@@ -1,0 +1,31 @@
+.title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 56px;
+  margin: 20px 0;
+}
+
+.description {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  margin: 10px 0;
+  line-height: 28px;
+}
+
+.picture {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
