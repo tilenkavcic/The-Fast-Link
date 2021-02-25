@@ -6,11 +6,10 @@ import Header from "../components/Header";
 import DemoPageLinks from "../components/DemoPageLinks";
 import FullPageLoader from "../components/FullPageLoader";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
-import fetch from "../lib/fetch";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
-
+	
 	const [favoriteColor, setFavoriteColor] = useState();
 	const fetchData = useCallback(async () => {
 		const token = await AuthUser.getIdToken();
@@ -19,6 +18,7 @@ const Page = () => {
 			method: "GET",
 			headers: {
 				Authorization: token,
+				uid: AuthUser.id,
 			},
 		});
 		const data = await response.json();
@@ -35,6 +35,7 @@ const Page = () => {
 			const data = await fetchData();
 			console.log(data);
 			setFavoriteColor(data);
+			console.log(favoriteColor)
 		};
 		fetchFavoriteColor();
 	}, [fetchData]);
@@ -50,7 +51,7 @@ const Page = () => {
 					<div>
 						<h3>Example: SSR + data fetching with ID token</h3>
 						<p>This page requires authentication. It will do a server-side redirect (307) to the login page if the auth cookies are not set.</p>
-						{/* <p>Your favorite color is: {adminData}</p> */}
+						<p>Your favorite color is: {favoriteColor}</p>
 					</div>
 					<DemoPageLinks />
 				</div>

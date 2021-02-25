@@ -19,11 +19,3 @@ if (!firebase.apps.length) {
 	// firebase.analytics();
 }
 export default firebase;
-
-// export default function initFirebase() {
-//   if (!firebase.apps.length) {
-//     firebase.initializeApp(clientCredentials);
-//     // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-//     // firebase.analytics();
-//   }
-// }

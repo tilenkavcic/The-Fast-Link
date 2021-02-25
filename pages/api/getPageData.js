@@ -2,7 +2,7 @@ import React from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/clientApp";
-import 'firebase/firestore';
+import "firebase/firestore";
 
 initAuth();
 
@@ -24,29 +24,29 @@ const handler = async (req, res) => {
 		}
 		// Get data from firestore
 		try {
-			console.log("asd")
-			// const uid = req.headers.uid;
-			const asdas = await firebase.firestore().collection("homepage").doc("username").get();
-			const userData = await firebase.firestore().collection("users").doc(uid).get();
-			console.log(userData);
-			const pageName = userData.pages[0];
-			const pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
-			console.log(pageData);
+			const uid = req.headers.uid;
+			let userData = await firebase.firestore().collection("users").doc(uid).get();
+			userData = userData.data();
 
-			return fileNames.map((fileName) => {
-				return {
-					params: {
-						id: fileName,
-					},
-				};
+			const pageName = userData.pages[0];
+			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
+			pageData = pageData.data();
+
+			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
+
+			return res.status(200).json({
+				uid,
+				...pageData,
 			});
-		} catch (error) {
-			console.error("Error all page ids");
-			console.error(error);
+			// return {
+			// 	uid,
+			// 	...pageData,
+			// };
+		} catch (e) {
+			console.error("Error getting page data");
+			console.error(e);
 		}
 	}
-
-	return res.status(200).json({ favoriteColor });
 };
 
 export default handler;
