@@ -27,12 +27,34 @@ const Page = () => {
 		});
 		const data = await response.json();
 		if (!response.ok) {
-			// eslint-disable-next-line no-console
 			console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
 			return null;
 		}
 		return data;
 	}, [AuthUser]);
+
+	const uploadData = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/uploadPageData");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					headers: { "Content-Type": "application/json" },
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
 
 	useEffect(() => {
 		const fetchPageData = async () => {
@@ -60,15 +82,9 @@ const Page = () => {
 						<Formik
 							initialValues={pageData}
 							onSubmit={async (values) => {
-								
-								console.log(values);
-								useEffect(() => {
-									const fetchPageData = async () => {
-										const ret = await uploadData(values);
-									};
-									fetchPageData();
-								}, [uploadData]);
-								
+								console.log("submiting:", values);
+								const ret = await uploadData(values);
+								console.log("uploaded", ret);
 							}}
 						>
 							{({ values }) => (
@@ -91,7 +107,7 @@ const Page = () => {
 															</div>
 															<div className="col">
 																<label htmlFor={`links.${index}.pictureUrl`}>pictureUrl</label>
-																<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="pictureUrl" />
+																<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="url" />
 																{/* <img src={`links.${index}.pictureUrl`} alt={`links.${index}.title`} /> */}
 																<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
 															</div>
