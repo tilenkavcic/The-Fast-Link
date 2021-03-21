@@ -5,7 +5,6 @@ import {
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
 import Header from '../components/Header'
-import DemoPageLinks from '../components/DemoPageLinks'
 
 const styles = {
   content: {
@@ -33,7 +32,6 @@ const Demo = () => {
             and load the authed user only on the client side.
           </p>
         </div>
-        <DemoPageLinks />
       </div>
     </div>
   )
