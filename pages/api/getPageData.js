@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/clientApp";
@@ -11,14 +10,11 @@ const handler = async (req, res) => {
 		return res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
-	// This "unauthenticated" token is just an demo of the
-	// "SSR with no token" example.
 	if (token != "unauthenticated") {
 		// verify login
 		try {
 			await verifyIdToken(token);
 		} catch (e) {
-			// eslint-disable-next-line no-console
 			console.error(e);
 			return res.status(403).json({ error: "Not authorized" });
 		}
@@ -28,7 +24,7 @@ const handler = async (req, res) => {
 			let userData = await firebase.firestore().collection("users").doc(uid).get();
 			userData = userData.data();
 
-			const pageName = userData.pages[0];
+			const pageName = userData.pages[0]; // TODO: HARD CODED
 			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
 			pageData = pageData.data();
 
