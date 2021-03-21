@@ -34,14 +34,7 @@ const handler = async (req, res) => {
 
 			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
 
-			return res.status(200).json({
-				uid,
-				...pageData,
-			});
-			// return {
-			// 	uid,
-			// 	...pageData,
-			// };
+			return res.status(200).json(pageData);
 		} catch (e) {
 			console.error("Error getting page data");
 			console.error(e);
