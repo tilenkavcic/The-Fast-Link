@@ -55,7 +55,7 @@ const Page = () => {
 		},
 		[AuthUser]
 	);
-
+	const isRequired = (message) => (value) => (!!value ? undefined : message);
 	useEffect(() => {
 		const fetchPageData = async () => {
 			const data = await fetchData();
@@ -64,7 +64,6 @@ const Page = () => {
 		fetchPageData();
 	}, [fetchData]);
 
-	console.log("yo", pageData);
 	return (
 		<>
 			<Head></Head>
@@ -97,18 +96,18 @@ const Page = () => {
 														<div className="row" key={index}>
 															<div className="col">
 																<label htmlFor={`links.${index}.title`}>Name</label>
-																<Field name={`links.${index}.title`} placeholder="Jane Doe" type="text" />
+																<Field name={`links.${index}.title`} placeholder="Link title" type="text" />
 																<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
 															</div>
 															<div className="col">
-																<label htmlFor={`links.${index}.url`}>url</label>
-																<Field name={`links.${index}.url`} placeholder="www.link.com" type="url" />
+																<label htmlFor={`links.${index}.url`}>Link URL</label>
+																<Field name={`links.${index}.url`} validate={isRequired("URL is required")} placeholder="https://myPodcast.com" type="url" />
 																<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
 															</div>
 															<div className="col">
 																<label htmlFor={`links.${index}.pictureUrl`}>pictureUrl</label>
 																<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="url" />
-																{/* <img src={`links.${index}.pictureUrl`} alt={`links.${index}.title`} /> */}
+																<img src={friend.pictureUrl} alt={`links.${index}.title`} />
 																<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
 															</div>
 															<div className="col">
