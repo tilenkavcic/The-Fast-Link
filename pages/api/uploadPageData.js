@@ -30,6 +30,7 @@ const handler = async (req, res) => {
 		} catch (e) {
 			console.error("Error getting page data");
 			console.error(e);
+			return res.status(404).json({ error: "Error getting page data" });
 		}
 	}
 };
