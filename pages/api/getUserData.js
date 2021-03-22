@@ -20,17 +20,13 @@ const handler = async (req, res) => {
 		}
 		// Get data from firestore
 		try {
-			const page = JSON.parse(req.headers.page);
-			let pageData = await firebase.firestore().collection("homepage").doc(page.title).get();
-			pageData = pageData.data();
-
-			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
-
-			return res.status(200).json(pageData);
+			const uid = req.headers.uid;
+			const userData = await firebase.firestore().collection("users").doc(uid).get();
+			return res.status(200).json(userData.data());
 		} catch (e) {
-			console.error("Error getting page data");
+			console.error("Error getting user data");
 			console.error(e);
-			return res.status(404).json({ error: "Error getting page data" });
+			return res.status(404).json({ error: "Error getting user data" });
 		}
 	}
 };
