@@ -48,7 +48,7 @@ const AdminLinks = ({ pageData, setPageData }) => {
 						{({ insert, remove, push, move }) => (
 							<div>
 								{values.links.length > 0 &&
-									values.links.map((friend, index) => (
+									values.links.map((linkData, index) => (
 										<div className="row" key={index}>
 											<div className="col">
 												<label htmlFor={`links.${index}.title`}>Name</label>
@@ -63,7 +63,7 @@ const AdminLinks = ({ pageData, setPageData }) => {
 											<div className="col">
 												<label htmlFor={`links.${index}.pictureUrl`}>pictureUrl</label>
 												<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="url" />
-												<img src={friend.pictureUrl} alt={`links.${index}.title`} />
+												<img src={linkData.pictureUrl} alt={`links.${index}.title`} />
 												<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
 											</div>
 											<div className="col">
