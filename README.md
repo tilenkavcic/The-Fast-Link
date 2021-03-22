@@ -10,3 +10,5 @@ https://formik.org/docs/examples/field-arrays
 
 ## TODO
 - change img tags into nextjs images
+
+TODO: sort array by position always
