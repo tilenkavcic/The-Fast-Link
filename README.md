@@ -12,3 +12,7 @@ https://formik.org/docs/examples/field-arrays
 - change img tags into nextjs images
 
 TODO: sort array by position always
+
+- register user
+- (change pass, email)
+- landing page
