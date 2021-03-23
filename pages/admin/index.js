@@ -32,6 +32,29 @@ const Page = () => {
 		[AuthUser]
 	);
 
+	const uploadData = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/addNewPage");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
+
 	const [userData, setUserData] = useState({});
 
 	useEffect(() => {
@@ -41,10 +64,6 @@ const Page = () => {
 		};
 		fetchUserData();
 	}, [fetchData]);
-
-	const makeNewPage = () => {
-		
-	}
 
 	return (
 		<>
@@ -57,35 +76,50 @@ const Page = () => {
 						<h1>Hey there</h1>
 						<h2>Your pages</h2>
 						{userData.pages ? (
-							<Formik initialValues={userData}>
-								{({ values }) => (
+							<>
+								<Formik initialValues={userData}>
+									{({ values }) => (
+										<Form>
+											<FieldArray name="pages">
+												{({ insert, remove, push, move }) => (
+													<div>
+														{values.pages.length > 0 &&
+															values.pages.map((pageData, index) => (
+																<div key={index}>
+																	<Link
+																		className="pageBtn"
+																		href={{
+																			pathname: "/admin/[pageIndx]",
+																			query: { pageIndx: index },
+																		}}
+																	>
+																		<a>{pageData.title}</a>
+																	</Link>
+																</div>
+															))}
+													</div>
+												)}
+											</FieldArray>
+										</Form>
+									)}
+								</Formik>
+								<Formik
+									initialValues={{
+										newPage: "",
+									}}
+									onSubmit={async (pageName) => {
+										const newArr = userData.pages.concat([{ title: pageName.newPage }]);
+										const newUser = { ...userData, pages: newArr };
+										console.log(newUser)
+										await uploadData(newUser);
+									}}
+								>
 									<Form>
-										<FieldArray name="pages">
-											{({ insert, remove, push, move }) => (
-												<div>
-													{values.pages.length > 0 &&
-														values.pages.map((pageData, index) => (
-															<div key={index}>
-																<Link
-																	className="pageBtn"
-																	href={{
-																		pathname: "/admin/[pageIndx]",
-																		query: { pageIndx: index },
-																	}}
-																>
-																	<a>{pageData.title}</a>
-																</Link>
-															</div>
-														))}
-													<button type="button" className="addPageBtn" onClick={() => makeNewPage()}>
-														New page
-													</button>
-												</div>
-											)}
-										</FieldArray>
+										<Field id="newPage" name="newPage" placeholder="thepodcast" />
+										<button type="submit">New</button>
 									</Form>
-								)}
-							</Formik>
+								</Formik>
+							</>
 						) : (
 							""
 						)}
