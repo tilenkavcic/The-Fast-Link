@@ -20,11 +20,10 @@ const handler = async (req, res) => {
 		}
 		// Upload data to firestore
 		try {
-			const uid = req.headers.uid;
-			let userData = await firebase.firestore().collection("users").doc(uid).get();
-			userData = userData.data();
-			const pageName = userData.pages[0]; // TODO: HARD CODED
-			const sentData = JSON.parse(req.body);
+			const pageName = req.headers.page; // TODO: HARD CODED
+			const sentData = req.body;
+			console.log("send", sentData)
+			console.log("page", pageName)
 			let ret = await firebase.firestore().collection("homepage").doc(pageName).set(sentData);
 			return res.status(200);
 		} catch (e) {
