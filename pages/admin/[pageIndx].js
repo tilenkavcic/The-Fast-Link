@@ -79,12 +79,6 @@ const Page = () => {
 				<div>
 					{pageData.title ? (
 						<>
-							<div>
-								<h1>{pageData.title}</h1>
-								<h3>{pageData.description}</h3>
-								<img src={pageData.pictureUrl} alt={pageData.title} />
-							</div>
-
 							<AdminLinks pageData={pageData} setPageData={setPageData} />
 						</>
 					) : (

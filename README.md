@@ -16,3 +16,4 @@ TODO: sort array by position always
 - register user
 - (change pass, email)
 - landing page
+- fix https://stackoverflow.com/questions/45110441/firebase-auth-invalid-custom-token renew token after invalid in cookies
