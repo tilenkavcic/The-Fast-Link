@@ -23,9 +23,9 @@ const handler = async (req, res) => {
 			const page = JSON.parse(req.headers.page);
 			let pageData = await firebase.firestore().collection("homepage").doc(page.title).get();
 			pageData = pageData.data();
-
 			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
-
+			console.log(pageData)
+			
 			return res.status(200).json(pageData);
 		} catch (e) {
 			console.error("Error getting page data");

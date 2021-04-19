@@ -3,12 +3,14 @@ import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "nex
 import Link from "next/link";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import Thumb from "../components/Thumb"
+import PictureUpload from "../components/PictureUpload"
 
 const AdminLinks = ({ pageData, setPageData }) => {
 	const AuthUser = useAuthUser();
 
 	const uploadData = useCallback(
-		async (data, pageName) => {
+		async (data) => {
 			const token = await AuthUser.getIdToken();
 			const endpoint = getAbsoluteURL("/api/uploadPageData");
 			const response = await fetch(endpoint, {
@@ -17,7 +19,7 @@ const AdminLinks = ({ pageData, setPageData }) => {
 					"Content-Type": "application/json",
 					Authorization: token,
 					uid: AuthUser.id,
-					page: pageName,
+					page: pageData.name,
 				},
 				body: JSON.stringify(data),
 			});
@@ -46,10 +48,13 @@ const AdminLinks = ({ pageData, setPageData }) => {
 			{({ values }) => (
 				<>
 					<Form>
-						<label htmlFor="pageTitle">Title</label>
-						<Field id="pageTitle" name="pageTitle" placeholder="The page title" value={values.title} />
-						<label htmlFor="pageDescription">Description</label>
-						<Field id="pageDescription" name="pageDescription" placeholder="This is a description" value={values.description} />
+						<label htmlFor="title">Title</label>
+						<Field name="title" placeholder="The page title" />
+						<label htmlFor="description">Description</label>
+						<Field name="description" placeholder="This is a description" type="text" />
+						<PictureUpload />
+						{/* <Thumb file={values.file} /> */}
+
 						<img src={pageData.pictureUrl} alt={pageData.title} />
 						<FieldArray name="links">
 							{({ insert, remove, push, move }) => (

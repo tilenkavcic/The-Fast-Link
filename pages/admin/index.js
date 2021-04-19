@@ -74,10 +74,18 @@ const Page = () => {
 				<div>
 					<div>
 						<h1>Hey there</h1>
-						<h2>Your pages</h2>
+						<h2>Your podcasts</h2>
 						{userData.pages ? (
 							<>
-								<Formik initialValues={userData}>
+								<Formik
+									initialValues={userData}
+									onSubmit={async (pageName) => {
+										const newArr = userData.pages.concat([{ title: pageName.newPage }]);
+										const newUser = { ...userData, pages: newArr };
+										console.log(newUser);
+										await uploadData(newUser);
+									}}
+								>
 									{({ values }) => (
 										<Form>
 											<FieldArray name="pages">
@@ -100,24 +108,10 @@ const Page = () => {
 													</div>
 												)}
 											</FieldArray>
+											<Field id=" " name="newPage" placeholder="thepodcast" />
+											<button type="submit">New</button>
 										</Form>
 									)}
-								</Formik>
-								<Formik
-									initialValues={{
-										newPage: "",
-									}}
-									onSubmit={async (pageName) => {
-										const newArr = userData.pages.concat([{ title: pageName.newPage }]);
-										const newUser = { ...userData, pages: newArr };
-										console.log(newUser)
-										await uploadData(newUser);
-									}}
-								>
-									<Form>
-										<Field id="newPage" name="newPage" placeholder="thepodcast" />
-										<button type="submit">New</button>
-									</Form>
 								</Formik>
 							</>
 						) : (

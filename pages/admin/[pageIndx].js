@@ -8,6 +8,8 @@ import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import AdminLinks from "../../components/AdminLinks";
+import AdminPageTitle from "../../components/AdminPageTitle";
+
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
@@ -82,7 +84,10 @@ const Page = () => {
 							<AdminLinks pageData={pageData} setPageData={setPageData} />
 						</>
 					) : (
-						""
+						// no page title (this is a new page)
+						<>
+							<AdminPageTitle pageData={pageData} setPageData={setPageData} />
+						</>
 					)}
 				</div>
 			</div>
