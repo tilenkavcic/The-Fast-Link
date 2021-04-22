@@ -20,33 +20,54 @@ const handler = async (req, res) => {
 		}
 		// Upload data to firestore
 		try {
+			console.log(req.body);
 			const uid = req.headers.uid;
 			const pageName = req.headers.page;
-			const sentData = req.body;
+			const picture = req.body;
+			const submittedTile = req.headers.submittedtile;
+			const submittedDescription = req.headers.submiteddescription;
 
 			// upload picture
-			if (sentData.file) {
+			if (picture) {
+				const pictureTitle = req.headers.pictitle;
+				const pictureType = req.headers.pictype;
+				const pictureSize = req.headers.picsize;
+				const validPicTypes = ["image/gif", "image/jpeg", "image/png"];
+				if (!validPicTypes.includes(pictureType)) {
+					console.error("Invalid image type");
+					return res.status(400).json({ error: "Invalid image type" });
+				}
+
 				const storageRef = firebase.storage().ref();
+				const metadata = {
+					name: pictureTitle,
+					size: pictureSize,
+				};
+				console.log(picture);
+				console.log("uploading pic", pictureTitle);
 
-				// Create a reference
-				const mountainsRef = storageRef.child("userfiles/mountains.jpg");
+				const uploadTask = await storageRef.child(pictureTitle).put(picture, metadata);
 
-				// 'file' comes from the Blob or File API
-				const ret = await storageRef.put(file);
-				console.log("uploaded", ret);
+				console.log("aaaaaa");
+				console.log("uploaded", uploadTask);
+				console.log("uploaded", uploadTask.state);
+				console.log("uploaded", uploadTask.metadata);
+				console.log("uploaded", uploadTask.ref);
 			}
-			console.log("uploaded", ret);
 
 			// upload title, desc
-			const docRef = await firebase.firestore().collection("homepage").doc(sentData.name);
-			const res = await docRef.set(
-				{
-					title: sentData.title,
-					description: sentData.description,
-					pictureUrl: ret ? ret : "" // problem če edita sliko in je  ne dodaja
-				},
-				{ merge: true }
-			);
+			const docRef = await firebase.firestore().collection("homepage").doc(submittedTile);
+			updatedData = picture
+				? {
+						title: submittedTile,
+						description: submittedDescription,
+						// pictureUrl: uploadTask.url
+				  }
+				: {
+						title: submittedTile,
+						description: submittedDescription,
+				  };
+			const res = await docRef.set(updatedData, { merge: true });
 			return res.status(200);
 		} catch (e) {
 			console.error("Error uploading data");
