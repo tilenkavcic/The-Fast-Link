@@ -9,25 +9,20 @@ export default function AdminPageTitle({ pageData, setPageData }) {
 
 	const uploadData = useCallback(
 		async (data) => {
-			console.log("file",data.file)
+			console.log(data);
 			const token = await AuthUser.getIdToken();
 			const endpoint = getAbsoluteURL("/api/editPageHeading");
 			const response = await fetch(endpoint, {
 				method: "POST",
 				headers: {
-					"Content-Type": data.file.type,
 					Authorization: token,
 					uid: AuthUser.id,
-					page: data.name,
+					page: pageData.name,
 					submittedtile: data.title,
 					submiteddescription: data.description,
-					pictitle: data.file.name,
-					pictype: data.file.type,
-					picsize: data.file.size,
 				},
-				body: data.file,
+				body: "",
 			});
-			console.log(data);
 			const respData = await response.json();
 			if (!response.ok) {
 				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
@@ -42,10 +37,8 @@ export default function AdminPageTitle({ pageData, setPageData }) {
 		title: pageData.title,
 		description: pageData.description,
 		pictureUrl: pageData.pictureUrl,
-		name: pageData.name,
 		file: "",
 	};
-
 	return (
 		<>
 			<Formik
@@ -62,7 +55,7 @@ export default function AdminPageTitle({ pageData, setPageData }) {
 							<Field name="title" placeholder="The page title" />
 							<label htmlFor="description">Description</label>
 							<Field name="description" placeholder="This is a description" type="text" />
-							<label htmlFor="file">Picture upload</label>
+							{/* <label htmlFor="file">Picture upload</label>
 							<input
 								id="file"
 								name="file"
@@ -71,7 +64,7 @@ export default function AdminPageTitle({ pageData, setPageData }) {
 									setFieldValue("file", event.currentTarget.files[0]);
 								}}
 								className="form-control"
-							/>
+							/> */}
 							{values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"}
 							<button type="submit">Save</button>
 						</Form>
