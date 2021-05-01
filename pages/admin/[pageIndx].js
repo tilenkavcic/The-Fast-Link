@@ -5,7 +5,6 @@ import Head from "next/head";
 import Header from "../../components/Header";
 import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
-import AdminPageTitle from "../../components/AdminPageTitle";
 import { PageProvider } from "../../context/PageContext";
 import PageBody from "../../components/PageBody";
 

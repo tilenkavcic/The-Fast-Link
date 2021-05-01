@@ -10,20 +10,25 @@ export default function AdminPageTitle() {
 	const AuthUser = useAuthUser();
 
 	const [pageData, setPageData] = useContext(PageContext);
+
+	console.log(pageData);
 	const uploadData = useCallback(
 		async (data) => {
 			const token = await AuthUser.getIdToken();
 			const endpoint = getAbsoluteURL("/api/editPageHeading");
+			console.log("name", pageData.name);
+			console.log("name2", data);
+
 			const response = await fetch(endpoint, {
 				method: "POST",
 				headers: {
 					Authorization: token,
 					uid: AuthUser.id,
-					page: pageData.name,
+					page: data.name,
 					submittedtile: data.title,
 					submiteddescription: data.description,
 				},
-				body: "",
+				body: data,
 			});
 			const respData = await response.json();
 			if (!response.ok) {
@@ -38,7 +43,13 @@ export default function AdminPageTitle() {
 	async function submitForm(values) {
 		console.log("submiting:", values);
 		const ret = await uploadData(values, "username"); // TODO HARDCODED
-		setPageData({ ...pageData, title: values.title, description: values.description });
+		setPageData((data) => ({
+			...data,
+			title: values.title,
+			description: values.description,
+		}));
+		console.log(ret)
+		console.log()
 		console.log("Pagedata", pageData);
 		window.location.reload();
 	}
@@ -46,19 +57,21 @@ export default function AdminPageTitle() {
 	const formData = {
 		title: pageData.title,
 		description: pageData.description,
+		name: pageData.name,
 	};
 
 	return (
 		<>
-			<Formik initialValues={formData} onSubmit={submitForm}>
-				{({ values, setFieldValue }) => (
-					<>
-						<Form>
-							<label htmlFor="title">Title</label>
-							<Field name="title" placeholder="The page title" />
-							<label htmlFor="description">Description</label>
-							<Field name="description" placeholder="This is a description" type="text" />
-							{/* <label htmlFor="file">Picture upload</label>
+			{formData.name ? (
+				<Formik initialValues={formData} onSubmit={submitForm}>
+					{({ values, setFieldValue }) => (
+						<>
+							<Form>
+								<label htmlFor="title">Title</label>
+								<Field name="title" placeholder="The page title" />
+								<label htmlFor="description">Description</label>
+								<Field name="description" placeholder="This is a description" type="text" />
+								{/* <label htmlFor="file">Picture upload</label>
 							<input
 								id="file"
 								name="file"
@@ -68,12 +81,15 @@ export default function AdminPageTitle() {
 								}}
 								className="form-control"
 							/> */}
-							{/* {values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"} */}
-							<button type="submit">Save</button>
-						</Form>
-					</>
-				)}
-			</Formik>
+								{/* {values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"} */}
+								<button type="submit">Save</button>
+							</Form>
+						</>
+					)}
+				</Formik>
+			) : (
+				""
+			)}
 		</>
 	);
 }
