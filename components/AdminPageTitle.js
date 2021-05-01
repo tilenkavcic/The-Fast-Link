@@ -1,19 +1,17 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import PictureUpload from "../components/PictureUpload";
+// import PictureUpload from "../components/PictureUpload";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import Router from "next/router";
-import {PageContext} from "../context/PageContext"
+import { PageContext } from "../context/PageContext";
 
 export default function AdminPageTitle() {
 	const AuthUser = useAuthUser();
 
-	const [pageData, setPageData] = useContext(PageContext)
-
+	const [pageData, setPageData] = useContext(PageContext);
 	const uploadData = useCallback(
 		async (data) => {
-			console.log(data);
 			const token = await AuthUser.getIdToken();
 			const endpoint = getAbsoluteURL("/api/editPageHeading");
 			const response = await fetch(endpoint, {
@@ -37,25 +35,22 @@ export default function AdminPageTitle() {
 		[AuthUser]
 	);
 
+	async function submitForm(values) {
+		console.log("submiting:", values);
+		const ret = await uploadData(values, "username"); // TODO HARDCODED
+		setPageData({ ...pageData, title: values.title, description: values.description });
+		console.log("Pagedata", pageData);
+		window.location.reload();
+	}
+
 	const formData = {
 		title: pageData.title,
 		description: pageData.description,
-		pictureUrl: pageData.pictureUrl,
-		file: "",
 	};
+
 	return (
 		<>
-			<Formik
-				initialValues={formData}
-				onSubmit={async (values) => {
-					console.log("submiting:", values);
-					const ret = await uploadData(values, "username"); // TODO HARDCODED
-					setPageData((data) => {
-						return { ...data, title: values.title, description: values.description };
-					});
-					window.location.reload();
-				}}
-			>
+			<Formik initialValues={formData} onSubmit={submitForm}>
 				{({ values, setFieldValue }) => (
 					<>
 						<Form>
@@ -73,7 +68,7 @@ export default function AdminPageTitle() {
 								}}
 								className="form-control"
 							/> */}
-							{values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"}
+							{/* {values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"} */}
 							<button type="submit">Save</button>
 						</Form>
 					</>

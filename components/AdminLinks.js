@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import Thumb from "../components/Thumb"
-import PictureUpload from "../components/PictureUpload"
+import Thumb from "../components/Thumb";
+import PictureUpload from "../components/PictureUpload";
+import { PageContext } from "../context/PageContext";
 
-const AdminLinks = ({ pageData, setPageData }) => {
+const AdminLinks = () => {
 	const AuthUser = useAuthUser();
-
+	const [pageData, setPageData] = useContext(PageContext);
 	const uploadData = useCallback(
 		async (data) => {
 			const token = await AuthUser.getIdToken();
@@ -32,19 +33,20 @@ const AdminLinks = ({ pageData, setPageData }) => {
 		},
 		[AuthUser]
 	);
+	console.log("as");
 
 	const isRequired = (message) => (value) => (!!value ? undefined : message);
 
+	async function submitForm(values) {
+		console.log("<ss");
+		console.log("submiting:", values);
+		const ret = await uploadData(values, "username"); // TODO HARDCODED
+		setPageData(values);
+		console.log("uploaded", pageData);
+	}
+
 	return (
-		<Formik
-			initialValues={pageData}
-			onSubmit={async (values) => {
-				console.log("submiting:", values);
-				const ret = await uploadData(values, "username"); // TODO HARDCODED
-				setPageData(values);
-				console.log("uploaded", pageData);
-			}}
-		>
+		<Formik initialValues={pageData} onSubmit={submitForm}>
 			{({ values }) => (
 				<>
 					<Form>
@@ -52,10 +54,10 @@ const AdminLinks = ({ pageData, setPageData }) => {
 						<Field name="title" placeholder="The page title" />
 						<label htmlFor="description">Description</label>
 						<Field name="description" placeholder="This is a description" type="text" />
-						<PictureUpload />
+						{/* <PictureUpload /> */}
 						{/* <Thumb file={values.file} /> */}
+						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""}
 
-						<img src={pageData.pictureUrl} alt={pageData.title} />
 						<FieldArray name="links">
 							{({ insert, remove, push, move }) => (
 								<div>
@@ -73,10 +75,16 @@ const AdminLinks = ({ pageData, setPageData }) => {
 													<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
 												</div>
 												<div className="col">
-													<label htmlFor={`links.${index}.pictureUrl`}>pictureUrl</label>
-													<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="url" />
-													<img src={linkData.pictureUrl} alt={`links.${index}.title`} />
-													<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
+													{linkData.pictureUrl ? (
+														<>
+															<label htmlFor={`links.${index}.pictureUrl`}>pictureUrl</label>
+															<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="url" />
+															<img src={linkData.pictureUrl} alt={`links.${index}.title`} />
+															<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
+														</>
+													) : (
+														""
+													)}
 												</div>
 												<div className="col">
 													<button type="button" className="secondary" onClick={() => remove(index)}>

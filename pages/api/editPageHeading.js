@@ -24,7 +24,6 @@ const handler = async (req, res) => {
 			const pageName = req.headers.page;
 			const submittedTile = req.headers.submittedtile;
 			const submittedDescription = req.headers.submiteddescription;
-			console.log("something", submittedTile, submittedDescription, pageName);
 
 			// --- upload picture
 			// const picture = req.body;
@@ -53,14 +52,13 @@ const handler = async (req, res) => {
 			// }
 
 			// upload title, desc
-			const docRef = firebase.firestore().collection("homepage").doc(pageName);
 			const updatedData = {
 				title: submittedTile,
 				description: submittedDescription,
 			};
-			const ress = await docRef.set(updatedData, { merge: true });
-			console.log(ress)
-			res.status(200).end();
+			console.log("updated", updatedData, "name", pageName)
+			const ress = await firebase.firestore().collection("homepage").doc(pageName).set(updatedData, { merge: true });
+			return res.status(200).end();
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);

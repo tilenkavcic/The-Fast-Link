@@ -2,11 +2,8 @@ import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
-import Head from "next/head";
-import Header from "./Header";
 import FullPageLoader from "./FullPageLoader";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import AdminLinks from "./AdminLinks";
 import AdminPageTitle from "./AdminPageTitle";
 import { PageContext } from "../context/PageContext";
@@ -63,7 +60,6 @@ const PageBody = () => {
 	);
 
 	useEffect(() => {
-		console.log("asd");
 		const fetchUserPageData = async () => {
 			const data = await fetchData("/api/getUserData");
 			setUserData(data);
@@ -76,6 +72,9 @@ const PageBody = () => {
 
 	return (
 		<div>
+      <h2>
+        {pageData.name}
+      </h2>
 			{pageData.title ? (
 				<>
 					<AdminLinks />
