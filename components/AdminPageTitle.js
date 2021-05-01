@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import PictureUpload from "../components/PictureUpload";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
+import Router from "next/router";
+import {PageContext} from "../context/PageContext"
 
-export default function AdminPageTitle({ pageData, setPageData }) {
+export default function AdminPageTitle() {
 	const AuthUser = useAuthUser();
+
+	const [pageData, setPageData] = useContext(PageContext)
 
 	const uploadData = useCallback(
 		async (data) => {
@@ -46,6 +50,10 @@ export default function AdminPageTitle({ pageData, setPageData }) {
 				onSubmit={async (values) => {
 					console.log("submiting:", values);
 					const ret = await uploadData(values, "username"); // TODO HARDCODED
+					setPageData((data) => {
+						return { ...data, title: values.title, description: values.description };
+					});
+					window.location.reload();
 				}}
 			>
 				{({ values, setFieldValue }) => (
