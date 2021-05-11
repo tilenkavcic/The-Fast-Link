@@ -65,6 +65,34 @@ const Page = () => {
 		fetchUserData();
 	}, [fetchData]);
 
+	const uploadUserData = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/uploadUserData");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
+
+	async function removePage(vals) {
+		console.log("remove", vals);
+		await uploadUserData(vals);
+	}
+
 	return (
 		<>
 			<Head></Head>
@@ -94,15 +122,32 @@ const Page = () => {
 														{values.pages.length > 0 &&
 															values.pages.map((pageData, index) => (
 																<div key={index}>
-																	<Link
-																		className="pageBtn"
-																		href={{
-																			pathname: "/admin/[pageIndx]",
-																			query: { pageIndx: index },
-																		}}
-																	>
-																		<a>{pageData.title}</a>
-																	</Link>
+																	<div >
+																		<Link
+																			className="pageBtn"
+																			href={{
+																				pathname: "/admin/[pageIndx]",
+																				query: { pageIndx: index },
+																			}}
+																		>
+																			<a>{pageData.title}</a>
+																		</Link>
+																	</div>
+																	<div className="col">
+																		<button
+																			type="button"
+																			className="secondary"
+																			onClick={() => {
+																				remove(index);
+																				setTimeout(() => {
+																					removePage(values);
+																					
+																				}, 200)
+																			}}
+																		>
+																			X
+																		</button>
+																	</div>
 																</div>
 															))}
 													</div>
