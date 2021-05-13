@@ -138,11 +138,11 @@ const Page = () => {
 																			type="button"
 																			className="secondary"
 																			onClick={() => {
-																				remove(index);
+																				values.pages.splice(index, 1);
 																				setTimeout(() => {
 																					removePage(values);
-																					
-																				}, 200)
+																				}, 200);
+																				remove(index);
 																			}}
 																		>
 																			X
