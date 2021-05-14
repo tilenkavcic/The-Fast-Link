@@ -33,7 +33,6 @@ const AdminLinks = () => {
 		},
 		[AuthUser]
 	);
-	console.log("as");
 
 	const isRequired = (message) => (value) => (!!value ? undefined : message);
 

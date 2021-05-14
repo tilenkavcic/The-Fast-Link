@@ -7,11 +7,11 @@ import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import AdminLinks from "../../components/AdminLinks";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
-	const router = useRouter()
+	const router = useRouter();
 
 	const fetchData = useCallback(
 		async (endpointUrl) => {
@@ -90,9 +90,33 @@ const Page = () => {
 		[AuthUser]
 	);
 
-	async function removePage(vals) {
+	const removePageCall = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/removePage");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
+
+	async function removePage(vals, name) {
 		console.log("remove", vals);
-		await uploadUserData(vals);
+		uploadUserData(vals);
+		return await removePageCall(name);
 	}
 
 	return (
@@ -116,7 +140,7 @@ const Page = () => {
 										const newArr = userData.pages.concat([{ title: newPageStr }]);
 										const newUser = { ...userData, pages: newArr };
 										await uploadData(newUser);
-										router.push(`/admin/${pageName.pages.length}`)
+										router.push(`/admin/${pageName.pages.length}`);
 									}}
 								>
 									{({ values }) => (
@@ -143,11 +167,11 @@ const Page = () => {
 																			type="button"
 																			className="secondary"
 																			onClick={() => {
+																				let name = values.pages[index];
 																				values.pages.splice(index, 1);
-																				setTimeout(() => {
-																					removePage(values);
-																				}, 200);
-																				remove(index);
+																				removePage(values, name).then(() => {
+																					remove(index);
+																				});
 																			}}
 																		>
 																			X
