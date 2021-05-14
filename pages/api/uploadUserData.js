@@ -7,7 +7,7 @@ initAuth();
 
 const handler = async (req, res) => {
 	if (!(req.headers && req.headers.authorization)) {
-		return res.status(400).json({ error: "Missing Authorization header value" });
+		res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
 	if (token != "unauthenticated") {
@@ -16,19 +16,19 @@ const handler = async (req, res) => {
 			await verifyIdToken(token);
 		} catch (e) {
 			console.error(e);
-			return res.status(403).json({ error: "Not authorized" });
+			res.status(403).json({ error: "Not authorized" });
 		}
 		// Upload data to firestore
 		try {
 			const userId = req.headers.uid; // TODO: HARD CODED
 			const sentData = req.body;
-			console.log("send", sentData)
+			console.log("send", sentData);
 			let ret = await firebase.firestore().collection("users").doc(userId).set(sentData);
-			return res.status(200);
+			res.status(200).json({ resp: "sucess" });
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);
-			return res.status(404).json({ error: "Error uploading data" });
+			res.status(404).json({ error: "Error uploading data" });
 		}
 	}
 };

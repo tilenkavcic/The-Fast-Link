@@ -16,7 +16,7 @@ const handler = async (req, res) => {
 			await verifyIdToken(token);
 		} catch (e) {
 			console.error(e);
-			return res.status(403).json({ error: "Not authorized" });
+			res.status(403).json({ error: "Not authorized" });
 		}
 		// Upload data to firestore
 		try {
@@ -58,11 +58,11 @@ const handler = async (req, res) => {
 			};
 			console.log("updated", updatedData, "name", pageName)
 			const ress = await firebase.firestore().collection("homepage").doc(pageName).set(updatedData, { merge: true });
-			return res.status(200).end();
+			res.status(200).json({ resp: 'sucess' });
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);
-			return res.status(404).json({ error: "Error uploading data" });
+			res.status(404).json({ error: "Error uploading data" });
 		}
 	}
 };

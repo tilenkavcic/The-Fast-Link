@@ -7,7 +7,7 @@ initAuth();
 
 const handler = async (req, res) => {
 	if (!(req.headers && req.headers.authorization)) {
-		return res.status(400).json({ error: "Missing Authorization header value" });
+		res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
 	if (token != "unauthenticated") {
@@ -16,7 +16,7 @@ const handler = async (req, res) => {
 			await verifyIdToken(token);
 		} catch (e) {
 			console.error(e);
-			return res.status(403).json({ error: "Not authorized" });
+			res.status(403).json({ error: "Not authorized" });
 		}
 		// Get data from firestore
 		try {
@@ -26,11 +26,11 @@ const handler = async (req, res) => {
 			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
 			console.log(pageData)
 			
-			return res.status(200).json(pageData);
+			res.status(200).json(pageData);
 		} catch (e) {
 			console.error("Error getting page data");
 			console.error(e);
-			return res.status(404).json({ error: "Error getting page data" });
+			res.status(404).json({ error: "Error getting page data" });
 		}
 	}
 };
