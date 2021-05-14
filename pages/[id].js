@@ -13,11 +13,15 @@ export default function Post({ postData }) {
 				<title>{postData.title}</title>
 			</Head>
 
-			<h1 className={styles.title}>{postData.title}</h1>
-			<h2 className={styles.description}>{postData.description}</h2>
-			<div className={styles.picture}>
-        <img src={postData.pictureUrl} alt={postData.title}></img>
-      </div>
+			{postData.description ? <h1 className={styles.title}>{postData.title}</h1> : <h1>No title given</h1>}
+			{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}
+			{postData.pictureUrl ? (
+				<div className={styles.picture}>
+					<img src={postData.pictureUrl} alt={postData.title}></img>
+				</div>
+			) : (
+				""
+			)}
 
 			<div className={styles.links}>
 				{postData.links.map(({ title, url, pictureUrl, position }) => (
