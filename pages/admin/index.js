@@ -7,9 +7,11 @@ import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import AdminLinks from "../../components/AdminLinks";
+import { useRouter } from 'next/router'
 
 const Page = () => {
 	const AuthUser = useAuthUser();
+	const router = useRouter()
 
 	const fetchData = useCallback(
 		async (endpointUrl) => {
@@ -108,10 +110,13 @@ const Page = () => {
 								<Formik
 									initialValues={userData}
 									onSubmit={async (pageName) => {
-										const newArr = userData.pages.concat([{ title: pageName.newPage }]);
+										let newPageStr = pageName.newPage;
+										newPageStr = newPageStr.replaceAll(" ", "-");
+										newPageStr = encodeURIComponent(newPageStr);
+										const newArr = userData.pages.concat([{ title: newPageStr }]);
 										const newUser = { ...userData, pages: newArr };
-										console.log(newUser);
 										await uploadData(newUser);
+										router.push(`/admin/${pageName.pages.length}`)
 									}}
 								>
 									{({ values }) => (
@@ -122,7 +127,7 @@ const Page = () => {
 														{values.pages.length > 0 &&
 															values.pages.map((pageData, index) => (
 																<div key={index}>
-																	<div >
+																	<div>
 																		<Link
 																			className="pageBtn"
 																			href={{

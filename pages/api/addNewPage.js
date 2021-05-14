@@ -40,8 +40,7 @@ const handler = async (req, res) => {
 				],
 			};
 			const ret2 = await firebase.firestore().collection("homepage").doc(newPageName).set(newPage);
-
-			return res.status(200);
+			res.status(200).json({ resp: 'sucess' });
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);
