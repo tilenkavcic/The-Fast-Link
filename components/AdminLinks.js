@@ -56,45 +56,34 @@ const AdminLinks = () => {
 						{/* <PictureUpload /> */}
 						{/* <Thumb file={values.file} /> */}
 						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""}
-
+						<h3>Links</h3>
 						<FieldArray name="links">
 							{({ insert, remove, push, move }) => (
 								<div>
 									{values.links.length > 0 &&
 										values.links.map((linkData, index) => (
 											<div className="row" key={index}>
+												<div className="col">{linkData.pictureUrl ? <img width="50px" src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}</div>
 												<div className="col">
-													<label htmlFor={`links.${index}.title`}>Name</label>
-													<Field name={`links.${index}.title`} placeholder="Link title" type="text" />
-													<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
+													<h6>{linkData.title}</h6>
 												</div>
 												<div className="col">
 													<label htmlFor={`links.${index}.url`}>Link URL</label>
-													<Field name={`links.${index}.url`} validate={isRequired("URL is required")} placeholder="https://myPodcast.com" type="url" />
-													<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
+													<Field name={`links.${index}.url`} placeholder="https://myPodcast.com" type="url" />
+													<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
 												</div>
 												<div className="col">
-													{linkData.pictureUrl ? (
-														<>
-															<label htmlFor={`links.${index}.pictureUrl`}>pictureUrl</label>
-															<Field name={`links.${index}.pictureUrl`} placeholder="www.picture.com" type="url" />
-															<img src={linkData.pictureUrl} alt={`links.${index}.title`} />
-															<ErrorMessage name={`links.${index}.title`} component="div" className="field-error" />
-														</>
-													) : (
-														""
-													)}
-												</div>
-												<div className="col">
-													<button type="button" className="secondary" onClick={() => remove(index)}>
-														X
-													</button>
+													<label>
+														<Field type="checkbox" validate={isRequired("Input a link first")} name={`links.${index}.activated`} />
+														activated
+														<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
+													</label>
 												</div>
 											</div>
 										))}
-									<button type="button" className="secondary" onClick={() => push({ title: "", url: "", pictureUrl: "" })}>
+									{/* <button type="button" className="secondary" onClick={() => push({ title: "", url: "", pictureUrl: "" })}>
 										Add Link
-									</button>
+									</button> */}
 								</div>
 							)}
 						</FieldArray>
