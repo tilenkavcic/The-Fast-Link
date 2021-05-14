@@ -24,7 +24,7 @@ const handler = async (req, res) => {
 			const sentData = req.body;
 			console.log("send", sentData);
 			let ret = await firebase.firestore().collection("users").doc(userId).set(sentData);
-			res.status(200).json({ resp: "sucess" });
+			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);
