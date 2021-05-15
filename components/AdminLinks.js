@@ -38,7 +38,7 @@ const AdminLinks = () => {
 
 	async function submitForm(values) {
 		console.log("submiting:", values);
-		const ret = await uploadData(values, "username"); // TODO HARDCODED
+		const ret = await uploadData(values); // add authUser.id for adding new links
 		setPageData(values);
 		console.log("uploaded", pageData);
 	}

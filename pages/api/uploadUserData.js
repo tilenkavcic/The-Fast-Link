@@ -20,7 +20,7 @@ const handler = async (req, res) => {
 		}
 		// Upload data to firestore
 		try {
-			const userId = req.headers.uid; // TODO: HARD CODED
+			const userId = req.headers.uid; 
 			const sentData = req.body;
 			console.log("send", sentData);
 			let ret = await firebase.firestore().collection("users").doc(userId).set(sentData);

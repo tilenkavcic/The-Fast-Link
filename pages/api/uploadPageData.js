@@ -20,7 +20,7 @@ const handler = async (req, res) => {
 		}
 		// Upload data to firestore
 		try {
-			const pageName = req.headers.page; // TODO: HARD CODED
+			const pageName = req.headers.page;
 			const sentData = req.body;
 			console.log("send", sentData)
 			console.log("page", pageName)

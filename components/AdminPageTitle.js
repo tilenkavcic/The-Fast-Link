@@ -42,7 +42,7 @@ export default function AdminPageTitle() {
 
 	async function submitForm(values) {
 		console.log("submiting:", values);
-		const ret = await uploadData(values, "username"); // TODO HARDCODED
+		const ret = await uploadData(values); 
 		setPageData((data) => ({
 			...data,
 			title: values.title,
