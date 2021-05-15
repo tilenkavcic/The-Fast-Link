@@ -13,7 +13,7 @@ export default function Post({ postData }) {
 				<title>{postData.title}</title>
 			</Head>
 
-			{postData.description ? <h1 className={styles.title}>{postData.title}</h1> : <h1>No title given</h1>}
+			<h1 className={styles.title}>{postData.title}</h1>
 			{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}
 			{postData.pictureUrl ? (
 				<div className={styles.picture}>
@@ -24,10 +24,10 @@ export default function Post({ postData }) {
 			)}
 
 			<div className={styles.links}>
-				{postData.links.map(({ title, url, pictureUrl, position }) => (
+				{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
 					<>
-						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} />
-						{position % 2 == 0 ? <div></div> : <br />}
+						<MainLink key={index} title={title} url={url} imgUrl={pictureUrl} position={position} />
+						{index % 2 != 0 && index != postData.links.length - 1 ? <br /> : ""}
 					</>
 				))}
 			</div>
@@ -45,7 +45,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-	const postData = await getPageData(params.id);
+	let postData = await getPageData(params.id);
+	let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
+	postData.links = filteredLinks;
+	console.log(postData);
 	return {
 		props: {
 			postData,
