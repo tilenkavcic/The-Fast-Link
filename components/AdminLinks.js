@@ -37,7 +37,6 @@ const AdminLinks = () => {
 	const isRequired = (message) => (value) => (!!value ? undefined : message);
 
 	async function submitForm(values) {
-		console.log("<ss");
 		console.log("submiting:", values);
 		const ret = await uploadData(values, "username"); // TODO HARDCODED
 		setPageData(values);
@@ -74,7 +73,7 @@ const AdminLinks = () => {
 												</div>
 												<div className="col">
 													<label>
-														<Field type="checkbox" validate={isRequired("Input a link first")} name={`links.${index}.activated`} />
+														<Field type="checkbox" name={`links.${index}.activated`} />
 														activated
 														<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
 													</label>
