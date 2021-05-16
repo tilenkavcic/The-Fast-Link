@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
-import Link from "next/link";
-import FullPageLoader from "./FullPageLoader";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import AdminLinks from "./AdminLinks";
 import AdminPageTitle from "./AdminPageTitle";
@@ -72,9 +70,7 @@ const PageBody = () => {
 
 	return (
 		<div>
-      <h2>
-        {pageData.name}
-      </h2>
+			<h2>{pageData.name}</h2>
 			{pageData.title ? (
 				<>
 					<AdminLinks />

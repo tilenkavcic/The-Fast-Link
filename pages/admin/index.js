@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
-import Head from "next/head";
 import Header from "../../components/Header";
 import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import AdminLinks from "../../components/AdminLinks";
 import { useRouter } from "next/router";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Layout from "../../components/Layout";

@@ -1,15 +1,15 @@
 import Head from "next/head";
 
 export default function Layout({ children, home, title }) {
-  return (
-    <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="Link" />
-        <meta name="viewport" content="width=device-width"/>
-        <meta charSet="UTF-8"/>
+	return (
+		<>
+			<Head>
+				<link rel="icon" href="/favicon.ico" />
+				<meta name="description" content="Link" />
+				<meta name="viewport" content="width=device-width" />
+				<meta charSet="UTF-8" />
 
-        {/* <meta
+				{/* <meta
           property="og:image"
           content={`https://og-image.now.sh/${encodeURI(
             title
@@ -17,8 +17,8 @@ export default function Layout({ children, home, title }) {
         />
         <meta name="og:title" contetn={title} />
         <meta name="twitter:card" content="summary_large_image" /> */}
-      </Head>
-      <main>{children}</main>
-    </>
-  );
+			</Head>
+			<main>{children}</main>
+		</>
+	);
 }

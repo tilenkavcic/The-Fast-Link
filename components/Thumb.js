@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import next from "next";
 
 export default function Thumb(nextProps) {
-  console.log("asd",nextProps)
+	console.log("asd", nextProps);
 	if (!nextProps.file) {
 		return;
 	}

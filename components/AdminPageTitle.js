@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-// import PictureUpload from "../components/PictureUpload";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
-import Router from "next/router";
 import { PageContext } from "../context/PageContext";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import styles from "./adminPageTitle.module.scss";

@@ -1,12 +1,8 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
-import Link from "next/link";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import Thumb from "../components/Thumb";
-import PictureUpload from "../components/PictureUpload";
 import { PageContext } from "../context/PageContext";
-import Layout from "../components/Layout";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
 
@@ -102,7 +98,7 @@ const AdminLinks = () => {
 																<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
 															</td>
 															<td>
-															<label className={styles.switch}>
+																<label className={styles.switch}>
 																	<Field type="checkbox" name={`links.${index}.activated`} />
 																	<span className={styles.slider}></span>
 																	<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />

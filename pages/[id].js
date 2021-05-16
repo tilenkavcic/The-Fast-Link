@@ -1,10 +1,7 @@
 import { getAllPageIds, getPageData } from "../lib/pages";
-import Head from "next/head";
 import styles from "./id.module.scss";
-
 import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
-import Footer from "../components/Footer";
 import { Col, Container, Row } from "react-bootstrap";
 import Link from "next/link";
 
