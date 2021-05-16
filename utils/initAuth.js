@@ -16,7 +16,7 @@ const initAuth = () => {
 				// Using JSON to handle newline problems when storing the
 				// key as a secret in Vercel. See:
 				// https://github.com/vercel/vercel/issues/749#issuecomment-707515089
-				privateKey: process.env.FIREBASE_PRIVATE_KEY,
+				privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
 			},
 			databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 		},
