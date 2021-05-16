@@ -5,32 +5,39 @@ import styles from "./id.module.scss";
 import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
 import Footer from "../components/Footer";
+import { Col, Container, Row } from "react-bootstrap";
 
 export default function Post({ postData }) {
 	return (
 		<Layout title={postData.title}>
-			<Head>
-				<title>{postData.title}</title>
-			</Head>
+			<Container>
+				<Row>
+					<Col>
+						<h1 className={styles.title}>{postData.title}</h1>
+					</Col>
+				</Row>
+				<Row>
+					<Col>{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}</Col>
+				</Row>
+				{postData.pictureUrl ? (
+					<Row>
+						<Col className={styles.picture}>
+							<img src={postData.pictureUrl} alt={postData.title}></img>
+						</Col>
+					</Row>
+				) : (
+					""
+				)}
+			</Container>
 
-			<h1 className={styles.title}>{postData.title}</h1>
-			{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}
-			{postData.pictureUrl ? (
-				<div className={styles.picture}>
-					<img src={postData.pictureUrl} alt={postData.title}></img>
-				</div>
-			) : (
-				""
-			)}
-
-			<div className={styles.links}>
+			<Row className={styles.links}>
 				{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
 					<>
 						<MainLink key={index} title={title} url={url} imgUrl={pictureUrl} position={position} />
-						{index % 2 != 0 && index != postData.links.length - 1 ? <br /> : ""}
+						{index % 2 != 0 && index != postData.links.length - 1 ? <hr className={styles.hr} /> : ""}
 					</>
 				))}
-			</div>
+			</Row>
 			<Footer />
 		</Layout>
 	);
