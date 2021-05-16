@@ -156,7 +156,7 @@ const Page = () => {
 								<Form>
 									<FieldArray name="pages">
 										{({ insert, remove, push, move }) => (
-											<Row className={styles.row}>
+											<>
 												{values.pages.length > 0 &&
 													values.pages.map((pageData, index) => (
 														<Row className={styles.row} key={index}>
@@ -189,7 +189,7 @@ const Page = () => {
 															</Col>
 														</Row>
 													))}
-											</Row>
+											</>
 										)}
 									</FieldArray>
 									<Row className={styles.row}>
