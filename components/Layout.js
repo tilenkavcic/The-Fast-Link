@@ -7,7 +7,7 @@ export default function Layout({ children, home, title }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Link" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta charset="UTF-8"/>
+        <meta charSet="UTF-8"/>
 
         {/* <meta
           property="og:image"

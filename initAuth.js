@@ -12,7 +12,7 @@ const initAuth = () => {
 				projectId: "the-fast-link",
 				clientEmail: "firebase-adminsdk-he6ij@the-fast-link.iam.gserviceaccount.com",
 				// The private key must not be accesssible on the client side.
-				privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+				privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n") : undefined,
 			},
 			databaseURL: "https://the-fast-link.firebaseio.com",
 		},
