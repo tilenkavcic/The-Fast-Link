@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
 import Footer from "../components/Footer";
 import { Col, Container, Row } from "react-bootstrap";
+import Link from "next/link"
 
 export default function Post({ postData }) {
 	return (
@@ -38,7 +39,16 @@ export default function Post({ postData }) {
 					</>
 				))}
 			</Row>
-			<Footer />
+			<Container>
+				<Row>
+					<Col  className={styles.bottomLogo}>
+						<Link href="/" >
+						The Fast Link
+						</Link>
+						</Col>
+				</Row>
+			</Container>
+			{/* <Footer /> */}
 		</Layout>
 	);
 }

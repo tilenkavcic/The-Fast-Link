@@ -1,3 +1,5 @@
+@import "../styles/variables";
+
 .title {
   font-style: normal;
   font-weight: bold;
@@ -27,6 +29,14 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
+}
+
+.bottomLogo {
+  justify-content: center;
+  margin: 20px 0 50px 0;
+  font-weight: 600;
+  @include text-gradient;
+  text-align: center;
 }
 
 .hr {
