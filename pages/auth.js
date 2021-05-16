@@ -1,6 +1,7 @@
 import React from "react";
 import { withAuthUser, AuthAction } from "next-firebase-auth";
 import FirebaseAuth from "../components/FirebaseAuth";
+import Header from "../components/Header"
 
 const styles = {
 	content: {
@@ -14,17 +15,18 @@ const styles = {
 };
 
 const Auth = () => (
-	<div style={styles.content}>
-		<h3>Sign in / Register</h3>
-		<div style={styles.textContainer}>
-			<p>
-				Sign in or register
-			</p>
+	<>
+		<Header auth="true" />
+		<div style={styles.content}>
+			<h3>Sign in / Register</h3>
+			<div style={styles.textContainer}>
+				<p>Sign in or register</p>
+			</div>
+			<div>
+				<FirebaseAuth />
+			</div>
 		</div>
-		<div>
-			<FirebaseAuth />
-		</div>
-	</div>
+	</>
 );
 
 export default withAuthUser({

@@ -26,7 +26,7 @@ const Home = () => {
 					</Row>
 					<Row>
 						<Col className={styles.cont}>
-							<h2 className={styles.heroSubtitle}>4x faster</h2>
+							<h2 className={styles.heroSubtitle}>Blazing <i>Fast</i></h2>
 						</Col>
 						<Col>
 							<div className={styles.iphone}>
