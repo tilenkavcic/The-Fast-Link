@@ -7,21 +7,21 @@ import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { PageProvider } from "../../context/PageContext";
 import PageBody from "../../components/PageBody";
+import Layout from "../../components/Layout"
+import {Container} from "react-bootstrap"
 
 const Page = () => {
 	const AuthUser = useAuthUser();
 
 	return (
-		<>
-			<Head></Head>
-			<h1>Admin panel</h1>
-			<div>
+		<Layout>
 				<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 				<PageProvider>
-					<PageBody />
+					<Container>
+						<PageBody />
+					</Container>
 				</PageProvider>
-			</div>
-		</>
+		</Layout>
 	);
 };
 

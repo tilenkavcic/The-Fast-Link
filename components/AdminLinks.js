@@ -6,6 +6,9 @@ import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import Thumb from "../components/Thumb";
 import PictureUpload from "../components/PictureUpload";
 import { PageContext } from "../context/PageContext";
+import Layout from "../components/Layout";
+import { Button, Row, Col, Table } from "react-bootstrap";
+import styles from "./adminLinks.module.scss";
 
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
@@ -48,45 +51,75 @@ const AdminLinks = () => {
 			{({ values }) => (
 				<>
 					<Form>
-						<label htmlFor="title">Title</label>
-						<Field name="title" placeholder="The page title" />
-						<label htmlFor="description">Description</label>
-						<Field name="description" placeholder="This is a description" type="text" />
-						{/* <PictureUpload /> */}
-						{/* <Thumb file={values.file} /> */}
-						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""}
-						<h3>Links</h3>
-						<FieldArray name="links">
-							{({ insert, remove, push, move }) => (
-								<div>
-									{values.links.length > 0 &&
-										values.links.map((linkData, index) => (
-											<div className="row" key={index}>
-												<div className="col">{linkData.pictureUrl ? <img width="50px" src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}</div>
-												<div className="col">
-													<h6>{linkData.title}</h6>
-												</div>
-												<div className="col">
-													<label htmlFor={`links.${index}.url`}>Link URL</label>
-													<Field name={`links.${index}.url`} placeholder="https://myPodcast.com" type="url" />
-													<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
-												</div>
-												<div className="col">
-													<label>
-														<Field type="checkbox" name={`links.${index}.activated`} />
-														activated
-														<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
-													</label>
-												</div>
-											</div>
-										))}
-									{/* <button type="button" className="secondary" onClick={() => push({ title: "", url: "", pictureUrl: "" })}>
+						<Row class="form-group" className={styles.formTitle}>
+							<Col>
+								<label htmlFor="title">Title</label>
+							</Col>
+							<Col>
+								<Field class="form-control" name="title" placeholder="The page title" />
+							</Col>
+						</Row>
+						<Row class="form-group" className={styles.formTitle}>
+							<Col>
+								<label htmlFor="description">Description</label>
+							</Col>
+							<Col>
+								<Field class="form-control" name="description" placeholder="This is a description" type="text" />
+							</Col>
+						</Row>
+						{/* <PictureUpload />
+						<Thumb file={values.file} />
+						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
+						<Row>
+							<Col>
+								<h3>Links</h3>
+							</Col>
+						</Row>
+						<Row>
+							<Table className={styles.table}>
+								<thead>
+									<tr>
+										<th>Picture</th>
+										<th>Title</th>
+										<th>Link</th>
+										<th>Active</th>
+									</tr>
+								</thead>
+								<tbody>
+									<FieldArray name="links">
+										{({ insert, remove, push, move }) => (
+											<>
+												{values.links.length > 0 &&
+													values.links.map((linkData, index) => (
+														<tr key={index}>
+															<td>{linkData.pictureUrl ? <img width="50px" src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}</td>
+															<td>
+																<h6>{linkData.title}</h6>
+															</td>
+															<td>
+																{/* <label htmlFor={`links.${index}.url`}>Link URL</label> */}
+																<Field className="form-control" name={`links.${index}.url`} placeholder="https://myPodcast.com" type="url" />
+																<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
+															</td>
+															<td>
+															<label className={styles.switch}>
+																	<Field type="checkbox" name={`links.${index}.activated`} />
+																	<span className={styles.slider}></span>
+																	<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
+																</label>
+															</td>
+														</tr>
+													))}
+												{/* <button type="button" className="secondary" onClick={() => push({ title: "", url: "", pictureUrl: "" })}>
 										Add Link
 									</button> */}
-								</div>
-							)}
-						</FieldArray>
-						<button type="submit">Save</button>
+											</>
+										)}
+									</FieldArray>
+								</tbody>
+							</Table>
+						</Row>
+						<Button type="submit">Save</Button>
 					</Form>
 				</>
 			)}

@@ -8,8 +8,9 @@ import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import AdminLinks from "../../components/AdminLinks";
 import { useRouter } from "next/router";
-import { Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
 import Layout from "../../components/Layout";
+import styles from "./index.module.scss"
 
 const Page = () => {
 	const AuthUser = useAuthUser();
@@ -125,20 +126,20 @@ const Page = () => {
 		<Layout title="Admin">
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 			<Container>
-				<Row>
+				<Row className={styles.row}>
 					<Col>
 						<h1>Hey there</h1>
 					</Col>
 				</Row>
 
-				<Row>
+				<Row className={styles.row}>
 					<Col>
 						<h2>Your podcasts</h2>
 					</Col>
 				</Row>
 
 				{userData.pages ? (
-					<>
+					<Row className={styles.row}>
 						<Formik
 							initialValues={userData}
 							onSubmit={async (pageName) => {
@@ -155,11 +156,11 @@ const Page = () => {
 								<Form>
 									<FieldArray name="pages">
 										{({ insert, remove, push, move }) => (
-											<div>
+											<Row className={styles.row}>
 												{values.pages.length > 0 &&
 													values.pages.map((pageData, index) => (
-														<div key={index}>
-															<div>
+														<Row className={styles.row} key={index}>
+															<Col>
 																<Link
 																	className="pageBtn"
 																	href={{
@@ -167,12 +168,13 @@ const Page = () => {
 																		query: { pageIndx: index },
 																	}}
 																>
-																	<a>{pageData.title}</a>
+																	<Button size="lg" block>
+																		{pageData.title}
+																	</Button>
 																</Link>
-															</div>
-															<div className="col">
-																<button
-																	type="button"
+															</Col>
+															<Col>
+																<Button
 																	className="secondary"
 																	onClick={() => {
 																		let name = values.pages[index];
@@ -183,19 +185,25 @@ const Page = () => {
 																	}}
 																>
 																	X
-																</button>
-															</div>
-														</div>
+																</Button>
+															</Col>
+														</Row>
 													))}
-											</div>
+											</Row>
 										)}
 									</FieldArray>
-									<Field id=" " name="newPage" placeholder="thepodcast" />
-									<button type="submit">New</button>
+									<Row className={styles.row}>
+										<Col>
+											<Field className="form-control" id=" " name="newPage" placeholder="thepodcast" />
+										</Col>
+										<Col>
+											<Button type="submit">New</Button>
+										</Col>
+									</Row>
 								</Form>
 							)}
 						</Formik>
-					</>
+					</Row>
 				) : (
 					"loading"
 				)}
