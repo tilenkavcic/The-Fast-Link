@@ -1,44 +1,34 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "react-bootstrap";
-
-const styles = {
-	container: {
-		display: "flex",
-		justifyContent: "flex-end",
-		alignItems: "center",
-		padding: 16,
-	},
-};
+import { Button, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import styles from "./header.module.scss";
 
 const Header = ({ email, signOut }) => (
-	<div style={styles.container}>
-		{email ? (
-			<>
-				<p>Signed in as {email}</p>
-				<Button
-          variant="primary"
-					type="button"
-					onClick={() => {
-						signOut();
-					}}
-				>
-					Sign out
-				</Button>
-			</>
-		) : (
-			<>
-				<p>You are not signed in.</p>
-				<Link href="/auth">
-					<a>
-						<Button variant="primary" type="button">
-							Sign in
-						</Button>
-					</a>
-				</Link>
-			</>
-		)}
-	</div>
+	<Navbar sticky="top" className={styles.navbar}>
+		<Navbar.Brand href="/" className={styles.logo}>The Fast Link</Navbar.Brand>
+		<Navbar.Toggle aria-controls="basic-navbar-nav" />
+		<Navbar.Collapse className="justify-content-end">
+			{email ? (
+				<>
+					<Navbar.Text>Signed in as {email}</Navbar.Text>
+					<Button
+						variant="primary"
+						onClick={() => {
+							signOut();
+						}}
+					>
+						Sign out
+					</Button>
+				</>
+			) : (
+				<>
+					<Link href="/auth">
+						<Button variant="primary">Try it out</Button>
+					</Link>
+				</>
+			)}
+		</Navbar.Collapse>
+	</Navbar>
 );
 
 export default Header;
