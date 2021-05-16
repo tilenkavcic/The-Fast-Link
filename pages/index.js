@@ -10,7 +10,7 @@ import Layout from "../components/Layout";
 const Demo = () => {
 	const AuthUser = useAuthUser();
 	return (
-<>
+		<>
 			<Layout title="The Fast Link">
 				<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 				<Container>
@@ -20,19 +20,21 @@ const Demo = () => {
 						</Col>
 					</Row>
 					<Row>
-						<Col>
+						<Col className={styles.cont}>
 							<h2 className={styles.heroSubtitle}>4x faster</h2>
 						</Col>
-						<Col><div className={styles.iphone}>
-									<i/>
-									<video width="100%" playsInline autoPlay muted loop className={styles.videoMock}>
-										<source src="/present1.mp4" type="video/mp4" />
-									</video>
-								</div></Col>
+						<Col>
+							<div className={styles.iphone}>
+								<i />
+								<video width="100%" playsInline autoPlay muted loop className={styles.videoMock}>
+									<source src="/present1.mp4" type="video/mp4" />
+								</video>
+							</div>
+						</Col>
 					</Row>
 				</Container>
 			</Layout>
-</>
+		</>
 	);
 };
 

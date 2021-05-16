@@ -6,16 +6,17 @@
 .btn {
 	color: $background;
 	font-weight: 600;
-	border-radius: 4px;
-	background-color: $primary1;
-	border-color: $primary1;
+	border-radius: 10px;
+	background-color: $white;
+	border-color: $white;
+	border-width: 3px;
+	padding: 0.5rem 1rem;
 }
 
-.btn :hover {
-	border-radius: 4px;
+.btn:hover {
 	color: $white;
 	background-color: $background;
-	border-color: $primary1;
+	border-color: $white;
 }
 
 h1,
@@ -36,7 +37,6 @@ body {
 	margin: 0;
 	font-family: $font-primary;
 	min-width: fit-content;
-
 }
 
 * {
