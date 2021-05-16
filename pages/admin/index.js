@@ -8,6 +8,8 @@ import getAbsoluteURL from "../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import AdminLinks from "../../components/AdminLinks";
 import { useRouter } from "next/router";
+import { Container, Row, Col } from "react-bootstrap";
+import Layout from "../../components/Layout";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
@@ -120,81 +122,85 @@ const Page = () => {
 	}
 
 	return (
-		<>
-			<Head></Head>
-			<h1>Admin panel</h1>
-			<div>
-				<Header email={AuthUser.email} signOut={AuthUser.signOut} />
-				<div>
-					<div>
+		<Layout title="Admin">
+			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
+			<Container>
+				<Row>
+					<Col>
 						<h1>Hey there</h1>
+					</Col>
+				</Row>
+
+				<Row>
+					<Col>
 						<h2>Your podcasts</h2>
-						{userData.pages ? (
-							<>
-								<Formik
-									initialValues={userData}
-									onSubmit={async (pageName) => {
-										let newPageStr = pageName.newPage;
-										newPageStr = newPageStr.replaceAll(" ", "-");
-										newPageStr = encodeURIComponent(newPageStr);
-										const newArr = userData.pages.concat([{ title: newPageStr }]);
-										const newUser = { ...userData, pages: newArr };
-										await uploadData(newUser);
-										router.push(`/admin/${pageName.pages.length}`);
-									}}
-								>
-									{({ values }) => (
-										<Form>
-											<FieldArray name="pages">
-												{({ insert, remove, push, move }) => (
-													<div>
-														{values.pages.length > 0 &&
-															values.pages.map((pageData, index) => (
-																<div key={index}>
-																	<div>
-																		<Link
-																			className="pageBtn"
-																			href={{
-																				pathname: "/admin/[pageIndx]",
-																				query: { pageIndx: index },
-																			}}
-																		>
-																			<a>{pageData.title}</a>
-																		</Link>
-																	</div>
-																	<div className="col">
-																		<button
-																			type="button"
-																			className="secondary"
-																			onClick={() => {
-																				let name = values.pages[index];
-																				values.pages.splice(index, 1);
-																				removePage(values, name).then(() => {
-																					remove(index);
-																				});
-																			}}
-																		>
-																			X
-																		</button>
-																	</div>
-																</div>
-															))}
-													</div>
-												)}
-											</FieldArray>
-											<Field id=" " name="newPage" placeholder="thepodcast" />
-											<button type="submit">New</button>
-										</Form>
-									)}
-								</Formik>
-							</>
-						) : (
-							""
-						)}
-					</div>
-				</div>
-			</div>
-		</>
+					</Col>
+				</Row>
+
+				{userData.pages ? (
+					<>
+						<Formik
+							initialValues={userData}
+							onSubmit={async (pageName) => {
+								let newPageStr = pageName.newPage;
+								newPageStr = newPageStr.replaceAll(" ", "-");
+								newPageStr = encodeURIComponent(newPageStr);
+								const newArr = userData.pages.concat([{ title: newPageStr }]);
+								const newUser = { ...userData, pages: newArr };
+								await uploadData(newUser);
+								router.push(`/admin/${pageName.pages.length}`);
+							}}
+						>
+							{({ values }) => (
+								<Form>
+									<FieldArray name="pages">
+										{({ insert, remove, push, move }) => (
+											<div>
+												{values.pages.length > 0 &&
+													values.pages.map((pageData, index) => (
+														<div key={index}>
+															<div>
+																<Link
+																	className="pageBtn"
+																	href={{
+																		pathname: "/admin/[pageIndx]",
+																		query: { pageIndx: index },
+																	}}
+																>
+																	<a>{pageData.title}</a>
+																</Link>
+															</div>
+															<div className="col">
+																<button
+																	type="button"
+																	className="secondary"
+																	onClick={() => {
+																		let name = values.pages[index];
+																		values.pages.splice(index, 1);
+																		removePage(values, name).then(() => {
+																			remove(index);
+																		});
+																	}}
+																>
+																	X
+																</button>
+															</div>
+														</div>
+													))}
+											</div>
+										)}
+									</FieldArray>
+									<Field id=" " name="newPage" placeholder="thepodcast" />
+									<button type="submit">New</button>
+								</Form>
+							)}
+						</Formik>
+					</>
+				) : (
+					"loading"
+				)}
+			</Container>
+		</Layout>
 	);
 };
 
