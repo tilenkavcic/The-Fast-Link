@@ -9,3 +9,13 @@ $primary1: #9FDDFF, 100%;
 $primary2: #774dd1 100.31%;
 $whiteBackround: #ffffff;
 $font-primary: Work Sans, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
+
+@mixin bg-gradient() {
+  background: linear-gradient(90deg, #9FDDFF 0.31%, #774DD1 100.31%);
+}
+
+@mixin text-gradient() {
+  background: -webkit-linear-gradient(0deg, #9FDDFF 0.31%, #774DD1 100.31%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

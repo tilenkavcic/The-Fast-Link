@@ -10,35 +10,29 @@ import Layout from "../components/Layout";
 const Demo = () => {
 	const AuthUser = useAuthUser();
 	return (
-		<>
+<>
 			<Layout title="The Fast Link">
-				<div>
-					<Header email={AuthUser.email} signOut={AuthUser.signOut} />
-					<Container fluid="md">
-						<Row>
-							<Col>
-								<h1 className={styles.heroTitle}>Optimised to convert</h1>
-							</Col>
-						</Row>
-						<Row>
-							<Col>
-								<div className={styles.iphone}>
-									<b/>
+				<Header email={AuthUser.email} signOut={AuthUser.signOut} />
+				<Container>
+					<Row>
+						<Col>
+							<h1 className={styles.heroTitle}>Optimised to convert</h1>
+						</Col>
+					</Row>
+					<Row>
+						<Col>
+							<h2 className={styles.heroSubtitle}>4x faster</h2>
+						</Col>
+						<Col><div className={styles.iphone}>
 									<i/>
 									<video width="100%" playsInline autoPlay muted loop className={styles.videoMock}>
 										<source src="/present1.mp4" type="video/mp4" />
 									</video>
-								</div>
-							</Col>
-							<Col>
-								<h2 className="hero-subtitle">4x faster</h2>
-							</Col>
-							<Col></Col>
-						</Row>
-					</Container>
-				</div>
+								</div></Col>
+					</Row>
+				</Container>
 			</Layout>
-		</>
+</>
 	);
 };
 
