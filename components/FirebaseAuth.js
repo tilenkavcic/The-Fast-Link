@@ -5,34 +5,9 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
-import { useAuthUser } from "next-firebase-auth";
 
 // Note that next-firebase-auth inits Firebase for us,
 // so we don't need to.
-
-// const uploadData = async (data) => {
-// 	console.log("data", data);
-// 	const AuthUser = useAuthUser();
-// 	const token = await AuthUser.getIdToken();
-// 	const endpoint = getAbsoluteURL("/api/addNewUser");
-// 	console.log("token", token);
-
-// 	const response = await fetch(endpoint, {
-// 		method: "POST",
-// 		headers: {
-// 			Authorization: token,
-// 			uid: data.user.uid,
-// 			email: data.user.email,
-// 		},
-// 		body: {},
-// 	});
-// 	const respData = await response.json();
-// 	if (!response.ok) {
-// 		console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-// 		return new Promise.reject();
-// 	}
-// 	return new Promise.resolve();
-// };
 
 const firebaseAuthConfig = {
 	signInFlow: "popup",

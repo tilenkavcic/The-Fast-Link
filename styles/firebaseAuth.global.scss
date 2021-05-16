@@ -3,60 +3,88 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
 @import "../styles/variables.scss";
 
+* {
+	color: #fff !important;
+}
+
 .firebaseui-container {
-  font-family: $font-primary;
-  background: rgba(194, 109, 109, 0.932);
-  margin-bottom: 15px;
-  min-height: 150px;
-  padding-top: 10px;
-  border-radius: 20px;
-  box-shadow: none;
+	font-family: $font-primary !important;
+	background-color: $background !important;
+	margin-bottom: 15px;
+	min-height: 150px;
+	padding-top: 10px;
+	border-radius: 40px !important;
+	box-shadow: none !important;
 }
+.firebaseui-card-content {
+}
+
+#ui-sign-in-email-input {
+}
+// mdl-textfield__input firebaseui-input firebaseui-id-email
+
 .firebaseui-container.firebaseui-page-provider-sign-in {
-  font-family: $font-primary;
-  background: transparent;
-  box-shadow: none;
-  min-height: 0;
-  margin-bottom: 0;
-  padding-top: 0;
+	font-family: $font-primary;
+	background: transparent;
+	box-shadow: none;
+	min-height: 0;
+	margin-bottom: 0;
+	padding-top: 0;
 }
+
 .firebaseui-container.firebaseui-id-page-callback {
-  background: transparent;
-  box-shadow: none;
-  margin-top: 40px;
-  height: 84px;
-  min-height: 0;
-  margin-bottom: 0;
-  padding-top: 0;
+	background: transparent;
+	box-shadow: none;
+	margin-top: 40px;
+	height: 84px;
+	min-height: 0;
+	margin-bottom: 0;
+	padding-top: 0;
 }
+.mdl-button.mdl-js-button.mdl-button--primary {
+	color: primary1 !important;
+}
+
 .firebaseui-card-header {
-  font-family: $font-primary;
-  display: none;
+	font-family: $font-primary;
+	display: none;
 }
+
 .firebaseui-title {
-  font-family: $font-primary;
+	font-family: $font-primary;
 }
 
 .firebaseui-subtitle,
 .firebaseui-text {
-  font-family: $font-primary;
-  color: rgba(255, 255, 255, 0.87);
+	font-family: $font-primary;
+	color: rgba(255, 255, 255, 0.87) !important;
 }
-.firebaseui-form-actions
-  .mdl-button--raised.mdl-button--colored.firebaseui-button {
-  background: rgba(0, 0, 0, 0.1);
+
+.firebaseui-button {
+	border-radius: 10px !important;
+	font-family: $font-primary !important;
+	letter-spacing: 0.15em !important;
+	font-weight: 600 !important;
 }
+
+.firebaseui-form-actions .mdl-button--raised.mdl-button--colored.firebaseui-button {
+	background: rgba(0, 0, 0, 0.1);
+}
+
 .firebaseui-input {
-  font-family: $font-primary;
+	font-family: $font-primary;
+	color: #fff !important;
 }
+
 .firebaseui-id-dismiss-info-bar {
-  display: block;
+	display: block;
 }
+
 .firebaseui-info-bar {
-  border: 0;
-  border-radius: 10px;
-  left: 5%;
-  right: 5%;
-  top: 10%;
-  bottom: 10%;
+	border: 0;
+	border-radius: 10px;
+	left: 5%;
+	right: 5%;
+	top: 10%;
+	bottom: 10%;
 }
