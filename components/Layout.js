@@ -1,10 +1,9 @@
 import styles from "./layout.module.scss";
-import utilStyles from "../styles/utils.module.scss";
 import Head from "next/head";
 
 export default function Layout({ children, home, title }) {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="Link" />
@@ -18,6 +17,6 @@ export default function Layout({ children, home, title }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <main>{children}</main>
-    </div>
+    </>
   );
 }
