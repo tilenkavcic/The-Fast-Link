@@ -9,6 +9,8 @@ https://www.pluralsight.com/guides/generating-dynamic-forms-from-json-in-react
 https://formik.org/docs/examples/field-arrays
 
 ## TODO
+- **Reload SSR when adding/updating a page (recompile on server)**
+
 - change img tags into nextjs images
 
 TODO: sort array by position always
