@@ -3,9 +3,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
 @import "../styles/variables.scss";
 
-* {
-	color: #fff !important;
-}
 
 .firebaseui-container {
 	font-family: $font-primary !important;
@@ -16,13 +13,9 @@
 	border-radius: 40px !important;
 	box-shadow: none !important;
 }
-.firebaseui-card-content {
+.mdl-textfield--floating-label .mdl-textfield__label {
+	color: #fff !important;
 }
-
-#ui-sign-in-email-input {
-}
-// mdl-textfield__input firebaseui-input firebaseui-id-email
-
 .firebaseui-container.firebaseui-page-provider-sign-in {
 	font-family: $font-primary;
 	background: transparent;
