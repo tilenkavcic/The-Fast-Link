@@ -1,4 +1,4 @@
-import { getAllPageIds, getPageData } from "../lib/pages";
+import { getPageData } from "../lib/pages";
 import styles from "./id.module.scss";
 import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
@@ -31,10 +31,10 @@ export default function Post({ postData }) {
 
 			<Row className={styles.links}>
 				{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
-					<>
-						<MainLink key={index} title={title} url={url} imgUrl={pictureUrl} position={position} />
+					<React.Fragment key={index}>
+						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} />
 						{index % 2 != 0 && index != postData.links.length - 1 ? <hr className={styles.hr} /> : ""}
-					</>
+					</React.Fragment>
 				))}
 			</Row>
 			<Container>
@@ -48,19 +48,10 @@ export default function Post({ postData }) {
 	);
 }
 
-export async function getStaticPaths() {
-	const paths = await getAllPageIds();
-	return {
-		paths,
-		fallback: false,
-	};
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
 	let postData = await getPageData(params.id);
 	let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 	postData.links = filteredLinks;
-	console.log(postData);
 	return {
 		props: {
 			postData,
