@@ -82,7 +82,7 @@ const handler = async (req, res) => {
 					},
 					{
 						pictureUrl: "/radiopublic.svg",
-						title: "RadioPublic",
+						title: "Radio Public",
 						position: "7",
 						url: "",
 						activated: false,

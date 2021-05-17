@@ -3,10 +3,10 @@ import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "nex
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { PageContext } from "../context/PageContext";
-import { Button, Row, Col, Table } from "react-bootstrap";
+import { Button, Row, Col, Table, Navbar } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
 	const [pageData, setPageData] = useContext(PageContext);
@@ -77,7 +77,8 @@ const AdminLinks = () => {
 						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
 						<Row>
 							<Col>
-								<h6>Your link&nbsp;
+								<h6>
+									Your link&nbsp;
 									<Link href={"https://fast-link.vercel.app/" + pageData.title}>{"https://fast-link.vercel.app/" + pageData.title}</Link>
 								</h6>
 							</Col>
@@ -131,9 +132,11 @@ const AdminLinks = () => {
 								</tbody>
 							</Table>
 						</Row>
-						<Button type="submit" block>
-							Save
-						</Button>
+						<Navbar sticky="top" className={styles.submitBtn}>
+							<Button type="submit" block>
+								Save
+							</Button>
+						</Navbar>
 					</Form>
 				</>
 			)}
