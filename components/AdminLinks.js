@@ -7,6 +7,7 @@ import { Button, Row, Col, Table, Navbar } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
 	const [pageData, setPageData] = useContext(PageContext);
@@ -35,12 +36,10 @@ const AdminLinks = () => {
 	);
 
 	const isRequired = (message) => (value) => (!!value ? undefined : message);
-
+	
 	async function submitForm(values) {
-		console.log("submiting:", values);
 		const ret = await uploadData(values); // add authUser.id for adding new links
 		setPageData(values);
-		console.log("uploaded", pageData);
 	}
 
 	return (
@@ -70,6 +69,13 @@ const AdminLinks = () => {
 							</Col>
 							<Col sm={8}>
 								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
+							</Col>
+						</Row>
+						<Row>
+							<Col>
+								<Button>
+									<Link href="/admin/embed">Embed to your website</Link>
+								</Button>
 							</Col>
 						</Row>
 						{/* <PictureUpload />
