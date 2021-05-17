@@ -6,7 +6,7 @@ import { PageContext } from "../context/PageContext";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
 import Image from "next/image";
-
+import Link from "next/link"
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
 	const [pageData, setPageData] = useContext(PageContext);
@@ -75,6 +75,13 @@ const AdminLinks = () => {
 						{/* <PictureUpload />
 						<Thumb file={values.file} />
 						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
+						<Row>
+							<Col>
+								<h6>Your link&nbsp;
+									<Link href={"https://fast-link.vercel.app/" + pageData.title}>{"https://fast-link.vercel.app/" + pageData.title}</Link>
+								</h6>
+							</Col>
+						</Row>
 						<Row>
 							<Col>
 								<h3>Links</h3>
