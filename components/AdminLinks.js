@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { PageContext } from "../context/PageContext";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
+import Image from "next/image";
 
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
@@ -48,18 +49,18 @@ const AdminLinks = () => {
 				<>
 					<Form>
 						<Row class="form-group" className={styles.formTitle}>
-							<Col>
-								<label htmlFor="title">Title</label>
+							<Col sm={4}>
+								<label htmlFor="title">Podcast title</label>
 							</Col>
-							<Col>
+							<Col sm={8}>
 								<Field class="form-control" name="title" placeholder="The page title" />
 							</Col>
 						</Row>
 						<Row class="form-group" className={styles.formTitle}>
-							<Col>
+							<Col sm={4}>
 								<label htmlFor="description">Description</label>
 							</Col>
-							<Col>
+							<Col sm={8}>
 								<Field class="form-control" name="description" placeholder="This is a description" type="text" />
 							</Col>
 						</Row>
@@ -88,7 +89,7 @@ const AdminLinks = () => {
 												{values.links.length > 0 &&
 													values.links.map((linkData, index) => (
 														<tr key={index}>
-															<td>{linkData.pictureUrl ? <img width="50px" src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}</td>
+															<td>{linkData.pictureUrl ? <Image width={50} height={50} src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}</td>
 															<td>
 																<h6>{linkData.title}</h6>
 															</td>
@@ -115,7 +116,9 @@ const AdminLinks = () => {
 								</tbody>
 							</Table>
 						</Row>
-						<Button type="submit">Save</Button>
+						<Button type="submit" block>
+							Save
+						</Button>
 					</Form>
 				</>
 			)}

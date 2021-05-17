@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
 import { Col, Container, Row } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Post({ postData }) {
 	return (
@@ -20,7 +21,7 @@ export default function Post({ postData }) {
 				{postData.pictureUrl ? (
 					<Row>
 						<Col className={styles.picture}>
-							<img src={postData.pictureUrl} alt={postData.title}></img>
+							<Image src={postData.pictureUrl} alt={postData.title}></Image>
 						</Col>
 					</Row>
 				) : (
@@ -56,7 +57,7 @@ export async function getStaticPaths() {
 	};
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
 	let postData = await getPageData(params.id);
 	let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 	postData.links = filteredLinks;

@@ -69,8 +69,8 @@ const PageBody = () => {
 	}, [fetchData, fetchPage]);
 
 	return (
-		<div>
-			<h2>{pageData.name}</h2>
+		<>
+			<h1>{pageData.name}</h1>
 			{pageData.title ? (
 				<>
 					<AdminLinks />
@@ -81,7 +81,7 @@ const PageBody = () => {
 					<AdminPageTitle />
 				</>
 			)}
-		</div>
+		</>
 	);
 };
 

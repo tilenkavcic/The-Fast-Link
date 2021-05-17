@@ -61,25 +61,28 @@ export default function AdminPageTitle() {
 	};
 
 	return (
-		<Row>
+		<>
 			{formData.name ? (
 				<Formik initialValues={formData} onSubmit={submitForm}>
 					{({ values, setFieldValue }) => (
-						<Row>
 							<Form>
 								<Row className={styles.form}>
-									<Col>
-										<label className={styles.label} htmlFor="title">Title</label>
+									<Col sm={4}>
+										<label className={styles.label} htmlFor="title">
+											Podcast title
+										</label>
 									</Col>
-									<Col>
+									<Col sm={8}>
 										<Field class="form-control" name="title" placeholder="The page title" />
 									</Col>
 								</Row>
 								<Row className={styles.form}>
-									<Col>
-										<label className={styles.label} htmlFor="description">Description</label>
+									<Col sm={4}>
+										<label className={styles.label} htmlFor="description">
+											Description
+										</label>
 									</Col>
-									<Col>
+									<Col sm={8}>
 										<Field class="form-control" name="description" placeholder="This is a description" type="text" />
 									</Col>
 								</Row>
@@ -96,16 +99,16 @@ export default function AdminPageTitle() {
 								{/* {values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"} */}
 								<Row>
 									<Col>
-										<Button type="submit">Save</Button>
+										<Button type="submit" block>Save</Button>
 									</Col>
 								</Row>
 							</Form>
-						</Row>
+
 					)}
 				</Formik>
 			) : (
 				""
 			)}
-		</Row>
+		</>
 	);
 }

@@ -8,7 +8,7 @@ import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { useRouter } from "next/router";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Layout from "../../components/Layout";
-import styles from "./index.module.scss"
+import styles from "./index.module.scss";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
@@ -158,7 +158,7 @@ const Page = () => {
 												{values.pages.length > 0 &&
 													values.pages.map((pageData, index) => (
 														<Row className={styles.row} key={index}>
-															<Col>
+															<Col sm={10}>
 																<Link
 																	className="pageBtn"
 																	href={{
@@ -166,12 +166,10 @@ const Page = () => {
 																		query: { pageIndx: index },
 																	}}
 																>
-																	<Button size="lg" block>
-																		{pageData.title}
-																	</Button>
+																	<Button block>{pageData.title}</Button>
 																</Link>
 															</Col>
-															<Col>
+															<Col sm={2}>
 																<Button
 																	className="secondary"
 																	onClick={() => {
@@ -182,7 +180,10 @@ const Page = () => {
 																		});
 																	}}
 																>
-																	X
+																	<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+																		<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#292929" />
+																		<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
+																	</svg>
 																</Button>
 															</Col>
 														</Row>
@@ -191,11 +192,13 @@ const Page = () => {
 										)}
 									</FieldArray>
 									<Row className={styles.row}>
-										<Col>
+										<Col sm={10}>
 											<Field className="form-control" id=" " name="newPage" placeholder="thepodcast" />
 										</Col>
-										<Col>
-											<Button type="submit">New</Button>
+										<Col sm={2}>
+											<Button type="submit" className={styles.newBtn}>
+												New
+											</Button>
 										</Col>
 									</Row>
 								</Form>
