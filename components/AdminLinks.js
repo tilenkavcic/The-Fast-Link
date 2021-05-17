@@ -50,18 +50,26 @@ const AdminLinks = () => {
 					<Form>
 						<Row class="form-group" className={styles.formTitle}>
 							<Col sm={4}>
-								<label htmlFor="title">Podcast title</label>
+								<Row>
+									<label htmlFor="title">Podcast title</label>
+								</Row>
 							</Col>
+
 							<Col sm={8}>
 								<Field class="form-control" name="title" placeholder="The page title" />
 							</Col>
 						</Row>
 						<Row class="form-group" className={styles.formTitle}>
 							<Col sm={4}>
-								<label htmlFor="description">Description</label>
+								<Row>
+									<label htmlFor="description">Short description</label>
+								</Row>
+								<Row>
+									<small>Try to keep it under 100 caracters</small>
+								</Row>
 							</Col>
 							<Col sm={8}>
-								<Field class="form-control" name="description" placeholder="This is a description" type="text" />
+								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
 							</Col>
 						</Row>
 						{/* <PictureUpload />

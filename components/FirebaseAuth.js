@@ -5,7 +5,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
-
+import { Row } from "react-bootstrap";
 // Note that next-firebase-auth inits Firebase for us,
 // so we don't need to.
 
@@ -19,11 +19,12 @@ const firebaseAuthConfig = {
 			requireDisplayName: false,
 		},
 	],
-	signInSuccessUrl: "/",
+	signInSuccessUrl: "/admin",
 	credentialHelper: "none",
 	callbacks: {
 		// https://github.com/firebase/firebaseui-web#signinsuccesswithauthresultauthresult-redirecturl
 		signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+			console.log("redirect", redirectUrl)
 			authResult.user.getIdTokenResult().then((tokenResult) => {
 				if (authResult.additionalUserInfo.isNewUser) {
 					const userId = authResult.user.uid;
@@ -59,7 +60,7 @@ const FirebaseAuth = () => {
 			setRenderAuth(true);
 		}
 	}, []);
-	return <div>{renderAuth ? <StyledFirebaseAuth uiConfig={firebaseAuthConfig} firebaseAuth={firebase.auth()} /> : null}</div>;
+	return <Row>{renderAuth ? <StyledFirebaseAuth uiConfig={firebaseAuthConfig} firebaseAuth={firebase.auth()} /> : null}</Row>;
 };
 
 export default FirebaseAuth;

@@ -44,7 +44,6 @@ export default function Post({ postData }) {
 					</Col>
 				</Row>
 			</Container>
-			{/* <Footer /> */}
 		</Layout>
 	);
 }

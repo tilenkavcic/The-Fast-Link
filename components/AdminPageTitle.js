@@ -65,28 +65,35 @@ export default function AdminPageTitle() {
 			{formData.name ? (
 				<Formik initialValues={formData} onSubmit={submitForm}>
 					{({ values, setFieldValue }) => (
-							<Form>
-								<Row className={styles.form}>
-									<Col sm={4}>
+						<Form>
+							<Row className={styles.form}>
+								<Col sm={4}>
+									<Row>
 										<label className={styles.label} htmlFor="title">
 											Podcast title
 										</label>
-									</Col>
-									<Col sm={8}>
-										<Field class="form-control" name="title" placeholder="The page title" />
-									</Col>
-								</Row>
-								<Row className={styles.form}>
-									<Col sm={4}>
+									</Row>
+								</Col>
+								<Col sm={8}>
+									<Field class="form-control" name="title" placeholder="The page title" />
+								</Col>
+							</Row>
+							<Row className={styles.form}>
+								<Col sm={4}>
+									<Row>
 										<label className={styles.label} htmlFor="description">
-											Description
+											Short description
 										</label>
-									</Col>
-									<Col sm={8}>
-										<Field class="form-control" name="description" placeholder="This is a description" type="text" />
-									</Col>
-								</Row>
-								{/* <label htmlFor="file">Picture upload</label>
+									</Row>
+									<Row>
+										<small>Try to keep it under 100 caracters</small>
+									</Row>
+								</Col>
+								<Col sm={8}>
+									<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
+								</Col>
+							</Row>
+							{/* <label htmlFor="file">Picture upload</label>
 							<input
 								id="file"
 								name="file"
@@ -96,14 +103,15 @@ export default function AdminPageTitle() {
 								}}
 								className="form-control"
 							/> */}
-								{/* {values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"} */}
-								<Row>
-									<Col>
-										<Button type="submit" block>Save</Button>
-									</Col>
-								</Row>
-							</Form>
-
+							{/* {values.pictureUrl ? <img src={values.pictureUrl} alt={values.title} /> : "no picture"} */}
+							<Row>
+								<Col>
+									<Button type="submit" block>
+										Save
+									</Button>
+								</Col>
+							</Row>
+						</Form>
 					)}
 				</Formik>
 			) : (

@@ -1,15 +1,11 @@
 import styles from "./footer.module.scss";
 import Link from "next/link";
+import { Row } from "react-bootstrap";
 
 export default function Footer() {
-  return (
-    <div className={styles.wrapper}>
-      <Link href="/">
-        <a>
-          <div className={styles.logo}></div>
-        </a>
-      </Link>
-      <span class={styles.srOnly}>Provided by The Fast Link</span>
-    </div>
-  );
+	return (
+		<Row className={styles.wrapper}>
+			<Link href="/">The Fast Link</Link>
+		</Row>
+	);
 }

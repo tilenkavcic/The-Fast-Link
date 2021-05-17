@@ -13,6 +13,10 @@
 	border-radius: 40px !important;
 	box-shadow: none !important;
 }
+.firebaseui-card-content {
+	border-width: 10px;
+	border-color: #fff !important;
+}
 .mdl-textfield--floating-label .mdl-textfield__label {
 	color: #fff !important;
 }
@@ -61,7 +65,8 @@
 }
 
 .firebaseui-form-actions .mdl-button--raised.mdl-button--colored.firebaseui-button {
-	background: rgba(0, 0, 0, 0.1);
+	background: $primary;
+	color: $background;
 }
 
 .firebaseui-input {

@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { Container, Row, Col } from "react-bootstrap";
 import styles from "./index.module.scss";
 import Layout from "../components/Layout";
+import Footer from "../components/Footer";
 
 const Home = () => {
 	const AuthUser = useAuthUser();
@@ -38,6 +39,7 @@ const Home = () => {
 						</Col>
 					</Row>
 				</Container>
+					<Footer />
 			</Layout>
 		</>
 	);

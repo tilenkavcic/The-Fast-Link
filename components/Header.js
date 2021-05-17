@@ -15,7 +15,7 @@ const Header = ({ email, signOut, auth }) => (
 			<Navbar.Collapse className="justify-content-end">
 				{email ? (
 					<>
-						<Navbar.Text className={styles.navbarText}>{email}</Navbar.Text>
+						{/* <Navbar.Text className={styles.navbarText}>{email}</Navbar.Text> */}
 						<Button
 							className={styles.button}
 							variant="primary"

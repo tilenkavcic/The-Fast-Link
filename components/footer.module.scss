@@ -1,32 +1,10 @@
 @import "../styles/variables.scss";
 
-
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-
-  .logo {
-    height: 44px;
-    width: 197px;
-    border: none;
-    background: url("/images/logoFooter.svg") no-repeat;
-    cursor: pointer;
-
-    -webkit-transition: background 0.2s ease-out;
-    transition: background 0.2s ease-out;
-
-    &:hover,
-    &:focus {
-      background: url("/images/logoFooterHover.svg") no-repeat;
-    }
-  }
-
-  .srOnly {
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-  }
+	margin: 2rem 0 0 0;
+	padding: 2rem 0 1rem 0;
+	justify-content: center;
+	font-weight: 600;
+	// background-color: rgb(37, 37, 37);
+  bottom: 0;
 }

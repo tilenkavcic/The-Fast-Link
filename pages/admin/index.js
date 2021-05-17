@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import styles from "./index.module.scss";
+import Footer from "../../components/Footer";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
@@ -209,6 +210,7 @@ const Page = () => {
 					"loading"
 				)}
 			</Container>
+				 <Footer/>
 		</Layout>
 	);
 };

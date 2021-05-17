@@ -1,31 +1,31 @@
 import React from "react";
 import { withAuthUser, AuthAction } from "next-firebase-auth";
 import FirebaseAuth from "../components/FirebaseAuth";
-import Header from "../components/Header"
+import Header from "../components/Header";
+import { Container, Row, Col } from "react-bootstrap";
 
 const styles = {
 	content: {
-		padding: `8px 32px`,
+		justifyContent: "center",
 	},
 	textContainer: {
-		display: "flex",
-		justifyContent: "center",
-		margin: 16,
+		textAlign: "center",
 	},
 };
 
 const Auth = () => (
 	<>
 		<Header auth="true" />
-		<div style={styles.content}>
-			<h3>Sign in / Register</h3>
-			<div style={styles.textContainer}>
-				<p>Sign in or register</p>
-			</div>
-			<div>
-				<FirebaseAuth />
-			</div>
-		</div>
+		<Container>
+				<Row style={styles.content}>
+					<Col >
+					<h1 style={styles.textContainer}>Sign in / Register</h1>
+					</Col>
+				</Row>
+				<Row style={styles.content}>
+					<FirebaseAuth />
+				</Row>
+		</Container>
 	</>
 );
 

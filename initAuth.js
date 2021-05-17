@@ -30,7 +30,7 @@ const initAuth = () => {
 			httpOnly: true,
 			maxAge: 12 * 60 * 60 * 24 * 1000, // twelve days
 			overwrite: true,
-			path: "/admin",
+			path: "/",
 			sameSite: "strict",
 			secure: true, // set this to false in local (non-HTTPS) development
 			signed: true,
