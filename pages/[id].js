@@ -57,7 +57,7 @@ export async function getStaticPaths() {
 	};
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
 	let postData = await getPageData(params.id);
 	let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 	postData.links = filteredLinks;
