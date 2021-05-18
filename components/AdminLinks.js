@@ -76,7 +76,7 @@ const AdminLinks = () => {
 								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
 							</Col>
 						</Row>
-						
+
 						<Row>
 							<Col>
 								<h6>
@@ -98,7 +98,6 @@ const AdminLinks = () => {
 						{/* <PictureUpload />
 						<Thumb file={values.file} />
 						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
-					
 
 						<Row>
 							<Col>

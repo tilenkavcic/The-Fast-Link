@@ -206,10 +206,16 @@ const Page = () => {
 						</Formik>
 					</Row>
 				) : (
-					"loading"
+					<div className={styles.loading}>
+						<div className={styles.dot}></div>
+						<div className={styles.dot}></div>
+						<div className={styles.dot}></div>
+						<div className={styles.dot}></div>
+						<div className={styles.dot}></div>
+					</div>
 				)}
 			</Container>
-				 <Footer/>
+			<Footer />
 		</Layout>
 	);
 };

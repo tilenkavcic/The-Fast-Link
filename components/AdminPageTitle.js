@@ -108,7 +108,13 @@ export default function AdminPageTitle() {
 					)}
 				</Formik>
 			) : (
-				""
+				<div className={styles.loading}>
+					<div className={styles.dot}></div>
+					<div className={styles.dot}></div>
+					<div className={styles.dot}></div>
+					<div className={styles.dot}></div>
+					<div className={styles.dot}></div>
+				</div>
 			)}
 		</>
 	);
