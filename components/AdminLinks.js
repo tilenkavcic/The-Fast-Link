@@ -88,9 +88,11 @@ const AdminLinks = () => {
 
 						<Row>
 							<Col>
-								<Button className={styles.embedBtn} block>
-									<Link href="/admin/embed">Embed to your website</Link>
-								</Button>
+								<Link href="/admin/embed">
+									<Button className={styles.embedBtn} block>
+										Embed to your website
+									</Button>
+								</Link>
 							</Col>
 						</Row>
 						{/* <PictureUpload />
