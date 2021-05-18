@@ -51,6 +51,9 @@ const Page = () => {
 			});
 			const respData = await response.json();
 			if (!response.ok) {
+				if (response.status == 403) {
+					alert("This podcast name already exists");
+				}
 				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
 				return null;
 			}
@@ -142,12 +145,14 @@ const Page = () => {
 							initialValues={userData}
 							onSubmit={async (pageName) => {
 								let newPageStr = pageName.newPage;
-								newPageStr = newPageStr.replaceAll(" ", "-");
+								newPageStr = newPageStr.replaceAll(" ", "-").replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "").toLowerCase();
 								newPageStr = encodeURIComponent(newPageStr);
 								const newArr = userData.pages.concat([{ title: newPageStr }]);
 								const newUser = { ...userData, pages: newArr };
-								await uploadData(newUser);
-								router.push(`/admin/${pageName.pages.length}`);
+								let ret = await uploadData(newUser);
+								if (ret != null) {
+									router.push(`/admin/${pageName.pages.length}`);
+								} 
 							}}
 						>
 							{({ values }) => (
@@ -193,7 +198,7 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="thepodcast" />
+											<Field className="form-control" id=" " name="newPage" placeholder="your-podcat" />
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn}>
