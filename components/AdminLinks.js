@@ -3,7 +3,7 @@ import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "nex
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { PageContext } from "../context/PageContext";
-import { Button, Row, Col, Table, Navbar } from "react-bootstrap";
+import { Alert, Button, Row, Col, Table, Navbar } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,10 +36,15 @@ const AdminLinks = () => {
 	);
 
 	const isRequired = (message) => (value) => (!!value ? undefined : message);
-	
+
+	const [submitAlert, setSubmitalert] = useState(false);
 	async function submitForm(values) {
 		const ret = await uploadData(values); // add authUser.id for adding new links
 		setPageData(values);
+		setSubmitalert(true);
+		setTimeout(() => {
+			setSubmitalert(false);
+		}, 3000);
 	}
 
 	return (
@@ -71,16 +76,7 @@ const AdminLinks = () => {
 								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
 							</Col>
 						</Row>
-						<Row>
-							<Col>
-								<Button>
-									<Link href="/admin/embed">Embed to your website</Link>
-								</Button>
-							</Col>
-						</Row>
-						{/* <PictureUpload />
-						<Thumb file={values.file} />
-						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
+						
 						<Row>
 							<Col>
 								<h6>
@@ -89,13 +85,26 @@ const AdminLinks = () => {
 								</h6>
 							</Col>
 						</Row>
+
+						<Row>
+							<Col>
+								<Button className={styles.embedBtn} block>
+									<Link href="/admin/embed">Embed to your website</Link>
+								</Button>
+							</Col>
+						</Row>
+						{/* <PictureUpload />
+						<Thumb file={values.file} />
+						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
+					
+
 						<Row>
 							<Col>
 								<h3>Links</h3>
 							</Col>
 						</Row>
 						<Row>
-							<Table className={styles.table}>
+							<Table className={styles.table} borderless>
 								<thead>
 									<tr>
 										<th>Picture</th>
@@ -140,6 +149,7 @@ const AdminLinks = () => {
 						</Row>
 						<Navbar sticky="top" className={styles.submitBtn}>
 							<Button type="submit" block>
+								{submitAlert ? <Alert variant="primary">Successfully submited</Alert> : ""}
 								Save
 							</Button>
 						</Navbar>
