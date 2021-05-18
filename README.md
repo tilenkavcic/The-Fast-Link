@@ -9,7 +9,7 @@ https://www.pluralsight.com/guides/generating-dynamic-forms-from-json-in-react
 https://formik.org/docs/examples/field-arrays
 
 ## TODO
-- **Reload SSR when adding/updating a page (recompile on server)**
+https://stackoverflow.com/questions/3064199/transparent-iframe-body
 
 - change img tags into nextjs images
 
