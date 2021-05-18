@@ -69,7 +69,7 @@ const AdminLinks = () => {
 									<label htmlFor="description">Short description</label>
 								</Row>
 								<Row>
-									<small>Try to keep it under 100 caracters</small>
+									<small>Try to keep it under 100 characters</small>
 								</Row>
 							</Col>
 							<Col sm={8}>
@@ -150,7 +150,7 @@ const AdminLinks = () => {
 						</Row>
 						<Navbar sticky="top" className={styles.submitBtn}>
 							<Button type="submit" block>
-								{submitAlert ? <Alert variant="primary">Successfully submited</Alert> : ""}
+								{submitAlert ? <Alert variant="primary">Successfully submitted</Alert> : ""}
 								Save
 							</Button>
 						</Navbar>

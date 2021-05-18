@@ -79,7 +79,7 @@ export default function AdminPageTitle() {
 										</label>
 									</Row>
 									<Row>
-										<small>Try to keep it under 100 caracters</small>
+										<small>Try to keep it under 100 characters</small>
 									</Row>
 								</Col>
 								<Col sm={8}>

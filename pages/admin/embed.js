@@ -33,7 +33,7 @@ const Page = () => {
 	// }, []);
 
 	return (
-		<Layout title="Admin">
+		<Layout title="The Fast Link | Embed" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 			<Container>
 				<Row>
