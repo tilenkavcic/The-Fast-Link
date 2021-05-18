@@ -22,7 +22,6 @@ const handler = async (req, res) => {
 		try {
 			const userId = req.headers.uid; 
 			const sentData = req.body;
-			console.log("send", sentData);
 			let ret = await firebase.firestore().collection("users").doc(userId).set(sentData);
 			res.status(200).json({ resp: "success" });
 		} catch (e) {

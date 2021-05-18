@@ -56,7 +56,6 @@ const handler = async (req, res) => {
 				title: submittedTile,
 				description: submittedDescription,
 			};
-			console.log("updated", updatedData, "name", pageName)
 			const ress = await firebase.firestore().collection("homepage").doc(pageName).set(updatedData, { merge: true });
 			res.status(200).json({ resp: 'success' });
 		} catch (e) {

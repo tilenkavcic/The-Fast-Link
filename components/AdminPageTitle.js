@@ -11,13 +11,10 @@ export default function AdminPageTitle() {
 
 	const [pageData, setPageData] = useContext(PageContext);
 
-	console.log(pageData);
 	const uploadData = useCallback(
 		async (data) => {
 			const token = await AuthUser.getIdToken();
 			const endpoint = getAbsoluteURL("/api/editPageHeading");
-			console.log("name", pageData.name);
-			console.log("name2", data);
 
 			const response = await fetch(endpoint, {
 				method: "POST",
@@ -41,16 +38,12 @@ export default function AdminPageTitle() {
 	);
 
 	async function submitForm(values) {
-		console.log("submiting:", values);
 		const ret = await uploadData(values);
 		setPageData((data) => ({
 			...data,
 			title: values.title,
 			description: values.description,
 		}));
-		console.log(ret);
-		console.log();
-		console.log("Pagedata", pageData);
 		window.location.reload();
 	}
 

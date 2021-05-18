@@ -24,7 +24,6 @@ const firebaseAuthConfig = {
 	callbacks: {
 		// https://github.com/firebase/firebaseui-web#signinsuccesswithauthresultauthresult-redirecturl
 		signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-			console.log("redirect", redirectUrl)
 			authResult.user.getIdTokenResult().then((tokenResult) => {
 				if (authResult.additionalUserInfo.isNewUser) {
 					const userId = authResult.user.uid;
@@ -38,7 +37,7 @@ const firebaseAuthConfig = {
 							return false;
 						})
 						.catch((e) => {
-							console.log(e);
+							console.error(e);
 							return false;
 						});
 				} else {

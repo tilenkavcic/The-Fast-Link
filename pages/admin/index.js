@@ -116,7 +116,6 @@ const Page = () => {
 	);
 
 	async function removePage(vals, name) {
-		console.log("remove", vals);
 		uploadUserData(vals);
 		return await removePageCall(name);
 	}

@@ -21,7 +21,6 @@ const handler = async (req, res) => {
 		// Upload data to firestore
 		try {
 			const uid = req.headers.uid;
-			console.log(req.body);
 			const sentData = req.body;
 			const ret1 = await firebase.firestore().collection("users").doc(uid).set(sentData);
 			const newPageName = sentData.pages[sentData.pages.length - 1].title;

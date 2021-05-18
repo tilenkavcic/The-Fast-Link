@@ -22,10 +22,8 @@ const handler = async (req, res) => {
 		try {
 			const uid = req.headers.uid;
 			const pageName = req.body.title;
-      
-			console.log("name", pageName)
 			const ress = await firebase.firestore().collection("homepage").doc(pageName).delete();
-			res.status(200).json({ resp: 'success' });
+			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);

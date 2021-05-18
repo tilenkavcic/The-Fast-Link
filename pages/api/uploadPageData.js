@@ -22,8 +22,6 @@ const handler = async (req, res) => {
 		try {
 			const pageName = req.headers.page;
 			const sentData = req.body;
-			console.log("send", sentData)
-			console.log("page", pageName)
 			let ret = await firebase.firestore().collection("homepage").doc(pageName).set(sentData);
 			res.status(200).json({ resp: 'success' });
 		} catch (e) {
