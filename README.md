@@ -12,6 +12,7 @@ https://formik.org/docs/examples/field-arrays
 https://stackoverflow.com/questions/3064199/transparent-iframe-body
 
 - change img tags into nextjs images
+- fnicky remove page
 
 TODO: sort array by position always
 
