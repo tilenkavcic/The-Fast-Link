@@ -49,7 +49,14 @@ export default function Post({ postData }) {
 }
 
 export async function getServerSideProps({ params }) {
-	let postData = await getPageData(params.id);
+	if (params.id == "json") throw new Error("error");
+
+	try {
+		let postData = await getPageData(params.id);
+	} catch (e) {
+		// console.log(e)
+		throw new Error("error");
+	}
 	let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 	postData.links = filteredLinks;
 	return {

@@ -17,7 +17,6 @@ const handler = async (req, res) => {
 		// verify login
 		try {
 			const authUser = await verifyIdToken(token);
-			console.log(authUser);
 			if (authUser.id != uid) {
 				throw "Page outside of user scope";
 			}
@@ -32,7 +31,6 @@ const handler = async (req, res) => {
 			ret0.get()
 				.then(async (doc) => {
 					if (doc.exists) {
-						console.log("Document exists", doc.data());
 						return res.status(403).json({ error: "Document exists" });
 					} else {
 						const ret1 = await firebase.firestore().collection("users").doc(uid).set(sentData);

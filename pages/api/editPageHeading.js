@@ -15,7 +15,6 @@ const handler = async (req, res) => {
 		// verify login
 		try {
 			const authUser = await verifyIdToken(token);
-			console.log(authUser);
 			// TODO check if this page is of user
 			if (authUser.id != uid) {
 				throw "Page outside of user scope";
