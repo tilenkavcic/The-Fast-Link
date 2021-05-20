@@ -1,10 +1,9 @@
 /* globals window */
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Row } from "react-bootstrap";
 // Note that next-firebase-auth inits Firebase for us,
 // so we don't need to.

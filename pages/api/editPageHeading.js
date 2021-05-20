@@ -1,6 +1,6 @@
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
-import firebase from "../../firebase/clientApp";
+import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
 
 initAuth();
@@ -10,17 +10,22 @@ const handler = async (req, res) => {
 		return res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
+	const uid = req.headers.uid;
 	if (token != "unauthenticated") {
 		// verify login
 		try {
-			await verifyIdToken(token);
+			const authUser = await verifyIdToken(token);
+			console.log(authUser);
+			// TODO check if this page is of user
+			if (authUser.id != uid) {
+				throw "Page outside of user scope";
+			}
 		} catch (e) {
 			console.error(e);
 			res.status(403).json({ error: "Not authorized" });
 		}
 		// Upload data to firestore
 		try {
-			const uid = req.headers.uid;
 			const pageName = req.headers.page;
 			const submittedTile = req.headers.submittedtile;
 			const submittedDescription = req.headers.submiteddescription;
