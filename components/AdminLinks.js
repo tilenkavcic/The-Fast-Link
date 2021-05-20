@@ -81,7 +81,7 @@ const AdminLinks = () => {
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"https://fast-link.vercel.app/" + pageData.name}>{"https://fast-link.vercel.app/" + pageData.name}</Link>
+									<Link href={"https://fast-link.vercel.app/" + pageData.name}><a target="_blank">{"https://fast-link.vercel.app/" + pageData.name}</a></Link>
 								</h6>
 							</Col>
 						</Row>
