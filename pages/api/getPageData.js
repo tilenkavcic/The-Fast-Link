@@ -1,6 +1,6 @@
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
-import firebase from "../../firebase/clientApp";
+import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
 
 initAuth();
@@ -13,7 +13,8 @@ const handler = async (req, res) => {
 	if (token != "unauthenticated") {
 		// verify login
 		try {
-			await verifyIdToken(token);
+			const authUser = await verifyIdToken(token);
+			// check if user can edit this page
 		} catch (e) {
 			console.error(e);
 			res.status(403).json({ error: "Not authorized" });
