@@ -27,7 +27,6 @@ const handler = async (req, res) => {
 		try {
 			const ref = firebase.firestore().collection("users").doc(uid);
 			const userData = await ref.get();
-			console.log("userData", userData);
 
 			res.status(200).json(userData.data());
 		} catch (e) {
