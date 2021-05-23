@@ -15,7 +15,7 @@ const Page = () => {
 	const pageName = router.query.name;
 	const iframeTag = `<iframe
 	width="100%"
-	height="700px"
+	height="500px"
 	src="https://thefast.link/${pageName}/embed"
 	allowtransparency="true"
 	frameborder="0" allowfullscreen>
@@ -71,13 +71,13 @@ const Page = () => {
 				<iframe width="100%" height="400" src="https://fast-link.vercel.app/neki" frameBorder="0" allowFullScreen></iframe>
 			</div>
 			<div className={inStyle.fastOverlay}></div> */}
-<iframe
+{/* <iframe
 	width="100%"
-	height="700px"
+	height="500px"
 	src="http://localhost:3000/podkast/embed"
 	allowtransparency="true"
 	frameborder="0" allowfullscreen>
-</iframe>
+</iframe> */}
 			<Footer />
 		</Layout>
 	);
