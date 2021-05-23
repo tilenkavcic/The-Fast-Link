@@ -9,47 +9,28 @@ import Image from "next/image";
 export default function Post({ postData }) {
 	return (
 		<>
-			{/* <style jsx>{`
-				.body {
-					background-color: rgba(255, 255, 255, 0);
+			<style jsx global>{`
+				main, html, body {
+					background-color: rgb(255,255,255,0);
 				}
-			`}</style> */}
+			`}</style>
 
 			<Layout title={postData.title} className={styles.layout}>
-				<Container>
-					<Row>
-						<Col>
-							<h1 className={styles.title}>{postData.title}</h1>
-						</Col>
-					</Row>
-					<Row>
-						<Col>{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}</Col>
-					</Row>
-					{postData.pictureUrl ? (
-						<Row>
-							<Col className={styles.picture}>
-								<Image src={postData.pictureUrl} alt={postData.title}></Image>
-							</Col>
-						</Row>
-					) : (
-						""
-					)}
-				</Container>
-
 				<Row className={styles.links}>
 					{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
 						<React.Fragment key={index}>
-							<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} />
+								<a href={url} className={styles.rectangle}>
+								<h1 className={styles.title}>{title}</h1>
+								<div className={styles.pictureContainer}>{pictureUrl != "" ? <img src={pictureUrl} alt={title} className={styles.picture} /> : ""}</div>
+							</a>
+
+							{/* <MainLink title={title} url={url} imgUrl={pictureUrl} position={position} /> */}
 						</React.Fragment>
 					))}
 				</Row>
-				<Container>
-					<Row>
-						<Col className={styles.bottomLogo}>
-							<Link href="/">The Fast Link</Link>
-						</Col>
-					</Row>
-				</Container>
+				<Row className={styles.bottomLogo}>
+					<Link href="/">The Fast Link</Link>
+				</Row>
 			</Layout>
 		</>
 	);

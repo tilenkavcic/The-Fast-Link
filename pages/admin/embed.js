@@ -15,7 +15,7 @@ const Page = () => {
 	const pageName = router.query.name;
 	const iframeTag = `<iframe
 	width="100%"
-	height="1600px"
+	height="700px"
 	src="https://thefast.link/${pageName}/embed"
 	allowtransparency="true"
 	frameborder="0" allowfullscreen>
@@ -73,7 +73,7 @@ const Page = () => {
 			<div className={inStyle.fastOverlay}></div> */}
 <iframe
 	width="100%"
-	height="1600px"
+	height="700px"
 	src="http://localhost:3000/podkast/embed"
 	allowtransparency="true"
 	frameborder="0" allowfullscreen>
