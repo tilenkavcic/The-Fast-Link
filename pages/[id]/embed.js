@@ -21,7 +21,7 @@ export default function Post({ postData }) {
 						<React.Fragment key={index}>
 								<a href={url} className={styles.rectangle}>
 								<h1 className={styles.title}>{title}</h1>
-								<div className={styles.pictureContainer}>{pictureUrl != "" ? <img src={pictureUrl} alt={title} className={styles.picture} /> : ""}</div>
+								<div className={styles.pictureContainer}>{pictureUrl != "" ? <img src={pictureUrl} alt={title} className={styles.pictureInside} /> : ""}</div>
 							</a>
 
 							{/* <MainLink title={title} url={url} imgUrl={pictureUrl} position={position} /> */}
