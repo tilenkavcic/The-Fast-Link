@@ -81,14 +81,14 @@ const AdminLinks = () => {
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"https://fast-link.vercel.app/" + pageData.name}><a target="_blank">{"https://fast-link.vercel.app/" + pageData.name}</a></Link>
+									<Link href={"https://thefast.link/" + encodeURIComponent(pageData.name)}><a target="_blank">{"https://thefast.link/" + pageData.name}</a></Link>
 								</h6>
 							</Col>
 						</Row>
 
 						<Row>
 							<Col>
-								<Link href="/admin/embed">
+								<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
 									<Button className={styles.embedBtn} block>
 										Embed to your website
 									</Button>
