@@ -12,13 +12,15 @@ import Footer from "../../components/Footer";
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
+	const pageName = router.query.name;
 	const iframeTag = `<iframe
 	width="100%"
-	height="1600px"
-	src="https://www.thefast.link/[your-podcast-name]"
+	height="500px"
+	src="https://thefast.link/${pageName}/embed"
+	allowtransparency="true"
 	frameborder="0" allowfullscreen>
 </iframe>`;
-
+	
 	// function popup(mylink, windowname) {
 	// 	console.log("asd");
 	// 	if (!window.focus) return true;
@@ -47,6 +49,7 @@ const Page = () => {
 				<Row>
 					<Col>
 						<pre className={styles.htmltxt}>{iframeTag}</pre>
+						You can increase the height so all the links fit
 					</Col>
 				</Row>
 				{/* <Row>
@@ -68,7 +71,13 @@ const Page = () => {
 				<iframe width="100%" height="400" src="https://fast-link.vercel.app/neki" frameBorder="0" allowFullScreen></iframe>
 			</div>
 			<div className={inStyle.fastOverlay}></div> */}
-
+{/* <iframe
+	width="100%"
+	height="500px"
+	src="http://localhost:3000/podkast/embed"
+	allowtransparency="true"
+	frameborder="0" allowfullscreen>
+</iframe> */}
 			<Footer />
 		</Layout>
 	);

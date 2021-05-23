@@ -49,19 +49,19 @@ export default function Post({ postData }) {
 }
 
 export async function getServerSideProps({ params }) {
-	if (params.id == "json") throw new Error("error");
+	// if (params.id == "json") throw new Error("error");
 
 	try {
 		let postData = await getPageData(params.id);
+		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
+		postData.links = filteredLinks;
+		return {
+			props: {
+				postData,
+			},
+		};
 	} catch (e) {
-		// console.log(e)
+		console.log(e)
 		throw new Error("error");
 	}
-	let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
-	postData.links = filteredLinks;
-	return {
-		props: {
-			postData,
-		},
-	};
 }
