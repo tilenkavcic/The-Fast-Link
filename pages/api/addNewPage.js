@@ -43,6 +43,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/apple-podcasts.svg",
 									title: "Apple Podcasts",
+									name: "apple-podcasts",
 									position: "0",
 									url: "",
 									activated: true,
@@ -50,6 +51,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/Spotify.svg",
 									title: "Spotify",
+									name: "spotify",
 									position: "1",
 									url: "",
 									activated: true,
@@ -57,6 +59,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/google-podcasts.svg",
 									title: "Google Podcasts",
+									name: "googlepodcasts",
 									position: "2",
 									url: "",
 									activated: true,
@@ -64,6 +67,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/pocket-casts.svg",
 									title: "Pocket Casts",
+									name: "pocket-casts",
 									position: "3",
 									url: "",
 									activated: true,
@@ -71,6 +75,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/rss.svg",
 									title: "RSS",
+									name: "rss",
 									position: "4",
 									url: "",
 									activated: true,
@@ -78,6 +83,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/overcast.svg",
 									title: "Overcast",
+									name: "overcast",
 									position: "5",
 									url: "",
 									activated: true,
@@ -85,6 +91,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/podcast-addict.svg",
 									title: "Podcast Addict",
+									name: "podcast-addict",
 									position: "6",
 									url: "",
 									activated: true,
@@ -92,6 +99,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/radiopublic.svg",
 									title: "RadioPublic",
+									name: "radiopublic",
 									position: "7",
 									url: "",
 									activated: true,
@@ -99,6 +107,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/podchaser.svg",
 									title: "Podchaser",
+									name: "podchaser",
 									position: "8",
 									url: "",
 									activated: true,
@@ -106,6 +115,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/castbox.svg",
 									title: "Castbox",
+									name: "castbox",
 									position: "9",
 									url: "",
 									activated: true,
@@ -113,6 +123,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/breaker.svg",
 									title: "Breaker",
+									name: "breaker",
 									position: "10",
 									url: "",
 									activated: true,
@@ -120,6 +131,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/castro.svg",
 									title: "Castro",
+									name: "castro",
 									position: "11",
 									url: "",
 									activated: true,
@@ -127,6 +139,7 @@ const handler = async (req, res) => {
 								{
 									pictureUrl: "/stitcher.svg",
 									title: "Stitcher",
+									name: "stitcher",
 									position: "12",
 									url: "",
 									activated: true,

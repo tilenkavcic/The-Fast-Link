@@ -30,9 +30,9 @@ export default function Post({ postData }) {
 			</Container>
 
 			<Row className={styles.links}>
-				{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
+				{postData.links.map(({ title, url, pictureUrl, position, activated, name }, index) => (
 					<React.Fragment key={index}>
-						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} />
+						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} pageName={postData.name} linkName={name} />
 						{index % 2 != 0 && index != postData.links.length - 1 ? <hr className={styles.hr} /> : ""}
 					</React.Fragment>
 				))}
