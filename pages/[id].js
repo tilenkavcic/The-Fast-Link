@@ -1,4 +1,4 @@
-import { getPageData } from "../lib/pages";
+import { getPageData, logRedirect } from "../lib/pages";
 import styles from "./id.module.scss";
 import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
@@ -55,6 +55,7 @@ export async function getServerSideProps({ params }) {
 		let postData = await getPageData(params.id);
 		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 		postData.links = filteredLinks;
+		let res = await logRedirect(params.id);
 		return {
 			props: {
 				postData,

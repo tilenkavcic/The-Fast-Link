@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 export default function Post(props) {
 	const router = useRouter();
 	const pageName = router.query.url;
-	console.log("routing to", pageName)
+	console.log("routing to", pageName);
 	useEffect(() => {
 		window.location.href = pageName;
 	}, []);
@@ -15,7 +15,7 @@ export default function Post(props) {
 
 export async function getServerSideProps({ params }) {
 	try {
-		let postData = await logRedirect(params);
+		let postData = await logRedirect(params.id, params.linkId);
 		return {
 			props: {},
 		};
