@@ -9,7 +9,7 @@ import { PageContext } from "../context/PageContext";
 const PageBody = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
-	const { pageIndx } = router.query;
+	const { pageName } = router.query;
 
 	const [userData, setUserData] = useState({});
 	const [pageData, setPageData] = useContext(PageContext);
@@ -44,7 +44,7 @@ const PageBody = () => {
 				headers: {
 					Authorization: token,
 					uid: AuthUser.id,
-					page: JSON.stringify(thisPage),
+					page: thisPage,
 				},
 			});
 			const data = await response.json();
@@ -61,8 +61,8 @@ const PageBody = () => {
 		const fetchUserPageData = async () => {
 			const data = await fetchData("/api/getUserData");
 			setUserData(data);
-			const thisPage = data.pages[pageIndx];
-			const ret = await fetchPage("/api/getPageData", thisPage);
+			console.log(pageName)
+			const ret = await fetchPage("/api/getPageData", pageName);
 			setPageData(ret);
 		};
 		fetchUserPageData();

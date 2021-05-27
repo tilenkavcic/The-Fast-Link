@@ -168,8 +168,8 @@ const Page = () => {
 																<Link
 																	className="pageBtn"
 																	href={{
-																		pathname: "/admin/[pageIndx]",
-																		query: { pageIndx: index },
+																		pathname: "/admin/[pageName]",
+																		query: { pageName: pageData.title },
 																	}}
 																>
 																	<Button block>{pageData.title}</Button>

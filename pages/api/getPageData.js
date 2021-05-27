@@ -21,8 +21,8 @@ const handler = async (req, res) => {
 		}
 		// Get data from firestore
 		try {
-			const page = JSON.parse(req.headers.page);
-			let pageData = await firebase.firestore().collection("homepage").doc(page.title).get();
+			const pageName = req.headers.page;
+			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
 			pageData = pageData.data();
 			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
 			
