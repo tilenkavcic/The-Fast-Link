@@ -76,16 +76,19 @@ const AdminLinks = () => {
 								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
 							</Col>
 						</Row>
-
+						{/* <PictureUpload />
+						<Thumb file={values.file} />
+						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
 						<Row>
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"https://thefast.link/" + encodeURIComponent(pageData.name)}><a target="_blank">{"https://thefast.link/" + pageData.name}</a></Link>
+									<Link href={"https://thefast.link/" + encodeURIComponent(pageData.name)}>
+										<a target="_blank">{"https://thefast.link/" + pageData.name}</a>
+									</Link>
 								</h6>
 							</Col>
 						</Row>
-
 						<Row>
 							<Col>
 								<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
@@ -95,9 +98,26 @@ const AdminLinks = () => {
 								</Link>
 							</Col>
 						</Row>
-						{/* <PictureUpload />
-						<Thumb file={values.file} />
-						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
+						<Row className={styles.row}>
+							<Col>
+								<Link href={ "/admin/" + pageData.name + "/review"}>
+									<Button block>Review</Button>
+								</Link>
+							</Col>
+							<Col>
+								<Link href={"/admin/" + pageData.name + "/episodes"}>
+									<Button block>Episodes</Button>
+								</Link>
+							</Col>
+						</Row>
+						<Row className={styles.row}>
+							<Col>
+								<Link href={"/admin/" + pageData.name + "/analytics"}>
+									<Button block>Analytics
+									</Button >
+								</Link>
+							</Col>
+						</Row>
 
 						<Row>
 							<Col>

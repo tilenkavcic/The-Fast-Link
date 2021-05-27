@@ -122,6 +122,7 @@ const Page = () => {
 		uploadUserData(vals);
 		return await removePageCall(name);
 	}
+	const [submitType, setSubmitType] = useState("");
 
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
@@ -140,7 +141,7 @@ const Page = () => {
 				</Row>
 
 				{userData.pages ? (
-					<Row className={styles.row}>
+					<>
 						<Formik
 							initialValues={userData}
 							onSubmit={async (pageName) => {
@@ -152,7 +153,7 @@ const Page = () => {
 								let ret = await uploadData(newUser);
 								if (ret != null) {
 									router.push(`/admin/${pageName.pages.length}`);
-								} 
+								}
 							}}
 						>
 							{({ values }) => (
@@ -184,6 +185,7 @@ const Page = () => {
 																			remove(index);
 																		});
 																	}}
+																	block
 																>
 																	<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
 																		<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#292929" />
@@ -201,15 +203,16 @@ const Page = () => {
 											<Field className="form-control" id=" " name="newPage" placeholder="your-podcat" />
 										</Col>
 										<Col sm={2}>
-											<Button type="submit" className={styles.newBtn}>
+											<Button type="submit" className={styles.newBtn} block>
 												New
 											</Button>
 										</Col>
 									</Row>
+
 								</Form>
 							)}
 						</Formik>
-					</Row>
+					</>
 				) : (
 					<div className={styles.loading}>
 						<div className={styles.dot}></div>

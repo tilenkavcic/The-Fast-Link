@@ -1,6 +1,8 @@
 @import "../styles/variables";
 
 .embedBtn {
+  background-color: $primary;
+  border-color: $primary;
   color: $background;
   margin: 10px 0;
   & a {
