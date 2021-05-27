@@ -15,16 +15,13 @@ const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
 
-	const fetchData = useCallback(
-		async (endpointUrl) => {
-			const token = await AuthUser.getIdToken();
+	const callApiEndpoint = useCallback(
+		async ({ endpointUrl, headers, body = undefined, method }) => {
 			const endpoint = getAbsoluteURL(endpointUrl);
 			const response = await fetch(endpoint, {
-				method: "GET",
-				headers: {
-					Authorization: token,
-					uid: AuthUser.id,
-				},
+				method: method,
+				headers: headers,
+				body: JSON.stringify(body),
 			});
 			const data = await response.json();
 			if (!response.ok) {
@@ -36,93 +33,67 @@ const Page = () => {
 		[AuthUser]
 	);
 
-	const uploadData = useCallback(
-		async (data) => {
-			const token = await AuthUser.getIdToken();
-			const endpoint = getAbsoluteURL("/api/addNewPage");
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-					uid: AuthUser.id,
-				},
-				body: JSON.stringify(data),
-			});
-			const respData = await response.json();
-			if (!response.ok) {
-				if (response.status == 403) {
-					alert("This podcast name already exists");
-				}
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-				return null;
-			}
-			return respData;
-		},
-		[AuthUser]
-	);
+	const uploadData = async (data) => {
+		const userToken = await AuthUser.getIdToken();
+		const query = {
+			endpointUrl: "/api/addNewPage",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+			},
+			body: data,
+			method: "POST",
+		};
+		return callApiEndpoint(query);
+	};
 
 	const [userData, setUserData] = useState({});
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const data = await fetchData("/api/getUserData");
+			const userToken = await AuthUser.getIdToken();
+			const query = {
+				endpointUrl: "/api/getUserData",
+				headers: {
+					Authorization: userToken,
+					uid: AuthUser.id,
+				},
+				method: "GET",
+			};
+			const data = await callApiEndpoint(query);
 			setUserData(data);
 		};
 		fetchUserData();
-	}, [fetchData]);
-
-	const uploadUserData = useCallback(
-		async (data) => {
-			const token = await AuthUser.getIdToken();
-			const endpoint = getAbsoluteURL("/api/uploadUserData");
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-					uid: AuthUser.id,
-				},
-				body: JSON.stringify(data),
-			});
-			const respData = await response.json();
-			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-				return null;
-			}
-			return respData;
-		},
-		[AuthUser]
-	);
-
-	const removePageCall = useCallback(
-		async (data) => {
-			const token = await AuthUser.getIdToken();
-			const endpoint = getAbsoluteURL("/api/removePage");
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-					uid: AuthUser.id,
-				},
-				body: JSON.stringify(data),
-			});
-			const respData = await response.json();
-			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-				return null;
-			}
-			return respData;
-		},
-		[AuthUser]
-	);
+	}, []); // should maybe be called on remove
 
 	async function removePage(vals, name) {
-		uploadUserData(vals);
-		return await removePageCall(name);
+		const userToken = await AuthUser.getIdToken();
+		const queryRemovePage = {
+			endpointUrl: "/api/removePage",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+			},
+			body: name,
+			method: "DELETE",
+		};
+		const queryUploadUserData = {
+			endpointUrl: "/api/uploadUserData",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+			},
+			body: vals,
+			method: "POST",
+		};
+
+		const res = await callApiEndpoint(queryRemovePage)
+		callApiEndpoint(queryUploadUserData);
+		return res
 	}
-	const [submitType, setSubmitType] = useState("");
 
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
@@ -152,7 +123,7 @@ const Page = () => {
 								const newUser = { ...userData, pages: newArr };
 								let ret = await uploadData(newUser);
 								if (ret != null) {
-									router.push(`/admin/${pageName.pages.length}`);
+									router.push(`/admin/${newPageStr}`);
 								}
 							}}
 						>
@@ -208,7 +179,6 @@ const Page = () => {
 											</Button>
 										</Col>
 									</Row>
-
 								</Form>
 							)}
 						</Formik>
