@@ -11,6 +11,7 @@ import Link from "next/link";
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
 	const [pageData, setPageData] = useContext(PageContext);
+
 	const uploadData = useCallback(
 		async (data) => {
 			const token = await AuthUser.getIdToken();
@@ -83,7 +84,7 @@ const AdminLinks = () => {
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"https://thefast.link/" + encodeURIComponent(pageData.name)}>
+									<Link href={"/" + encodeURIComponent(pageData.name)}>
 										<a target="_blank">{"https://thefast.link/" + pageData.name}</a>
 									</Link>
 								</h6>
@@ -100,21 +101,20 @@ const AdminLinks = () => {
 						</Row>
 						<Row className={styles.row}>
 							<Col>
-								<Link href={ "/admin/" + pageData.name + "/review"}>
+								<Link href={"/admin/" + pageData.name + "/analytics"}>
+									<Button block>Analytics</Button>
+								</Link>
+							</Col>
+						</Row>
+						<Row className={styles.row}>
+							<Col>
+								<Link href={"/admin/" + pageData.name + "/review"}>
 									<Button block>Review</Button>
 								</Link>
 							</Col>
 							<Col>
 								<Link href={"/admin/" + pageData.name + "/episodes"}>
 									<Button block>Episodes</Button>
-								</Link>
-							</Col>
-						</Row>
-						<Row className={styles.row}>
-							<Col>
-								<Link href={"/admin/" + pageData.name + "/analytics"}>
-									<Button block>Analytics
-									</Button >
 								</Link>
 							</Col>
 						</Row>
