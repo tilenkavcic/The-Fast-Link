@@ -69,6 +69,37 @@ const Page = () => {
 
 	const removePage = async (vals, name, index) => {
 		const userToken = await AuthUser.getIdToken();
+
+		let removingObj = vals.pages[index];
+		if (removingObj.episodes) {
+			removingObj.episodes.forEach((ep) => {
+				const query1 = {
+					endpointUrl: "/api/removePage",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: userToken,
+						uid: AuthUser.id,
+					},
+					body: { title: ep.title },
+					method: "DELETE",
+				};
+				const res = callApiEndpoint(query1);
+			});
+		}
+		if (removingObj.review) {
+			const query2 = {
+				endpointUrl: "/api/removePage",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: userToken,
+					uid: AuthUser.id,
+				},
+				body: { title: removingObj.review },
+				method: "DELETE",
+			};
+			const res = callApiEndpoint(query2);
+		}
+
 		const queryRemovePage = {
 			endpointUrl: "/api/removePage",
 			headers: {
@@ -90,7 +121,6 @@ const Page = () => {
 			body: vals,
 			method: "POST",
 		};
-
 		setUserData(vals);
 		const res = callApiEndpoint(queryRemovePage);
 		await callApiEndpoint(queryUploadUserData);
@@ -153,8 +183,8 @@ const Page = () => {
 																<Button
 																	className="secondary"
 																	onClick={() => {
-																		removePage(values, { title: pageData.title }, index)
-																		remove(index)
+																		removePage(values, { title: pageData.title }, index);
+																		remove(index);
 																	}}
 																	block
 																>

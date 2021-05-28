@@ -144,7 +144,6 @@ const Page = () => {
 							}}
 						>
 							{({ values }) => (
-								
 								<Form>
 									<FieldArray name="episodes">
 										{({ insert, remove, push, move }) => (
