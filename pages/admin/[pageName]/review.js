@@ -15,16 +15,13 @@ const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
 
-	const fetchData = useCallback(
-		async (endpointUrl) => {
-			const token = await AuthUser.getIdToken();
+	const callApiEndpoint = useCallback(
+		async ({ endpointUrl, headers, body = undefined, method }) => {
 			const endpoint = getAbsoluteURL(endpointUrl);
 			const response = await fetch(endpoint, {
-				method: "GET",
-				headers: {
-					Authorization: token,
-					uid: AuthUser.id,
-				},
+				method: method,
+				headers: headers,
+				body: JSON.stringify(body),
 			});
 			const data = await response.json();
 			if (!response.ok) {
@@ -36,93 +33,57 @@ const Page = () => {
 		[AuthUser]
 	);
 
-	const uploadData = useCallback(
-		async (data) => {
-			const token = await AuthUser.getIdToken();
-			const endpoint = getAbsoluteURL("/api/addNewPage");
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-					uid: AuthUser.id,
-				},
-				body: JSON.stringify(data),
-			});
-			const respData = await response.json();
-			if (!response.ok) {
-				if (response.status == 403) {
-					alert("This podcast name already exists");
-				}
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-				return null;
-			}
-			return respData;
-		},
-		[AuthUser]
-	);
-
-	const [userData, setUserData] = useState({});
+	const getPageIndex = (data) => {
+		return data.pages.findIndex((x) => x.title == router.query.pageName);
+	};
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const data = await fetchData("/api/getUserData");
-			setUserData(data);
+			const userToken = await AuthUser.getIdToken();
+			const query = {
+				endpointUrl: "/api/getUserData",
+				headers: {
+					Authorization: userToken,
+					uid: AuthUser.id,
+				},
+				method: "GET",
+			};
+			const data = await callApiEndpoint(query);
+			redirectToPage(data, getPageIndex(data));
 		};
 		fetchUserData();
-	}, [fetchData]);
+	}, []); 
 
-	const uploadUserData = useCallback(
-		async (data) => {
-			const token = await AuthUser.getIdToken();
-			const endpoint = getAbsoluteURL("/api/uploadUserData");
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-					uid: AuthUser.id,
-				},
-				body: JSON.stringify(data),
-			});
-			const respData = await response.json();
-			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-				return null;
+	const redirectToPage = async (userData, pageIndex) => {
+		if (userData.pages[pageIndex].review && userData.pages[pageIndex].review != "") {
+			router.push(`/admin/${userData.pages[pageIndex].review}`);
+		} else {
+			let newPageName = `${router.query.pageName}-review`;
+			let newPageObject = userData.pages;
+			newPageObject[pageIndex].review = newPageName;
+			const newUser = { ...userData, pages: newPageObject };
+			let ret = await addNewReview(newUser, newPageName);
+			if (ret != null) {
+				router.push(`/admin/${newPageName}`);
 			}
-			return respData;
-		},
-		[AuthUser]
-	);
+		}
+	};
 
-	const removePageCall = useCallback(
-		async (data) => {
-			const token = await AuthUser.getIdToken();
-			const endpoint = getAbsoluteURL("/api/removePage");
-			const response = await fetch(endpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: token,
-					uid: AuthUser.id,
-				},
-				body: JSON.stringify(data),
-			});
-			const respData = await response.json();
-			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
-				return null;
-			}
-			return respData;
-		},
-		[AuthUser]
-	);
-
-	async function removePage(vals, name) {
-		uploadUserData(vals);
-		return await removePageCall(name);
-	}
-	const [submitType, setSubmitType] = useState("");
+	const addNewReview = async (data, newPageName) => {
+		const userToken = await AuthUser.getIdToken();
+		const query = {
+			endpointUrl: "/api/addNewReview",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+				newpagename: newPageName, 
+			},
+			body: data,
+			method: "POST",
+		};
+		return callApiEndpoint(query);
+	};
 
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
@@ -130,90 +91,18 @@ const Page = () => {
 			<Container>
 				<Row className={styles.row}>
 					<Col>
-						<h1>Hey there</h1>
+						<h1>Hey</h1>
 					</Col>
 				</Row>
 
 				<Row className={styles.row}>
 					<Col>
-						<h2>Your podcasts</h2>
+						<h2>Your review</h2>
 					</Col>
 				</Row>
 
-				{userData.pages ? (
-					<>
-						<Formik
-							initialValues={userData}
-							onSubmit={async (pageName) => {
-								let newPageStr = pageName.newPage;
-								newPageStr = newPageStr.replaceAll(" ", "-").replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "").toLowerCase();
-								newPageStr = encodeURIComponent(newPageStr);
-								const newArr = userData.pages.concat([{ title: newPageStr }]);
-								const newUser = { ...userData, pages: newArr };
-								let ret = await uploadData(newUser);
-								if (ret != null) {
-									router.push(`/admin/${pageName.pages.length}`);
-								}
-							}}
-						>
-							{({ values }) => (
-								<Form>
-									<FieldArray name="pages">
-										{({ insert, remove, push, move }) => (
-											<>
-												{values.pages.length > 0 &&
-													values.pages.map((pageData, index) => (
-														<Row className={styles.row} key={index}>
-															<Col sm={10}>
-																<Link
-																	className="pageBtn"
-																	href={{
-																		pathname: "/admin/[pageIndx]",
-																		query: { pageIndx: index },
-																	}}
-																>
-																	<Button block>{pageData.title}</Button>
-																</Link>
-															</Col>
-															<Col sm={2}>
-																<Button
-																	className="secondary"
-																	onClick={() => {
-																		let name = values.pages[index];
-																		values.pages.splice(index, 1);
-																		removePage(values, name).then(() => {
-																			remove(index);
-																		});
-																	}}
-																	block
-																>
-																	<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-																		<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#292929" />
-																		<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
-																	</svg>
-																</Button>
-															</Col>
-														</Row>
-													))}
-											</>
-										)}
-									</FieldArray>
-									<Row className={styles.row}>
-										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="your-podcat" />
-										</Col>
-										<Col sm={2}>
-											<Button type="submit" className={styles.newBtn} block>
-												New
-											</Button>
-										</Col>
-									</Row>
-
-								</Form>
-							)}
-						</Formik>
-					</>
-				) : (
+				<>
+					Making your review page ...
 					<div className={styles.loading}>
 						<div className={styles.dot}></div>
 						<div className={styles.dot}></div>
@@ -221,7 +110,7 @@ const Page = () => {
 						<div className={styles.dot}></div>
 						<div className={styles.dot}></div>
 					</div>
-				)}
+				</>
 			</Container>
 			<Footer />
 		</Layout>
