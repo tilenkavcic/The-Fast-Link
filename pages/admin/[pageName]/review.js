@@ -1,27 +1,30 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
-import Header from "../../components/Header";
-import FullPageLoader from "../../components/FullPageLoader";
-import getAbsoluteURL from "../../utils/getAbsoluteURL";
+import Header from "../../../components/Header";
+import FullPageLoader from "../../../components/FullPageLoader";
+import getAbsoluteURL from "../../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import Layout from "../../components/Layout";
-import styles from "./index.module.scss";
-import Footer from "../../components/Footer";
+import Layout from "../../../components/Layout";
+import styles from "./review.module.scss";
+import Footer from "../../../components/Footer";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
 
-	const callApiEndpoint = useCallback(
-		async ({ endpointUrl, headers, body = undefined, method }) => {
+	const fetchData = useCallback(
+		async (endpointUrl) => {
+			const token = await AuthUser.getIdToken();
 			const endpoint = getAbsoluteURL(endpointUrl);
 			const response = await fetch(endpoint, {
-				method: method,
-				headers: headers,
-				body: JSON.stringify(body),
+				method: "GET",
+				headers: {
+					Authorization: token,
+					uid: AuthUser.id,
+				},
 			});
 			const data = await response.json();
 			if (!response.ok) {
@@ -33,68 +36,93 @@ const Page = () => {
 		[AuthUser]
 	);
 
-	const uploadData = async (data) => {
-		const userToken = await AuthUser.getIdToken();
-		const query = {
-			endpointUrl: "/api/addNewPage",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: data,
-			method: "POST",
-		};
-		return callApiEndpoint(query);
-	};
+	const uploadData = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/addNewPage");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				if (response.status == 403) {
+					alert("This podcast name already exists");
+				}
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
 
 	const [userData, setUserData] = useState({});
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const userToken = await AuthUser.getIdToken();
-			const query = {
-				endpointUrl: "/api/getUserData",
-				headers: {
-					Authorization: userToken,
-					uid: AuthUser.id,
-				},
-				method: "GET",
-			};
-			const data = await callApiEndpoint(query);
+			const data = await fetchData("/api/getUserData");
 			setUserData(data);
 		};
 		fetchUserData();
-	}, []); // should maybe be called on remove
+	}, [fetchData]);
 
-	const removePage = async (vals, name) => {
-		const userToken = await AuthUser.getIdToken();
-		const queryRemovePage = {
-			endpointUrl: "/api/removePage",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: name,
-			method: "DELETE",
-		};
-		const queryUploadUserData = {
-			endpointUrl: "/api/uploadUserData",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: vals,
-			method: "POST",
-		};
+	const uploadUserData = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/uploadUserData");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
 
-		setUserData(vals);
-		const res = callApiEndpoint(queryRemovePage);
-		await callApiEndpoint(queryUploadUserData);
-		return Promise.resolve();
-	};
+	const removePageCall = useCallback(
+		async (data) => {
+			const token = await AuthUser.getIdToken();
+			const endpoint = getAbsoluteURL("/api/removePage");
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: token,
+					uid: AuthUser.id,
+				},
+				body: JSON.stringify(data),
+			});
+			const respData = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				return null;
+			}
+			return respData;
+		},
+		[AuthUser]
+	);
+
+	async function removePage(vals, name) {
+		uploadUserData(vals);
+		return await removePageCall(name);
+	}
+	const [submitType, setSubmitType] = useState("");
 
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
@@ -115,7 +143,6 @@ const Page = () => {
 				{userData.pages ? (
 					<>
 						<Formik
-							enableReinitialize
 							initialValues={userData}
 							onSubmit={async (pageName) => {
 								let newPageStr = pageName.newPage;
@@ -125,7 +152,7 @@ const Page = () => {
 								const newUser = { ...userData, pages: newArr };
 								let ret = await uploadData(newUser);
 								if (ret != null) {
-									router.push(`/admin/${newPageStr}`);
+									router.push(`/admin/${pageName.pages.length}`);
 								}
 							}}
 						>
@@ -141,8 +168,8 @@ const Page = () => {
 																<Link
 																	className="pageBtn"
 																	href={{
-																		pathname: "/admin/[pageName]",
-																		query: { pageName: pageData.title },
+																		pathname: "/admin/[pageIndx]",
+																		query: { pageIndx: index },
 																	}}
 																>
 																	<Button block>{pageData.title}</Button>
@@ -155,8 +182,8 @@ const Page = () => {
 																		let name = values.pages[index];
 																		values.pages.splice(index, 1);
 																		removePage(values, name).then(() => {
-																			Router.reload();
-																		})
+																			remove(index);
+																		});
 																	}}
 																	block
 																>
@@ -181,6 +208,7 @@ const Page = () => {
 											</Button>
 										</Col>
 									</Row>
+
 								</Form>
 							)}
 						</Formik>

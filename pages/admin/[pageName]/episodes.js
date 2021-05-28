@@ -1,20 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
-import Header from "../../components/Header";
-import FullPageLoader from "../../components/FullPageLoader";
-import getAbsoluteURL from "../../utils/getAbsoluteURL";
+import Header from "../../../components/Header";
+import FullPageLoader from "../../../components/FullPageLoader";
+import getAbsoluteURL from "../../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import Layout from "../../components/Layout";
-import styles from "./index.module.scss";
-import Footer from "../../components/Footer";
+import Layout from "../../../components/Layout";
+import styles from "./episodes.module.scss";
+import Footer from "../../../components/Footer";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
-
 	const callApiEndpoint = useCallback(
 		async ({ endpointUrl, headers, body = undefined, method }) => {
 			const endpoint = getAbsoluteURL(endpointUrl);
@@ -102,13 +101,13 @@ const Page = () => {
 			<Container>
 				<Row className={styles.row}>
 					<Col>
-						<h1>Hey there</h1>
+						<h1>Hey</h1>
 					</Col>
 				</Row>
 
 				<Row className={styles.row}>
 					<Col>
-						<h2>Your podcasts</h2>
+						<h2>Your <i>{router.query.pageName}</i> episodes</h2>
 					</Col>
 				</Row>
 
@@ -154,9 +153,8 @@ const Page = () => {
 																	onClick={() => {
 																		let name = values.pages[index];
 																		values.pages.splice(index, 1);
-																		removePage(values, name).then(() => {
-																			Router.reload();
-																		})
+																		removePage(values, name)
+																		Router.reload();
 																	}}
 																	block
 																>
