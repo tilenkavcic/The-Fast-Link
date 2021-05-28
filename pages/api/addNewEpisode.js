@@ -12,13 +12,13 @@ const handler = async (req, res) => {
 	const token = req.headers.authorization;
 	const uid = req.headers.uid;
 	const sentData = req.body;
-	const newPageName = sentData.pages[sentData.pages.length - 1].title;
+	const newPageName = req.headers.newpagename;
 	if (token != "unauthenticated") {
 		// verify login
 		try {
 			const authUser = await verifyIdToken(token);
 			if (authUser.id != uid) {
-				throw "Page outside of user scope";
+				return res.status(403).json({ error: "Page outside of user scope" });
 			}
 		} catch (e) {
 			console.error(e);
@@ -39,7 +39,7 @@ const handler = async (req, res) => {
 							description: "",
 							pictureUrl: "",
 							name: newPageName,
-							type: "podcast",
+							title: "episode",
 							links: [
 								{
 									pictureUrl: "/apple-podcasts.svg",

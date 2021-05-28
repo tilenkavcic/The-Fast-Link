@@ -67,7 +67,7 @@ const Page = () => {
 		fetchUserData();
 	}, []); // should maybe be called on remove
 
-	const removePage = async (vals, name) => {
+	const removePage = async (vals, name, index) => {
 		const userToken = await AuthUser.getIdToken();
 		const queryRemovePage = {
 			endpointUrl: "/api/removePage",
@@ -79,6 +79,7 @@ const Page = () => {
 			body: name,
 			method: "DELETE",
 		};
+		vals.pages.splice(index, 1);
 		const queryUploadUserData = {
 			endpointUrl: "/api/uploadUserData",
 			headers: {
@@ -152,11 +153,8 @@ const Page = () => {
 																<Button
 																	className="secondary"
 																	onClick={() => {
-																		let name = values.pages[index];
-																		values.pages.splice(index, 1);
-																		removePage(values, name).then(() => {
-																			Router.reload();
-																		})
+																		removePage(values, { title: pageData.title }, index)
+																		remove(index)
 																	}}
 																	block
 																>
@@ -173,7 +171,7 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="your-podcat" />
+											<Field className="form-control" id=" " name="newPage" placeholder="your-podcast" />
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>

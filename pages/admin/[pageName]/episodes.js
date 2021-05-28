@@ -31,23 +31,8 @@ const Page = () => {
 		},
 		[AuthUser]
 	);
-
-	const uploadData = async (data) => {
-		const userToken = await AuthUser.getIdToken();
-		const query = {
-			endpointUrl: "/api/addNewPage",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: data,
-			method: "POST",
-		};
-		return callApiEndpoint(query);
-	};
-
 	const [userData, setUserData] = useState({});
+	const [pageIndex, setPageIndex] = useState();
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -61,12 +46,33 @@ const Page = () => {
 				method: "GET",
 			};
 			const data = await callApiEndpoint(query);
+			setPageIndex(getPageIndex(data));
 			setUserData(data);
 		};
 		fetchUserData();
-	}, []); // should maybe be called on remove
+	}, []);
 
-	const removePage = async (vals, name) => {
+	const getPageIndex = (data) => {
+		return data.pages.findIndex((x) => x.title == router.query.pageName);
+	};
+
+	const addNewPage = async (data, newPageName) => {
+		const userToken = await AuthUser.getIdToken();
+		const query = {
+			endpointUrl: "/api/addNewEpisode",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+				newpagename: newPageName
+			},
+			body: data,
+			method: "POST",
+		};
+		return callApiEndpoint(query);
+	};
+
+	const removePage = async (vals, name, index) => {
 		const userToken = await AuthUser.getIdToken();
 		const queryRemovePage = {
 			endpointUrl: "/api/removePage",
@@ -78,6 +84,7 @@ const Page = () => {
 			body: name,
 			method: "DELETE",
 		};
+		vals.pages[pageIndex].episodes.splice(index, 1);
 		const queryUploadUserData = {
 			endpointUrl: "/api/uploadUserData",
 			headers: {
@@ -88,13 +95,11 @@ const Page = () => {
 			body: vals,
 			method: "POST",
 		};
-
 		setUserData(vals);
 		const res = callApiEndpoint(queryRemovePage);
 		await callApiEndpoint(queryUploadUserData);
 		return Promise.resolve();
 	};
-
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
@@ -107,7 +112,9 @@ const Page = () => {
 
 				<Row className={styles.row}>
 					<Col>
-						<h2>Your <i>{router.query.pageName}</i> episodes</h2>
+						<h2>
+							Your <i>{router.query.pageName}</i> episodes
+						</h2>
 					</Col>
 				</Row>
 
@@ -118,23 +125,33 @@ const Page = () => {
 							initialValues={userData}
 							onSubmit={async (pageName) => {
 								let newPageStr = pageName.newPage;
-								newPageStr = newPageStr.replaceAll(" ", "-").replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "").toLowerCase();
 								newPageStr = encodeURIComponent(newPageStr);
-								const newArr = userData.pages.concat([{ title: newPageStr }]);
-								const newUser = { ...userData, pages: newArr };
-								let ret = await uploadData(newUser);
+								newPageStr = `${router.query.pageName}-ep-${newPageStr}`
+								let newArr;
+								if (userData.pages[pageIndex].episodes) {
+									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
+								} else {
+									newArr = userData.pages[pageIndex].episodes = []
+									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
+								}
+								let newPageArr = userData.pages
+								newPageArr[pageIndex].episodes = newArr
+								const newUser = { ...userData, pages: newPageArr };
+								let ret = await addNewPage(newUser, newPageStr);
 								if (ret != null) {
 									router.push(`/admin/${newPageStr}`);
 								}
 							}}
 						>
 							{({ values }) => (
+								
 								<Form>
-									<FieldArray name="pages">
+									<FieldArray name="episodes">
 										{({ insert, remove, push, move }) => (
 											<>
-												{values.pages.length > 0 &&
-													values.pages.map((pageData, index) => (
+												{values.pages[pageIndex].episodes &&
+													values.pages[pageIndex].episodes.length > 0 &&
+													values.pages[pageIndex].episodes.map((pageData, index) => (
 														<Row className={styles.row} key={index}>
 															<Col sm={10}>
 																<Link
@@ -144,17 +161,17 @@ const Page = () => {
 																		query: { pageName: pageData.title },
 																	}}
 																>
-																	<Button block>{pageData.title}</Button>
+																	<Button block>{
+																	pageData.title.split("-")[pageData.title.split("-").length-1]
+																	}</Button>
 																</Link>
 															</Col>
 															<Col sm={2}>
 																<Button
 																	className="secondary"
 																	onClick={() => {
-																		let name = values.pages[index];
-																		values.pages.splice(index, 1);
-																		removePage(values, name)
-																		Router.reload();
+																		removePage(values, { title: pageData.title }, index);
+																		remove(index)
 																	}}
 																	block
 																>
@@ -171,7 +188,7 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="your-podcat" />
+											<Field className="form-control" name="newPage" placeholder="Episode number" />
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>
