@@ -10,6 +10,7 @@ const handler = async (req, res) => {
 		res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
+	const uid = req.headers.uid;
 	if (token != "unauthenticated") {
 		// verify login
 		try {
@@ -29,7 +30,7 @@ const handler = async (req, res) => {
 			pageData = pageData.data();
 			pageData.links.sort((a, b) => (parseInt(a.position) > parseInt(b.position) ? 1 : -1));
 
-			if (pageData.author != authUser.id) {
+			if (pageData.author != uid) {
 				throw "Page outside of user scope";
 			} else {
 				res.status(200).json(pageData);
