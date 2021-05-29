@@ -126,6 +126,20 @@ const Page = () => {
 		await callApiEndpoint(queryUploadUserData);
 		return Promise.resolve();
 	};
+	const adjustPageName = (newPageStr) => {
+		newPageStr = newPageStr.replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "").toLowerCase();
+		newPageStr = newPageStr.replaceAll(" ", "-");
+		newPageStr = encodeURIComponent(newPageStr);
+		let ret = newPageStr.split("-");
+		newPageStr.split("-").forEach((w, index) => {
+			if (index != 0) {
+				let word = w.charAt(0).toUpperCase() + w.slice(1);
+				console.log(word);
+				ret[index] = word;
+			}
+		});
+		return ret.join("");
+	};
 
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
@@ -149,9 +163,7 @@ const Page = () => {
 							enableReinitialize
 							initialValues={userData}
 							onSubmit={async (pageName) => {
-								let newPageStr = pageName.newPage;
-								newPageStr = newPageStr.replaceAll(" ", "-").replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "").toLowerCase();
-								newPageStr = encodeURIComponent(newPageStr);
+								let newPageStr = adjustPageName(pageName.newPage);
 								const newArr = userData.pages.concat([{ title: newPageStr }]);
 								const newUser = { ...userData, pages: newArr };
 								let ret = await uploadData(newUser);
@@ -201,7 +213,7 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="your-podcast" />
+											<Field className="form-control" id=" " name="newPage" placeholder="yourPodcast" />
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>

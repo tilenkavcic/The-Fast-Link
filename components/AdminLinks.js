@@ -93,7 +93,7 @@ const AdminLinks = () => {
 
 						{pageData.type == "podcast" ? (
 							<>
-								<Row>
+								<Row className={styles.row}>
 									<Col>
 										<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
 											<Button className={styles.embedBtn} block>

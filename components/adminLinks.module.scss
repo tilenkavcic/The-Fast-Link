@@ -1,10 +1,13 @@
 @import "../styles/variables";
 
+.row{
+  margin: 10px 0;
+}
+
 .embedBtn {
   background-color: $primary;
   border-color: $primary;
   color: $background;
-  margin: 10px 0;
   & a {
     color: $background;
   }
