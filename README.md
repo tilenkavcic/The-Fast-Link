@@ -12,24 +12,9 @@ https://formik.org/docs/examples/field-arrays
 https://stackoverflow.com/questions/3064199/transparent-iframe-body
 
 - change img tags into nextjs images
-
-TODO: sort array by position always
-
-- register user
-- (change pass, email)
-- landing page
-- fix https://stackoverflow.com/questions/45110441/firebase-auth-invalid-custom-token renew token after invalid in cookies
+- delete analytics on podcast delete
 
 
-## embed
-```html
-<iframe
-  width="100%"
-  height="400"
-  src="https://www.thefast.link/podcastName"
-  frameborder="0"allowfullscreen>
-</iframe>
-```
 
 ## popup embed
 https://www.youtube.com/watch?v=FoXzDp-qzvw
