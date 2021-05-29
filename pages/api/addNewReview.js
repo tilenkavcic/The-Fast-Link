@@ -18,7 +18,7 @@ const handler = async (req, res) => {
 		try {
 			const authUser = await verifyIdToken(token);
 			if (authUser.id != uid) {
-				return res.status(403).json({ error: "Page outside of user scope" });
+				throw "Page outside of user scope";
 			}
 		} catch (e) {
 			console.error(e);
@@ -40,6 +40,7 @@ const handler = async (req, res) => {
 							pictureUrl: "",
 							name: newPageName,
 							type: "review",
+							author: uid,
 							links: [
 								{
 									pictureUrl: "/apple-podcasts.svg",

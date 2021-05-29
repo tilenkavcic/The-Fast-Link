@@ -10,21 +10,25 @@ const handler = async (req, res) => {
 		res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
+	const pageName = req.headers.page;
+	const sentData = req.body;
+	const uid = req.headers.uid;
 	if (token != "unauthenticated") {
 		// verify login
 		try {
+			// check if user has rights to edit this page
 			const authUser = await verifyIdToken(token);
-			// check if user has right to  edit this page
+			if (authUser.id != uid || sentData.author != authUser.id) {
+				throw "Page outside of user scope";
+			}
 		} catch (e) {
 			console.error(e);
 			res.status(403).json({ error: "Not authorized" });
 		}
 		// Upload data to firestore
 		try {
-			const pageName = req.headers.page;
-			const sentData = req.body;
 			let ret = await firebase.firestore().collection("homepage").doc(pageName).set(sentData);
-			res.status(200).json({ resp: 'success' });
+			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error getting page data");
 			console.error(e);

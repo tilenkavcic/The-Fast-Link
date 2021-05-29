@@ -13,8 +13,11 @@ const handler = async (req, res) => {
 	if (token != "unauthenticated") {
 		// verify login
 		try {
+			// check if user has rights to edit this page
 			const authUser = await verifyIdToken(token);
-			// check if user can edit this page
+			if (authUser.id != uid) {
+				throw "Page outside of user scope";
+			}
 		} catch (e) {
 			console.error(e);
 			res.status(403).json({ error: "Not authorized" });
@@ -24,9 +27,13 @@ const handler = async (req, res) => {
 			const pageName = req.headers.page;
 			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
 			pageData = pageData.data();
-			pageData.links.sort((a, b) => (a.position > b.position ? 1 : -1));
-			
-			res.status(200).json(pageData);
+			pageData.links.sort((a, b) => (parseInt(a.position) > parseInt(b.position) ? 1 : -1));
+
+			if (pageData.author != authUser.id) {
+				throw "Page outside of user scope";
+			} else {
+				res.status(200).json(pageData);
+			}
 		} catch (e) {
 			console.error("Error getting page data");
 			console.error(e);

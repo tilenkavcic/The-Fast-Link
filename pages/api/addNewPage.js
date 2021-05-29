@@ -40,6 +40,7 @@ const handler = async (req, res) => {
 							pictureUrl: "",
 							name: newPageName,
 							type: "podcast",
+							author: uid,
 							links: [
 								{
 									pictureUrl: "/apple-podcasts.svg",
