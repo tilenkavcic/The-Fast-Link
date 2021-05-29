@@ -56,6 +56,19 @@ const Page = () => {
 		return data.pages.findIndex((x) => x.title == router.query.pageName);
 	};
 
+	function validateNumber(value) {
+		let error;
+		if (!value) {
+			error = "";
+		} else {
+			if (!isNaN(value) && !isNaN(parseFloat(value))) {
+			} else {
+				error = "Episode should just be a number";
+			}
+		}
+		return error;
+	}
+
 	const addNewPage = async (data, newPageName) => {
 		const userToken = await AuthUser.getIdToken();
 		const query = {
@@ -64,7 +77,7 @@ const Page = () => {
 				"Content-Type": "application/json",
 				Authorization: userToken,
 				uid: AuthUser.id,
-				newpagename: newPageName
+				newpagename: newPageName,
 			},
 			body: data,
 			method: "POST",
@@ -100,6 +113,7 @@ const Page = () => {
 		await callApiEndpoint(queryUploadUserData);
 		return Promise.resolve();
 	};
+
 	return (
 		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
@@ -126,16 +140,16 @@ const Page = () => {
 							onSubmit={async (pageName) => {
 								let newPageStr = pageName.newPage;
 								newPageStr = encodeURIComponent(newPageStr);
-								newPageStr = `${router.query.pageName}-ep-${newPageStr}`
+								newPageStr = `${router.query.pageName}-ep-${newPageStr}`;
 								let newArr;
 								if (userData.pages[pageIndex].episodes) {
 									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
 								} else {
-									newArr = userData.pages[pageIndex].episodes = []
+									newArr = userData.pages[pageIndex].episodes = [];
 									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
 								}
-								let newPageArr = userData.pages
-								newPageArr[pageIndex].episodes = newArr
+								let newPageArr = userData.pages;
+								newPageArr[pageIndex].episodes = newArr;
 								const newUser = { ...userData, pages: newPageArr };
 								let ret = await addNewPage(newUser, newPageStr);
 								if (ret != null) {
@@ -143,7 +157,7 @@ const Page = () => {
 								}
 							}}
 						>
-							{({ values }) => (
+							{({ values, errors, touched, isValidating }) => (
 								<Form>
 									<FieldArray name="episodes">
 										{({ insert, remove, push, move }) => (
@@ -160,9 +174,7 @@ const Page = () => {
 																		query: { pageName: pageData.title },
 																	}}
 																>
-																	<Button block>{
-																	pageData.title.split("-")[pageData.title.split("-").length-1]
-																	}</Button>
+																	<Button block>{pageData.title.split("-")[pageData.title.split("-").length - 1]}</Button>
 																</Link>
 															</Col>
 															<Col sm={2}>
@@ -170,7 +182,7 @@ const Page = () => {
 																	className="secondary"
 																	onClick={() => {
 																		removePage(values, { title: pageData.title }, index);
-																		remove(index)
+																		remove(index);
 																	}}
 																	block
 																>
@@ -187,7 +199,8 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" name="newPage" placeholder="Episode number" />
+											<Field className="form-control" name="newPage" validate={validateNumber} placeholder="Episode number" />
+											{errors.newPage && touched.newPage && <div>{errors.newPage}</div>}
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>
