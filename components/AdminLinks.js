@@ -101,8 +101,7 @@ const AdminLinks = () => {
 										</Link>
 									</Col>
 								</Row>
-{pageData.type == "podcast" ? (
-							<>
+
 								<Row className={styles.row}>
 									<Col>
 										<Link href={"/admin/" + pageData.name + "/analytics"}>
@@ -110,6 +109,8 @@ const AdminLinks = () => {
 										</Link>
 									</Col>
 								</Row>
+{pageData.type == "podcast" ? (
+							<>
 								<Row className={styles.row}>
 									<Col>
 										<Link href={"/admin/" + pageData.name + "/review"}>
