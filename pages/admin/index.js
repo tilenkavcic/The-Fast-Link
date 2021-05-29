@@ -70,6 +70,18 @@ const Page = () => {
 	const removePage = async (vals, name, index) => {
 		const userToken = await AuthUser.getIdToken();
 
+		const query0 = {
+			endpointUrl: "/api/removePageAnalytics",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+			},
+			body: { title: ep.title },
+			method: "DELETE",
+		};
+		const res = callApiEndpoint(query0);
+
 		let removingObj = vals.pages[index];
 		if (removingObj.episodes) {
 			removingObj.episodes.forEach((ep) => {
@@ -99,7 +111,6 @@ const Page = () => {
 			};
 			const res = callApiEndpoint(query2);
 		}
-
 		const queryRemovePage = {
 			endpointUrl: "/api/removePage",
 			headers: {
