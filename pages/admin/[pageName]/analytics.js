@@ -12,8 +12,10 @@ import Footer from "../../../components/Footer";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
-	const [analyticsData, setAnalyticsData] = useState({});
-	const router = useRouter()
+	const router = useRouter();
+	const [analyticsData, setAnalyticsData] = useState();
+	const [pageAnalytics, setPageAnalytics] = useState();
+	const [linkAnalytics, setLinkAnalytics] = useState();
 
 	const callApiEndpoint = useCallback(
 		async ({ endpointUrl, headers, body = undefined, method }) => {
@@ -33,40 +35,94 @@ const Page = () => {
 		[AuthUser]
 	);
 
-	const fetchData = useCallback(
-		async (endpointUrl) => {
-			const endpoint = getAbsoluteURL(endpointUrl);
-			const response = await fetch(endpoint, {
-				
-			});
-			const data = await response.json();
-			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
-				return null;
-			}
-			return data;
-		},
-		[AuthUser]
-	);
-
 	useEffect(() => {
 		const fetchAnalyticsData = async () => {
 			const token = await AuthUser.getIdToken();
-			console.log(router.query.pageName)
 			const query = {
-				endpointUrl:"/api/getPageAnalytics",
+				endpointUrl: "/api/getPageAnalytics",
 				headers: {
 					Authorization: token,
 					uid: AuthUser.id,
 					page: router.query.pageName,
 				},
 				method: "GET",
-			}
+			};
 			const data = await callApiEndpoint(query);
-			setAnalytics(data);
+			setAnalyticsData(data);
+			getPageAnalytics(data);
+			getLinkAnalytics(data);
 		};
 		fetchAnalyticsData();
-	}, [fetchData]);
+	}, [callApiEndpoint]);
+
+	const getPageAnalytics = (data) => {
+		const ret = data.filter((doc) => doc.type == "page");
+		setPageAnalytics(ret);
+	};
+
+	const getLinkAnalytics = (data) => {
+		let links = [
+			{
+				name: "apple-podcasts",
+				clicks: 0,
+			},
+			{
+				name: "spotify",
+				clicks: 0,
+			},
+			{
+				name: "googlepodcasts",
+				clicks: 0,
+			},
+			{
+				name: "pocket-casts",
+				clicks: 0,
+			},
+			{
+				name: "rss",
+				clicks: 0,
+			},
+			{
+				name: "overcast",
+				clicks: 0,
+			},
+			{
+				name: "podcast-addict",
+				clicks: 0,
+			},
+			{
+				name: "radiopublic",
+				clicks: 0,
+			},
+			{
+				name: "podchaser",
+				clicks: 0,
+			},
+			{
+				name: "castbox",
+				clicks: 0,
+			},
+			{
+				name: "breaker",
+				clicks: 0,
+			},
+			{
+				name: "castro",
+				clicks: 0,
+			},
+			{
+				name: "stitcher",
+				clicks: 0,
+			},
+		];
+		data.forEach((doc) => {
+			if (doc.type == "link") {
+				const index = links.findIndex((el) => el.name == doc.link);
+				links[index].clicks += 1;
+			}
+		});
+		setLinkAnalytics(links);
+	};
 
 	return (
 		<Layout title="The Fast Link | Analytics" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
@@ -84,8 +140,12 @@ const Page = () => {
 					</Col>
 				</Row>
 
-				{analyticsData ? (
-					<></>
+				{analyticsData && pageAnalytics && linkAnalytics ? (
+					<Row>
+						{linkAnalytics.forEach((link) => (
+							<Col>{link.clicks}</Col>
+						))}
+					</Row>
 				) : (
 					<div className={styles.loading}>
 						<div className={styles.dot}></div>

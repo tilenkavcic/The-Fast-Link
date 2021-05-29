@@ -27,19 +27,17 @@ const handler = async (req, res) => {
 		try {
 			const pageName = req.headers.page;
 			const ref = firebase.firestore().collection("analytics");
-			let toTime = new Date()
-			let fromTime = new Date(toTime.setMonth(toTime.getMonth()-1));
-
-			console.log(toTime, fromTime)
-			
-			// let pageData = await ref.where("page", "==", pageName).where("timestamp", ">", fromTime).where("timestamp", "<", toTime).get();
-			// pageData = pageData.data();
-
-			if (pageData.author != uid) {
-				throw "Page outside of user scope";
-			} else {
-				res.status(200).json(pageData);
+			let toTime = new Date();
+			let fromTime = new Date(toTime.setMonth(toTime.getMonth() - 1));
+			let snapshot = await ref.where("page", "==", pageName).where("timestamp", ">", fromTime).get();
+			if (snapshot.empty) {
+				res.status(404).json({ error: "No matching ducuments found" });
 			}
+			let analyticsRet = [];
+			snapshot.forEach((doc) => {
+				analyticsRet.push(doc.data());
+			});
+			res.status(200).json(analyticsRet);
 		} catch (e) {
 			console.error("Error getting page data");
 			console.error(e);
