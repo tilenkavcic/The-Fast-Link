@@ -166,7 +166,7 @@ const Page = () => {
 													values.pages[pageIndex].episodes.length > 0 &&
 													values.pages[pageIndex].episodes.map((pageData, index) => (
 														<Row className={styles.row} key={index}>
-															<Col sm={10}>
+															<Col>
 																<Link
 																	className="pageBtn"
 																	href={{
@@ -177,7 +177,7 @@ const Page = () => {
 																	<Button block>{pageData.title.split("-")[pageData.title.split("-").length - 1]}</Button>
 																</Link>
 															</Col>
-															<Col sm={2}>
+															{/* <Col sm={2}>
 																<Button
 																	className="secondary"
 																	onClick={() => {
@@ -191,7 +191,7 @@ const Page = () => {
 																		<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
 																	</svg>
 																</Button>
-															</Col>
+															</Col> */}
 														</Row>
 													))}
 											</>
