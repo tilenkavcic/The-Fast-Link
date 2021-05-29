@@ -91,25 +91,24 @@ const AdminLinks = () => {
 							</Col>
 						</Row>
 
-						
-								<Row className={styles.row}>
-									<Col>
-										<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
-											<Button className={styles.embedBtn} block>
-												Embed to your website
-											</Button>
-										</Link>
-									</Col>
-								</Row>
+						<Row className={styles.row}>
+							<Col>
+								<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
+									<Button className={styles.embedBtn} block>
+										Embed to your website
+									</Button>
+								</Link>
+							</Col>
+						</Row>
 
-								<Row className={styles.row}>
-									<Col>
-										<Link href={"/admin/" + pageData.name + "/analytics"}>
-											<Button block>Analytics</Button>
-										</Link>
-									</Col>
-								</Row>
-{pageData.type == "podcast" ? (
+						<Row className={styles.row}>
+							<Col>
+								<Link href={"/admin/" + pageData.name + "/analytics"}>
+									<Button block>Analytics</Button>
+								</Link>
+							</Col>
+						</Row>
+						{pageData.type == "podcast" ? (
 							<>
 								<Row className={styles.row}>
 									<Col>
