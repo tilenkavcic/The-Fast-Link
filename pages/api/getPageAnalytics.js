@@ -32,16 +32,17 @@ const handler = async (req, res) => {
 			let snapshot = await ref.where("page", "==", pageName).where("timestamp", ">", fromTime).get();
 			if (snapshot.empty) {
 				res.status(404).json({ error: "No matching ducuments found" });
+			} else {
+				let analyticsRet = [];
+				snapshot.forEach((doc) => {
+					analyticsRet.push(doc.data());
+				});
+				res.status(200).json(analyticsRet);
 			}
-			let analyticsRet = [];
-			snapshot.forEach((doc) => {
-				analyticsRet.push(doc.data());
-			});
-			res.status(200).json(analyticsRet);
 		} catch (e) {
-			console.error("Error getting page data");
+			console.error("Error getting analytics data");
 			console.error(e);
-			res.status(404).json({ error: "Error getting page data" });
+			res.status(404).json({ error: "Error getting analytics data" });
 		}
 	}
 };

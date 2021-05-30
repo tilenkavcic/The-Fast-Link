@@ -50,9 +50,17 @@ const Page = () => {
 				},
 				method: "GET",
 			};
-			const data = await callApiEndpoint(query);
-			setAnalyticsData(data);
-			getPageLinkAnalytics(data);
+			try {
+				const data = await callApiEndpoint(query);
+				if (data) {
+					setAnalyticsData(data);
+					getPageLinkAnalytics(data);
+				} else {
+					setAnalyticsData(true);
+				}
+			} catch (e) {
+				console.error("e", e);
+			}
 		};
 		fetchAnalyticsData();
 	}, [callApiEndpoint]);
@@ -151,40 +159,45 @@ const Page = () => {
 					</Col>
 				</Row>
 
-				<Row className={styles.row}>
-					<Col>
-						<h2 className={styles.subtitle}>Overall clicks</h2>
-					</Col>
-				</Row>
-
-				{analyticsData && pageAnalytics && linkAnalytics ? (
+				{analyticsData ? (
 					<>
+						<Row className={styles.row}>
+							<Col>
+								<h2 className={styles.subtitle}>Overall clicks</h2>
+							</Col>
+						</Row>
 						<Row>
 							<Col>
 								<AnalyticsPageCount clicks={pageAnalytics} />
 							</Col>
 						</Row>
-						<Row className={styles.row}>
-							<Col>
-								<h2>Num. clicks on services</h2>
-							</Col>
-						</Row>
-						<Row className={styles.row}>
-							<Col>
-								Click through rate <b>{clickThroughRate}%</b>
-							</Col>
-						</Row>
 
-						<Row className={styles.allLinksWrapper}>
-							{linkAnalytics.map((link, idx) => {
-								return (
-									<Col key={idx} className={styles.linkWrapper}>
-										<h3 className={styles.linkTitle}>{link.title}</h3>
-										<AnalyticsLinkCount clicks={link.clicks} className={styles.linkCircle} />
+						{linkAnalytics.length > 0 ? (
+							<>
+								<Row className={styles.row}>
+									<Col>
+										<h2>Num. clicks on services</h2>
 									</Col>
-								);
-							})}
-						</Row>
+								</Row>
+								<Row className={styles.row}>
+									<Col>
+										Click through rate <b>{clickThroughRate}%</b>
+									</Col>
+								</Row>
+								<Row className={styles.allLinksWrapper}>
+									{linkAnalytics.map((link, idx) => {
+										return (
+											<Col key={idx} className={styles.linkWrapper}>
+												<h3 className={styles.linkTitle}>{link.title}</h3>
+												<AnalyticsLinkCount clicks={link.clicks} className={styles.linkCircle} />
+											</Col>
+										);
+									})}
+								</Row>
+							</>
+						) : (
+							""
+						)}
 					</>
 				) : (
 					<div className={styles.loading}>
