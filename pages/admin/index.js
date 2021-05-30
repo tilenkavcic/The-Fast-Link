@@ -68,74 +68,78 @@ const Page = () => {
 	}, []); // should maybe be called on remove
 
 	const removePage = async (vals, name, index) => {
-		const userToken = await AuthUser.getIdToken();
+		try {
+			const userToken = await AuthUser.getIdToken();
 
-		const query0 = {
-			endpointUrl: "/api/removePageAnalytics",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: { title: ep.title },
-			method: "DELETE",
-		};
-		const res = callApiEndpoint(query0);
+			const query0 = {
+				endpointUrl: "/api/removePageAnalytics",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: userToken,
+					uid: AuthUser.id,
+				},
+				body: { title: ep.title },
+				method: "DELETE",
+			};
+			callApiEndpoint(query0);
 
-		let removingObj = vals.pages[index];
-		if (removingObj.episodes) {
-			removingObj.episodes.forEach((ep) => {
-				const query1 = {
+			let removingObj = vals.pages[index];
+			if (removingObj.episodes) {
+				removingObj.episodes.forEach((ep) => {
+					const query1 = {
+						endpointUrl: "/api/removePage",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: userToken,
+							uid: AuthUser.id,
+						},
+						body: { title: ep.title },
+						method: "DELETE",
+					};
+					callApiEndpoint(query1);
+				});
+			}
+			if (removingObj.review) {
+				const query2 = {
 					endpointUrl: "/api/removePage",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: userToken,
 						uid: AuthUser.id,
 					},
-					body: { title: ep.title },
+					body: { title: removingObj.review },
 					method: "DELETE",
 				};
-				const res = callApiEndpoint(query1);
-			});
-		}
-		if (removingObj.review) {
-			const query2 = {
+				callApiEndpoint(query2);
+			}
+			const queryRemovePage = {
 				endpointUrl: "/api/removePage",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: userToken,
 					uid: AuthUser.id,
 				},
-				body: { title: removingObj.review },
+				body: name,
 				method: "DELETE",
 			};
-			const res = callApiEndpoint(query2);
+			vals.pages.splice(index, 1);
+			const queryUploadUserData = {
+				endpointUrl: "/api/uploadUserData",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: userToken,
+					uid: AuthUser.id,
+				},
+				body: vals,
+				method: "POST",
+			};
+			setUserData(vals);
+			callApiEndpoint(queryRemovePage);
+			await callApiEndpoint(queryUploadUserData);
+			return Promise.resolve();
+		} catch (e) {
+			console.error(e);
 		}
-		const queryRemovePage = {
-			endpointUrl: "/api/removePage",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: name,
-			method: "DELETE",
-		};
-		vals.pages.splice(index, 1);
-		const queryUploadUserData = {
-			endpointUrl: "/api/uploadUserData",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: vals,
-			method: "POST",
-		};
-		setUserData(vals);
-		const res = callApiEndpoint(queryRemovePage);
-		await callApiEndpoint(queryUploadUserData);
-		return Promise.resolve();
 	};
 	const adjustPageName = (newPageStr) => {
 		newPageStr = newPageStr.replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "");
