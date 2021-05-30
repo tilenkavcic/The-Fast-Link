@@ -1,0 +1,13 @@
+@import "../styles/variables";
+
+.numberCircle {
+  width: 120px;
+  line-height: 113px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 800;
+  @include text-gradient();
+  border: 7px solid #FFFFFF;
+  box-sizing: border-box;
+}
