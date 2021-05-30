@@ -62,54 +62,67 @@ const Page = () => {
 			{
 				name: "apple-podcasts",
 				clicks: 0,
+				title: "Apple Podcasts",
 			},
 			{
 				name: "spotify",
 				clicks: 0,
+				title: "Spotify",
 			},
 			{
 				name: "googlepodcasts",
 				clicks: 0,
+				title: "Google Podcasts",
 			},
 			{
 				name: "pocket-casts",
 				clicks: 0,
+				title: "Pocket Casts",
 			},
 			{
 				name: "rss",
 				clicks: 0,
+				title: "RSS",
 			},
 			{
 				name: "overcast",
 				clicks: 0,
+				title: "Overcast",
 			},
 			{
 				name: "podcast-addict",
 				clicks: 0,
+				title: "Podcast Addict",
 			},
 			{
 				name: "radiopublic",
 				clicks: 0,
+				title: "RadioPublic",
 			},
 			{
 				name: "podchaser",
 				clicks: 0,
+				title: "Podchaser",
 			},
 			{
 				name: "castbox",
 				clicks: 0,
+				title: "Castbox",
 			},
 			{
 				name: "breaker",
 				clicks: 0,
+				title: "Breaker",
 			},
 			{
 				name: "castro",
 				clicks: 0,
+				title: "Castro",
 			},
 			{
 				name: "stitcher",
 				clicks: 0,
+				title: "Stitcher",
 			},
 		];
 		const pageAnalyticsData = data.filter((doc) => doc.type == "page");
@@ -134,13 +147,13 @@ const Page = () => {
 			<Container>
 				<Row className={styles.row}>
 					<Col>
-						<h1>30 day analytics</h1>
+						<h1 className={styles.title}>30 day analytics</h1>
 					</Col>
 				</Row>
 
 				<Row className={styles.row}>
 					<Col>
-						<h2>Overall clicks</h2>
+						<h2 className={styles.subtitle}>Overall clicks</h2>
 					</Col>
 				</Row>
 
@@ -153,7 +166,7 @@ const Page = () => {
 						</Row>
 						<Row className={styles.row}>
 							<Col>
-								<h2>Click through</h2>
+								<h2>Num. clicks on services</h2>
 							</Col>
 						</Row>
 						<Row className={styles.row}>
@@ -162,12 +175,14 @@ const Page = () => {
 							</Col>
 						</Row>
 
-						<Row className={styles.row}>
-							{linkAnalytics.forEach((link) => {
-								<Col>
-									<h3>{link.name}</h3>
-									<AnalyticsLinkCount clicks={link.clicks} />
-								</Col>;
+						<Row className={styles.allLinksWrapper}>
+							{linkAnalytics.map((link, idx) => {
+								return (
+									<Col key={idx} className={styles.linkWrapper}>
+										<h3 className={styles.linkTitle}>{link.title}</h3>
+										<AnalyticsLinkCount clicks={link.clicks} className={styles.linkCircle} />
+									</Col>
+								);
 							})}
 						</Row>
 					</>
