@@ -28,9 +28,9 @@ export default function Post({ postData }) {
 						</React.Fragment>
 					))}
 				</Row>
-				<Row className={styles.bottomLogo}>
+				{/* <Row className={styles.bottomLogo}>
 					<Link href="/">The Fast Link</Link>
-				</Row>
+				</Row> */}
 			</Layout>
 		</>
 	);
