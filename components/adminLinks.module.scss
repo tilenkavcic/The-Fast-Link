@@ -1,84 +1,84 @@
 @import "../styles/variables";
 
-.row{
-  margin: 10px 0;
+.row {
+	margin: 10px 0;
 }
 
 .embedBtn {
-  background-color: $primary;
-  border-color: $primary;
-  color: $background;
-  & a {
-    color: $background;
-  }
+	background-color: $primary;
+	border-color: $primary;
+	color: $background;
+	& a {
+		color: $background;
+	}
 }
 
 .submitBtn {
-  left: 0;
-  bottom: 0;
+	left: 0;
+	bottom: 0;
 }
 
 .table {
-  color: $white;
+	color: $white;
 }
 
 .formTitle {
-  margin: 10px 0;
-  color: $white !important;
+	margin: 10px 0;
+	color: $white !important;
 }
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin: 0 0;
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	margin: 0 0;
 }
 
 /* Hide default HTML checkbox */
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 120ms;
-  transition: 120ms;
-  border-radius: 10px;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: 120ms;
+	transition: 120ms;
+	border-radius: 10px;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: $white;
-  -webkit-transition: 120ms;
-  transition: 120ms;
-  border-radius: 25%;
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: $white;
+	-webkit-transition: 120ms;
+	transition: 120ms;
+	border-radius: 25%;
 }
 
 input:checked + .slider {
-  background-color: #774dd1;
+	background-color: #774dd1;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 3px #774dd1;
+	box-shadow: 0 0 3px 2px #ffffff;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }

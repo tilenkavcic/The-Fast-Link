@@ -7,10 +7,84 @@ import { Alert, Button, Row, Col, Table, Navbar } from "react-bootstrap";
 import styles from "./adminLinks.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
 	const [pageData, setPageData] = useContext(PageContext);
+	const [submitAlert, setSubmitalert] = useState(false);
+	const isRequired = (message) => (value) => (!!value ? undefined : message);
+	const router = useRouter();
+
+	const callApiEndpoint = useCallback(
+		async ({ endpointUrl, headers, body = undefined, method }) => {
+			const endpoint = getAbsoluteURL(endpointUrl);
+			const response = await fetch(endpoint, {
+				method: method,
+				headers: headers,
+				body: JSON.stringify(body),
+			});
+			const data = await response.json();
+			if (!response.ok) {
+				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				return null;
+			}
+			return data;
+		},
+		[AuthUser]
+	);
+
+	const getPageIndex = (data) => {
+		return data.pages.findIndex((x) => x.title == pageData.name);
+	};
+
+	const redirectToReviewPage = async (userData, pageIndex) => {
+		if (userData.pages[pageIndex].review && userData.pages[pageIndex].review != "") {
+			router.push(`/admin/${userData.pages[pageIndex].review}`);
+		} else {
+			let newPageName = `${pageData.name}-review`;
+			let newPageObject = userData.pages;
+			newPageObject[pageIndex].review = newPageName;
+			const newUser = { ...userData, pages: newPageObject };
+			let ret = await addNewReview(newUser, newPageName);
+			if (ret != null) {
+				router.push(`/admin/${newPageName}`);
+			}
+		}
+	};
+
+	const addNewReview = async (data, newPageName) => {
+		const userToken = await AuthUser.getIdToken();
+		const query = {
+			endpointUrl: "/api/addNewReview",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+				newpagename: newPageName,
+			},
+			body: data,
+			method: "POST",
+		};
+		return callApiEndpoint(query);
+	};
+
+	const reviewRedirect = () => {
+		const fetchUserData = async () => {
+			const userToken = await AuthUser.getIdToken();
+			const query = {
+				endpointUrl: "/api/getUserData",
+				headers: {
+					Authorization: userToken,
+					uid: AuthUser.id,
+				},
+				method: "GET",
+			};
+			const data = await callApiEndpoint(query);
+			redirectToReviewPage(data, getPageIndex(data));
+		};
+		fetchUserData();
+	};
 
 	const uploadData = useCallback(
 		async (data) => {
@@ -36,9 +110,6 @@ const AdminLinks = () => {
 		[AuthUser]
 	);
 
-	const isRequired = (message) => (value) => (!!value ? undefined : message);
-
-	const [submitAlert, setSubmitalert] = useState(false);
 	async function submitForm(values) {
 		const ret = await uploadData(values); // add authUser.id for adding new links
 		setPageData(values);
@@ -112,9 +183,9 @@ const AdminLinks = () => {
 							<>
 								<Row className={styles.row}>
 									<Col>
-										<Link href={"/admin/" + pageData.name + "/review"}>
-											<Button block>Review</Button>
-										</Link>
+										<Button onClick={reviewRedirect} block>
+											Review
+										</Button>
 									</Col>
 									<Col>
 										<Link href={"/admin/" + pageData.name + "/episodes"}>
