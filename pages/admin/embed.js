@@ -44,7 +44,7 @@ const Page = () => {
 					</Col>
 				</Row>
 				<Row>
-					<Col>Include the following iframe in your HTML</Col>
+					<Col>Include the following transparent iframe in your HTML</Col>
 				</Row>
 				<Row>
 					<Col>

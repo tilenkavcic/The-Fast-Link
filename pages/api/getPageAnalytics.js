@@ -26,19 +26,23 @@ const handler = async (req, res) => {
 		// Get data from firestore
 		try {
 			const pageName = req.headers.page;
-			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
-			pageData = pageData.data();
-			pageData.links.sort((a, b) => (parseInt(a.position) > parseInt(b.position) ? 1 : -1));
-
-			if (pageData.author != uid) {
-				throw "Page outside of user scope";
+			const ref = firebase.firestore().collection("analytics");
+			let toTime = new Date();
+			let fromTime = new Date(toTime.setMonth(toTime.getMonth() - 1));
+			let snapshot = await ref.where("page", "==", pageName).where("timestamp", ">", fromTime).get();
+			if (snapshot.empty) {
+				res.status(404).json({ error: "No matching ducuments found" });
 			} else {
-				res.status(200).json(pageData);
+				let analyticsRet = [];
+				snapshot.forEach((doc) => {
+					analyticsRet.push(doc.data());
+				});
+				res.status(200).json(analyticsRet);
 			}
 		} catch (e) {
-			console.error("Error getting page data");
+			console.error("Error getting analytics data");
 			console.error(e);
-			res.status(404).json({ error: "Error getting page data" });
+			res.status(404).json({ error: "Error getting analytics data" });
 		}
 	}
 };

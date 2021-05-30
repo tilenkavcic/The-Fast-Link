@@ -14,11 +14,11 @@ const handler = async (req, res) => {
 	if (token != "unauthenticated") {
 		// verify login
 		try {
+			// check if user has rights to edit this page
 			const authUser = await verifyIdToken(token);
 			if (authUser.id != uid) {
 				throw "Page outside of user scope";
 			}
-			// check if user can edit this page
 		} catch (e) {
 			console.error(e);
 			res.status(403).json({ error: "Not authorized" });

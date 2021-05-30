@@ -1,4 +1,4 @@
-import { getPageData } from "../lib/pages";
+import { getPageData, logRedirect } from "../lib/pages";
 import styles from "./id.module.scss";
 import Layout from "../components/Layout";
 import MainLink from "../components/MainLink";
@@ -30,9 +30,9 @@ export default function Post({ postData }) {
 			</Container>
 
 			<Row className={styles.links}>
-				{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
+				{postData.links.map(({ title, url, pictureUrl, position, activated, name }, index) => (
 					<React.Fragment key={index}>
-						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} />
+						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} pageName={postData.name} linkName={name} />
 						{index % 2 != 0 && index != postData.links.length - 1 ? <hr className={styles.hr} /> : ""}
 					</React.Fragment>
 				))}
@@ -55,13 +55,14 @@ export async function getServerSideProps({ params }) {
 		let postData = await getPageData(params.id);
 		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 		postData.links = filteredLinks;
+		let res = await logRedirect(params.id);
 		return {
 			props: {
 				postData,
 			},
 		};
 	} catch (e) {
-		console.log(e)
+		console.log(e);
 		throw new Error("error");
 	}
 }

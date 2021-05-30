@@ -14,8 +14,8 @@ const handler = async (req, res) => {
 	if (token != "unauthenticated") {
 		// verify login
 		try {
+			// check if user has rights to edit this page
 			const authUser = await verifyIdToken(token);
-			// TODO check if this page is of user
 			if (authUser.id != uid) {
 				throw "Page outside of user scope";
 			}
@@ -61,7 +61,7 @@ const handler = async (req, res) => {
 				description: submittedDescription,
 			};
 			const ress = await firebase.firestore().collection("homepage").doc(pageName).set(updatedData, { merge: true });
-			res.status(200).json({ resp: 'success' });
+			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error uploading data");
 			console.error(e);

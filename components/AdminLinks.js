@@ -11,6 +11,7 @@ import Link from "next/link";
 const AdminLinks = () => {
 	const AuthUser = useAuthUser();
 	const [pageData, setPageData] = useContext(PageContext);
+
 	const uploadData = useCallback(
 		async (data) => {
 			const token = await AuthUser.getIdToken();
@@ -55,7 +56,7 @@ const AdminLinks = () => {
 						<Row class="form-group" className={styles.formTitle}>
 							<Col sm={4}>
 								<Row>
-									<label htmlFor="title">Podcast title</label>
+									<label htmlFor="title">Title of the page</label>
 								</Row>
 							</Col>
 
@@ -76,29 +77,55 @@ const AdminLinks = () => {
 								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
 							</Col>
 						</Row>
-
+						{/* <PictureUpload />
+						<Thumb file={values.file} />
+						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
 						<Row>
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"https://thefast.link/" + encodeURIComponent(pageData.name)}><a target="_blank">{"https://thefast.link/" + pageData.name}</a></Link>
+									<Link href={"/" + encodeURIComponent(pageData.name)}>
+										<a target="_blank">{"https://thefast.link/" + pageData.name}</a>
+									</Link>
 								</h6>
 							</Col>
 						</Row>
 
-						<Row>
+						<Row className={styles.row}>
 							<Col>
 								<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
 									<Button className={styles.embedBtn} block>
-										Embed to your website
+										Embed the link
 									</Button>
 								</Link>
 							</Col>
 						</Row>
-						{/* <PictureUpload />
-						<Thumb file={values.file} />
-						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
 
+						<Row className={styles.row}>
+							<Col>
+								<Link href={"/admin/" + pageData.name + "/analytics"}>
+									<Button block>Analytics</Button>
+								</Link>
+							</Col>
+						</Row>
+						{pageData.type == "podcast" ? (
+							<>
+								<Row className={styles.row}>
+									<Col>
+										<Link href={"/admin/" + pageData.name + "/review"}>
+											<Button block>Review</Button>
+										</Link>
+									</Col>
+									<Col>
+										<Link href={"/admin/" + pageData.name + "/episodes"}>
+											<Button block>Episodes</Button>
+										</Link>
+									</Col>
+								</Row>
+							</>
+						) : (
+							""
+						)}
 						<Row>
 							<Col>
 								<h3>Links</h3>

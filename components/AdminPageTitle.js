@@ -63,7 +63,7 @@ export default function AdminPageTitle() {
 								<Col sm={4}>
 									<Row>
 										<label className={styles.label} htmlFor="title">
-											Podcast title
+										Title of the page
 										</label>
 									</Row>
 								</Col>

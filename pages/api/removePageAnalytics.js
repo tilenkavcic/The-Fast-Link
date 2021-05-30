@@ -7,7 +7,7 @@ initAuth();
 
 const handler = async (req, res) => {
 	if (!(req.headers && req.headers.authorization)) {
-		res.status(400).json({ error: "Missing Authorization header value" });
+		return res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
 	const uid = req.headers.uid;
@@ -23,22 +23,21 @@ const handler = async (req, res) => {
 			console.error(e);
 			res.status(403).json({ error: "Not authorized" });
 		}
-		// Get data from firestore
+		// Upload data to firestore
 		try {
-			const pageName = req.headers.page;
-			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
-			pageData = pageData.data();
-			pageData.links.sort((a, b) => (parseInt(a.position) > parseInt(b.position) ? 1 : -1));
+			const pageName = req.body.title;
 
-			if (pageData.author != uid) {
-				throw "Page outside of user scope";
-			} else {
-				res.status(200).json(pageData);
-			}
+			const analytics = await firebase.firestore().collection("analytics").where("page", "==", pageName).get();
+
+			analytics.forEach((doc) => {
+				doc.ref.delete();
+			});
+
+			res.status(200).json({ resp: "success" });
 		} catch (e) {
-			console.error("Error getting page data");
+			console.error("Error deleting data");
 			console.error(e);
-			res.status(404).json({ error: "Error getting page data" });
+			res.status(404).json({ error: "Error deleting data" });
 		}
 	}
 };

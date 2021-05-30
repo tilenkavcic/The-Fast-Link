@@ -1,20 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
-import Header from "../../components/Header";
-import FullPageLoader from "../../components/FullPageLoader";
-import getAbsoluteURL from "../../utils/getAbsoluteURL";
+import Header from "../../../components/Header";
+import FullPageLoader from "../../../components/FullPageLoader";
+import getAbsoluteURL from "../../../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import Layout from "../../components/Layout";
-import styles from "./index.module.scss";
-import Footer from "../../components/Footer";
+import Layout from "../../../components/Layout";
+import styles from "./episodes.module.scss";
+import Footer from "../../../components/Footer";
 
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
-
 	const callApiEndpoint = useCallback(
 		async ({ endpointUrl, headers, body = undefined, method }) => {
 			const endpoint = getAbsoluteURL(endpointUrl);
@@ -32,23 +31,8 @@ const Page = () => {
 		},
 		[AuthUser]
 	);
-
-	const uploadData = async (data) => {
-		const userToken = await AuthUser.getIdToken();
-		const query = {
-			endpointUrl: "/api/addNewPage",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: userToken,
-				uid: AuthUser.id,
-			},
-			body: data,
-			method: "POST",
-		};
-		return callApiEndpoint(query);
-	};
-
 	const [userData, setUserData] = useState({});
+	const [pageIndex, setPageIndex] = useState();
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -62,99 +46,72 @@ const Page = () => {
 				method: "GET",
 			};
 			const data = await callApiEndpoint(query);
+			setPageIndex(getPageIndex(data));
 			setUserData(data);
 		};
 		fetchUserData();
-	}, []); // should maybe be called on remove
+	}, []);
+
+	const getPageIndex = (data) => {
+		return data.pages.findIndex((x) => x.title == router.query.pageName);
+	};
+
+	function validateNumber(value) {
+		let error;
+		if (!value) {
+			error = "";
+		} else {
+			if (!isNaN(value) && !isNaN(parseFloat(value))) {
+			} else {
+				error = "Episode should just be a number";
+			}
+		}
+		return error;
+	}
+
+	const addNewPage = async (data, newPageName) => {
+		const userToken = await AuthUser.getIdToken();
+		const query = {
+			endpointUrl: "/api/addNewEpisode",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+				newpagename: newPageName,
+			},
+			body: data,
+			method: "POST",
+		};
+		return callApiEndpoint(query);
+	};
 
 	const removePage = async (vals, name, index) => {
-		try {
-			const userToken = await AuthUser.getIdToken();
-
-			const query0 = {
-				endpointUrl: "/api/removePageAnalytics",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: userToken,
-					uid: AuthUser.id,
-				},
-				body: { title: ep.title },
-				method: "DELETE",
-			};
-			callApiEndpoint(query0);
-
-			let removingObj = vals.pages[index];
-			if (removingObj.episodes) {
-				removingObj.episodes.forEach((ep) => {
-					const query1 = {
-						endpointUrl: "/api/removePage",
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: userToken,
-							uid: AuthUser.id,
-						},
-						body: { title: ep.title },
-						method: "DELETE",
-					};
-					callApiEndpoint(query1);
-				});
-			}
-			if (removingObj.review) {
-				const query2 = {
-					endpointUrl: "/api/removePage",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: userToken,
-						uid: AuthUser.id,
-					},
-					body: { title: removingObj.review },
-					method: "DELETE",
-				};
-				callApiEndpoint(query2);
-			}
-			const queryRemovePage = {
-				endpointUrl: "/api/removePage",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: userToken,
-					uid: AuthUser.id,
-				},
-				body: name,
-				method: "DELETE",
-			};
-			vals.pages.splice(index, 1);
-			const queryUploadUserData = {
-				endpointUrl: "/api/uploadUserData",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: userToken,
-					uid: AuthUser.id,
-				},
-				body: vals,
-				method: "POST",
-			};
-			setUserData(vals);
-			callApiEndpoint(queryRemovePage);
-			await callApiEndpoint(queryUploadUserData);
-			return Promise.resolve();
-		} catch (e) {
-			console.error(e);
-		}
-	};
-	const adjustPageName = (newPageStr) => {
-		newPageStr = newPageStr.replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "");
-		newPageStr = encodeURIComponent(newPageStr);
-		newPageStr = newPageStr.replaceAll("-", " ");
-		newPageStr = newPageStr.replaceAll(" ", "-");
-		let ret = newPageStr.split("-");
-		newPageStr.split("-").forEach((w, index) => {
-			if (index != 0) {
-				let word = w.charAt(0).toUpperCase() + w.slice(1);
-				console.log(word);
-				ret[index] = word;
-			}
-		});
-		return ret.join("");
+		const userToken = await AuthUser.getIdToken();
+		const queryRemovePage = {
+			endpointUrl: "/api/removePage",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+			},
+			body: name,
+			method: "DELETE",
+		};
+		vals.pages[pageIndex].episodes.splice(index, 1);
+		const queryUploadUserData = {
+			endpointUrl: "/api/uploadUserData",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: userToken,
+				uid: AuthUser.id,
+			},
+			body: vals,
+			method: "POST",
+		};
+		setUserData(vals);
+		const res = callApiEndpoint(queryRemovePage);
+		await callApiEndpoint(queryUploadUserData);
+		return Promise.resolve();
 	};
 
 	return (
@@ -163,13 +120,15 @@ const Page = () => {
 			<Container>
 				<Row className={styles.row}>
 					<Col>
-						<h1>Hey there</h1>
+						<h1>Hey</h1>
 					</Col>
 				</Row>
 
 				<Row className={styles.row}>
 					<Col>
-						<h2>Your podcasts</h2>
+						<h2>
+							Your <i>{router.query.pageName}</i> episodes
+						</h2>
 					</Col>
 				</Row>
 
@@ -179,24 +138,35 @@ const Page = () => {
 							enableReinitialize
 							initialValues={userData}
 							onSubmit={async (pageName) => {
-								let newPageStr = adjustPageName(pageName.newPage);
-								const newArr = userData.pages.concat([{ title: newPageStr }]);
-								const newUser = { ...userData, pages: newArr };
-								let ret = await uploadData(newUser);
+								let newPageStr = pageName.newPage;
+								newPageStr = encodeURIComponent(newPageStr);
+								newPageStr = `${router.query.pageName}-ep-${newPageStr}`;
+								let newArr;
+								if (userData.pages[pageIndex].episodes) {
+									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
+								} else {
+									newArr = userData.pages[pageIndex].episodes = [];
+									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
+								}
+								let newPageArr = userData.pages;
+								newPageArr[pageIndex].episodes = newArr;
+								const newUser = { ...userData, pages: newPageArr };
+								let ret = await addNewPage(newUser, newPageStr);
 								if (ret != null) {
 									router.push(`/admin/${newPageStr}`);
 								}
 							}}
 						>
-							{({ values }) => (
+							{({ values, errors, touched, isValidating }) => (
 								<Form>
-									<FieldArray name="pages">
+									<FieldArray name="episodes">
 										{({ insert, remove, push, move }) => (
 											<>
-												{values.pages.length > 0 &&
-													values.pages.map((pageData, index) => (
+												{values.pages[pageIndex].episodes &&
+													values.pages[pageIndex].episodes.length > 0 &&
+													values.pages[pageIndex].episodes.map((pageData, index) => (
 														<Row className={styles.row} key={index}>
-															<Col sm={10}>
+															<Col>
 																<Link
 																	className="pageBtn"
 																	href={{
@@ -204,10 +174,10 @@ const Page = () => {
 																		query: { pageName: pageData.title },
 																	}}
 																>
-																	<Button block>{pageData.title}</Button>
+																	<Button block>{pageData.title.split("-")[pageData.title.split("-").length - 1]}</Button>
 																</Link>
 															</Col>
-															<Col sm={2}>
+															{/* <Col sm={2}>
 																<Button
 																	className="secondary"
 																	onClick={() => {
@@ -221,7 +191,7 @@ const Page = () => {
 																		<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
 																	</svg>
 																</Button>
-															</Col>
+															</Col> */}
 														</Row>
 													))}
 											</>
@@ -229,7 +199,8 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="yourPodcast" />
+											<Field className="form-control" name="newPage" validate={validateNumber} placeholder="Episode number" />
+											{errors.newPage && touched.newPage && <div>{errors.newPage}</div>}
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>

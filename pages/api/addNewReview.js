@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 	const token = req.headers.authorization;
 	const uid = req.headers.uid;
 	const sentData = req.body;
-	const newPageName = sentData.pages[sentData.pages.length - 1].title;
+	const newPageName = req.headers.newpagename;
 	if (token != "unauthenticated") {
 		// verify login
 		try {
@@ -39,7 +39,7 @@ const handler = async (req, res) => {
 							description: "",
 							pictureUrl: "",
 							name: newPageName,
-							type: "podcast",
+							type: "review",
 							author: uid,
 							links: [
 								{
