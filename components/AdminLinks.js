@@ -95,7 +95,7 @@ const AdminLinks = () => {
 							<Col>
 								<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
 									<Button className={styles.embedBtn} block>
-										Embed to your website
+										Embed the link
 									</Button>
 								</Link>
 							</Col>
