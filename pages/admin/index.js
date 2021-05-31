@@ -71,17 +71,17 @@ const Page = () => {
 		try {
 			const userToken = await AuthUser.getIdToken();
 
-			const query0 = {
-				endpointUrl: "/api/removePageAnalytics",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: userToken,
-					uid: AuthUser.id,
-				},
-				body: { title: ep.title },
-				method: "DELETE",
-			};
-			callApiEndpoint(query0);
+			// const query0 = {
+			// 	endpointUrl: "/api/removePageAnalytics",
+			// 	headers: {
+			// 		"Content-Type": "application/json",
+			// 		Authorization: userToken,
+			// 		uid: AuthUser.id,
+			// 	},
+			// 	body: { title: ep.title },
+			// 	method: "DELETE",
+			// };
+			// callApiEndpoint(query0);
 
 			let removingObj = vals.pages[index];
 			if (removingObj.episodes) {
