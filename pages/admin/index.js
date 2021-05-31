@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
+import { useAuthUser, withAuthUser, AuthAction } from "next-firebase-auth";
 import Link from "next/link";
 import Header from "../../components/Header";
 import FullPageLoader from "../../components/FullPageLoader";
 import getAbsoluteURL from "../../utils/getAbsoluteURL";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import Router, { useRouter } from "next/router";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Formik, Field, Form, FieldArray } from "formik";
+import { useRouter } from "next/router";
+import { Button, Container, Row, Col, Alert } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import styles from "./index.module.scss";
 import Footer from "../../components/Footer";
@@ -14,7 +14,7 @@ import Footer from "../../components/Footer";
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
-
+	const [error, setError] = useState()
 	const callApiEndpoint = useCallback(
 		async ({ endpointUrl, headers, body = undefined, method }) => {
 			const endpoint = getAbsoluteURL(endpointUrl);
@@ -26,14 +26,14 @@ const Page = () => {
 			const data = await response.json();
 			if (!response.ok) {
 				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
-				return null;
+				throw data;
 			}
 			return data;
 		},
 		[AuthUser]
 	);
 
-	const uploadData = async (data) => {
+	const addNewPage = async (data) => {
 		const userToken = await AuthUser.getIdToken();
 		const query = {
 			endpointUrl: "/api/addNewPage",
@@ -46,6 +46,12 @@ const Page = () => {
 			method: "POST",
 		};
 		return callApiEndpoint(query);
+		// .then((res) => {
+		// 	return res;
+		// })
+		// .catch((e) => {
+		// 	console.log(e);
+		// });
 	};
 
 	const [userData, setUserData] = useState({});
@@ -71,17 +77,17 @@ const Page = () => {
 		try {
 			const userToken = await AuthUser.getIdToken();
 
-			const query0 = {
-				endpointUrl: "/api/removePageAnalytics",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: userToken,
-					uid: AuthUser.id,
-				},
-				body: { title: ep.title },
-				method: "DELETE",
-			};
-			callApiEndpoint(query0);
+			// const query0 = {
+			// 	endpointUrl: "/api/removePageAnalytics",
+			// 	headers: {
+			// 		"Content-Type": "application/json",
+			// 		Authorization: userToken,
+			// 		uid: AuthUser.id,
+			// 	},
+			// 	body: { title: ep.title },
+			// 	method: "DELETE",
+			// };
+			// callApiEndpoint(query0);
 
 			let removingObj = vals.pages[index];
 			if (removingObj.episodes) {
@@ -178,14 +184,20 @@ const Page = () => {
 						<Formik
 							enableReinitialize
 							initialValues={userData}
-							onSubmit={async (pageName) => {
+							onSubmit={(pageName) => {
 								let newPageStr = adjustPageName(pageName.newPage);
 								const newArr = userData.pages.concat([{ title: newPageStr }]);
 								const newUser = { ...userData, pages: newArr };
-								let ret = await uploadData(newUser);
-								if (ret != null) {
-									router.push(`/admin/${newPageStr}`);
-								}
+								addNewPage(newUser)
+									.then((res) => {
+										router.push(`/admin/${newPageStr}`);
+									})
+									.catch((e) => {
+										setError("This name already exists");
+										setTimeout(() => {
+											setError("");
+										}, 3000);
+									});
 							}}
 						>
 							{({ values }) => (
@@ -237,6 +249,15 @@ const Page = () => {
 											</Button>
 										</Col>
 									</Row>
+									{error ? (
+										<Row>
+											<Col>
+												<Alert variant="danger">{error}</Alert>
+											</Col>
+										</Row>
+									) : (
+										""
+									)}
 								</Form>
 							)}
 						</Formik>

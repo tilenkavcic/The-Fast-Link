@@ -7,6 +7,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Post({ postData }) {
+	// React.useEffect(() => {
+	// 	var referrer = document.referrer;
+	// 	console.log("referrer url",referrer);
+	// }, [])
 	return (
 		<Layout title={postData.title}>
 			<Container>

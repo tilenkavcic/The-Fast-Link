@@ -41,6 +41,7 @@ const handler = async (req, res) => {
 							name: newPageName,
 							type: "review",
 							author: uid,
+							deleted: false,
 							links: [
 								{
 									pictureUrl: "/apple-podcasts.svg",

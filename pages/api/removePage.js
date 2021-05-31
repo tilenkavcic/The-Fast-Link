@@ -26,7 +26,13 @@ const handler = async (req, res) => {
 		// Upload data to firestore
 		try {
 			const pageName = req.body.title;
-			const ress = await firebase.firestore().collection("homepage").doc(pageName).delete();
+			// const ress = await firebase.firestore().collection("homepage").doc(pageName).delete();
+			const ress = await firebase.firestore().collection("homepage").doc(pageName).set(
+				{
+					deleted: true,
+				},
+				{ merge: true }
+			);
 			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error uploading data");
