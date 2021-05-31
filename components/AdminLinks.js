@@ -155,7 +155,7 @@ const AdminLinks = () => {
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"/" + encodeURIComponent(pageData.name)}>
+									<Link href={"/" + pageData.name}>
 										<a target="_blank">{"https://thefast.link/" + pageData.name}</a>
 									</Link>
 								</h6>
