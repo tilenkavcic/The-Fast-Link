@@ -14,7 +14,7 @@ import Footer from "../../components/Footer";
 const Page = () => {
 	const AuthUser = useAuthUser();
 	const router = useRouter();
-	const [error, setError] = useState()
+	const [error, setError] = useState();
 	const callApiEndpoint = useCallback(
 		async ({ endpointUrl, headers, body = undefined, method }) => {
 			const endpoint = getAbsoluteURL(endpointUrl);
@@ -149,9 +149,9 @@ const Page = () => {
 	};
 	const adjustPageName = (newPageStr) => {
 		newPageStr = newPageStr.replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "");
-		newPageStr = encodeURIComponent(newPageStr);
 		newPageStr = newPageStr.replaceAll("-", " ");
 		newPageStr = newPageStr.replaceAll(" ", "-");
+		newPageStr = encodeURIComponent(newPageStr);
 		let ret = newPageStr.split("-");
 		newPageStr.split("-").forEach((w, index) => {
 			if (index != 0) {
@@ -241,7 +241,7 @@ const Page = () => {
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" id=" " name="newPage" placeholder="yourPodcast" />
+											<Field className="form-control" name="newPage" placeholder="yourPodcast" />
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>

@@ -19,13 +19,11 @@ export default function AdminPageTitle() {
 			const response = await fetch(endpoint, {
 				method: "POST",
 				headers: {
+					"Content-Type": "application/json",
 					Authorization: token,
 					uid: AuthUser.id,
-					page: data.name,
-					submittedtile: data.title,
-					submiteddescription: data.description,
 				},
-				body: data,
+				body: JSON.stringify(data),
 			});
 			const respData = await response.json();
 			if (!response.ok) {
@@ -39,6 +37,7 @@ export default function AdminPageTitle() {
 
 	async function submitForm(values) {
 		const ret = await uploadData(values);
+		console.log(values);
 		setPageData((data) => ({
 			...data,
 			title: values.title,
@@ -63,7 +62,7 @@ export default function AdminPageTitle() {
 								<Col sm={4}>
 									<Row>
 										<label className={styles.label} htmlFor="title">
-										Title of the page
+											Title of the page
 										</label>
 									</Row>
 								</Col>
