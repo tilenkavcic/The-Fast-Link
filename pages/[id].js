@@ -5,8 +5,16 @@ import MainLink from "../components/MainLink";
 import { Col, Container, Row } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import {useEffect} from "react"
 
-export default function Post({ postData }) {
+export default function Post({ postData, error }) {
+	useEffect(() => {
+		if (error) {
+			const router = useRouter();
+			router.push(`/`);
+		}
+	}, [])
 	// React.useEffect(() => {
 	// 	var referrer = document.referrer;
 	// 	console.log("referrer url",referrer);
@@ -53,8 +61,6 @@ export default function Post({ postData }) {
 }
 
 export async function getServerSideProps({ params }) {
-	// if (params.id == "json") throw new Error("error");
-
 	try {
 		let postData = await getPageData(params.id);
 		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
@@ -66,7 +72,11 @@ export async function getServerSideProps({ params }) {
 			},
 		};
 	} catch (e) {
-		console.log(e);
-		throw new Error("error");
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/",
+			},		
+		};
 	}
 }
