@@ -25,9 +25,9 @@ const handler = async (req, res) => {
 		}
 		// Upload data to firestore
 		try {
-			const pageName = req.headers.page;
-			const submittedTile = req.headers.submittedtile;
-			const submittedDescription = req.headers.submiteddescription;
+			const pageName = req.body.name;
+			const submittedTile = req.body.title;
+			const submittedDescription = req.body.description;
 
 			// --- upload picture
 			// const picture = req.body;
