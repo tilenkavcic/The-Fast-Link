@@ -149,9 +149,9 @@ const Page = () => {
 	};
 	const adjustPageName = (newPageStr) => {
 		newPageStr = newPageStr.replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "");
-		newPageStr = encodeURIComponent(newPageStr);
 		newPageStr = newPageStr.replaceAll("-", " ");
 		newPageStr = newPageStr.replaceAll(" ", "-");
+		newPageStr = encodeURIComponent(newPageStr);
 		let ret = newPageStr.split("-");
 		newPageStr.split("-").forEach((w, index) => {
 			if (index != 0) {
