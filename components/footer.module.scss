@@ -2,9 +2,20 @@
 
 .wrapper {
 	margin: 2rem 0 0 0;
-	padding: 2rem 0 1rem 0;
+	padding: 2rem 0 0 0;
 	justify-content: center;
 	font-weight: 600;
+	// background-color: rgb(37, 37, 37);
+	font-size: 20px;
+  bottom: 0;
+}
+
+.feedback {
+	margin: 1rem 0 0 0;
+	padding: 0 0 2rem 0;
+	justify-content: center;
+	font-weight: 600;
+	color: $lightText;
 	// background-color: rgb(37, 37, 37);
 	font-size: 20px;
   bottom: 0;
