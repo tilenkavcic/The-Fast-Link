@@ -7,7 +7,7 @@
 	font-weight: 600;
 	// background-color: rgb(37, 37, 37);
 	font-size: 20px;
-  bottom: 0;
+	bottom: 0;
 }
 
 .feedback {
@@ -18,5 +18,10 @@
 	color: $lightText;
 	// background-color: rgb(37, 37, 37);
 	font-size: 20px;
-  bottom: 0;
+	bottom: 0;
+}
+
+.feedbackLink {
+	color: $lightText;
+	font-size: 17px;
 }

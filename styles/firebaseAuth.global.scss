@@ -20,6 +20,9 @@
 .mdl-textfield--floating-label .mdl-textfield__label {
 	color: #fff !important;
 }
+.firebaseui-textfield.mdl-textfield .firebaseui-input {
+	border-color: #777777 !important;
+}
 .firebaseui-container.firebaseui-page-provider-sign-in {
 	font-family: $font-primary;
 	background: transparent;
