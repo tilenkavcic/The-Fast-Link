@@ -55,6 +55,7 @@ const Page = () => {
 	};
 
 	const [userData, setUserData] = useState({});
+	const [confirmDelete, setConfirmDelete] = useState(-1);
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -207,34 +208,54 @@ const Page = () => {
 											<>
 												{values.pages.length > 0 &&
 													values.pages.map((pageData, index) => (
-														<Row className={styles.row} key={index}>
-															<Col sm={10}>
-																<Link
-																	className="pageBtn"
-																	href={{
-																		pathname: "/admin/[pageName]",
-																		query: { pageName: pageData.title },
-																	}}
-																>
-																	<Button block>{pageData.title}</Button>
-																</Link>
-															</Col>
-															<Col sm={2}>
-																<Button
-																	className="secondary"
-																	onClick={() => {
-																		removePage(values, { title: pageData.title }, index);
-																		remove(index);
-																	}}
-																	block
-																>
-																	<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-																		<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#292929" />
-																		<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
-																	</svg>
-																</Button>
-															</Col>
-														</Row>
+														<React.Fragment key={index}>
+															<Row className={styles.row}>
+																<Col sm={10}>
+																	<Link
+																		className="pageBtn"
+																		href={{
+																			pathname: "/admin/[pageName]",
+																			query: { pageName: pageData.title },
+																		}}
+																	>
+																		<Button block>{pageData.title}</Button>
+																	</Link>
+																</Col>
+																<Col sm={2}>
+																	<Button
+																		className="secondary"
+																		onClick={() => {
+																			setConfirmDelete(index);
+																		}}
+																		block
+																	>
+																		<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#292929" />
+																			<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
+																		</svg>
+																	</Button>
+																</Col>
+															</Row>
+															{confirmDelete == index ? (
+																<Row className={styles.row} key={index}>
+																	<Col>Are you sure, this is irreversible and will delete your podcast, all its pages as well as your analytics</Col>
+																	<Col>
+																		<Button
+																			className="secondary"
+																			onClick={() => {
+																				removePage(values, { title: pageData.title }, index);
+																				remove(index);
+																			}}
+																			block
+																		>
+																			I'm sure, DELETE
+																		</Button>
+																	</Col>
+																</Row>
+															) : (
+																""
+															)}
+														</React.Fragment>
 													))}
 											</>
 										)}
