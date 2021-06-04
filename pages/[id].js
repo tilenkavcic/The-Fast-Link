@@ -26,19 +26,19 @@ export default function Post({ postData, error }) {
 					<Col>
 						<h1 className={styles.title}>{postData.title}</h1>
 					</Col>
+				{/* {postData.pictureUrl ? (
+			<Col>
+						<Col className={styles.picture}>
+							<img src={postData.pictureUrl} alt={postData.title}></img>
+						</Col>
+					</Col>
+				) : (
+					""
+				)} */}
 				</Row>
 				<Row>
 					<Col>{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}</Col>
 				</Row>
-				{/* {postData.pictureUrl ? (
-					<Row>
-						<Col className={styles.picture}>
-							<img src={postData.pictureUrl} alt={postData.title}></img>
-						</Col>
-					</Row>
-				) : (
-					""
-				)} */}
 			</Container>
 
 			<Row className={styles.links}>
