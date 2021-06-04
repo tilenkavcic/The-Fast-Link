@@ -176,7 +176,7 @@ const Page = () => {
 							<>
 								<Row className={styles.row}>
 									<Col>
-										<h2>Num. clicks on services</h2>
+										<h2>Num. clicks per service</h2>
 									</Col>
 								</Row>
 								<Row className={styles.row}>
