@@ -1,12 +1,12 @@
 import { getPageData, logRedirect } from "../lib/pages";
 import styles from "./id.module.scss";
-import Layout from "../components/Layout";
+import LayoutPage from "../components/LayoutPage";
 import MainLink from "../components/MainLink";
 import { Col, Container, Row } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import {useEffect} from "react"
+import { useEffect } from "react";
 
 export default function Post({ postData, error }) {
 	useEffect(() => {
@@ -14,13 +14,13 @@ export default function Post({ postData, error }) {
 			const router = useRouter();
 			router.push(`/`);
 		}
-	}, [])
+	}, []);
 	// React.useEffect(() => {
 	// 	var referrer = document.referrer;
 	// 	console.log("referrer url",referrer);
 	// }, [])
 	return (
-		<Layout title={postData.title}>
+		<LayoutPage title={postData.title} description={postData.description} pictureUrl={postData.pictureUrl} name={postData.name}>
 			<Container>
 				<Row>
 					<Col>
@@ -30,15 +30,15 @@ export default function Post({ postData, error }) {
 				<Row>
 					<Col>{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}</Col>
 				</Row>
-				{postData.pictureUrl ? (
+				{/* {postData.pictureUrl ? (
 					<Row>
 						<Col className={styles.picture}>
-							<Image src={postData.pictureUrl} alt={postData.title}></Image>
+							<img src={postData.pictureUrl} alt={postData.title}></img>
 						</Col>
 					</Row>
 				) : (
 					""
-				)}
+				)} */}
 			</Container>
 
 			<Row className={styles.links}>
@@ -56,7 +56,7 @@ export default function Post({ postData, error }) {
 					</Col>
 				</Row>
 			</Container>
-		</Layout>
+		</LayoutPage>
 	);
 }
 
@@ -76,7 +76,7 @@ export async function getServerSideProps({ params }) {
 			redirect: {
 				permanent: false,
 				destination: "/",
-			},		
+			},
 		};
 	}
 }
