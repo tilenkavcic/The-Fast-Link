@@ -23,18 +23,16 @@ export default function Post({ postData, error }) {
 		<LayoutPage title={postData.title} description={postData.description} pictureUrl={postData.pictureUrl} name={postData.name}>
 			<Container>
 				<Row>
-					<Col>
+					<Col sm={9}>
 						<h1 className={styles.title}>{postData.title}</h1>
 					</Col>
-				{/* {postData.pictureUrl ? (
-			<Col>
-						<Col className={styles.picture}>
-							<img src={postData.pictureUrl} alt={postData.title}></img>
-						</Col>
-					</Col>
-				) : (
-					""
-				)} */}
+					{postData.pictureUrl ? (
+							<Col className={styles.picture} sm={1}>
+								<img height="100px" width="100px" src={postData.pictureUrl} alt={postData.title}></img>
+							</Col>
+					) : (
+						""
+					)}
 				</Row>
 				<Row>
 					<Col>{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}</Col>
