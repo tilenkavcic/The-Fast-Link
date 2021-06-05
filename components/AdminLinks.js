@@ -145,7 +145,7 @@ const AdminLinks = () => {
 								</Row>
 							</Col>
 							<Col sm={8}>
-								<Field class="form-control" name="description" placeholder="This is a description" type="text" component="textarea" />
+								<Field class="form-control" name="description" placeholder="This is a description" type="text" rows="4" component="textarea" />
 							</Col>
 						</Row>
 						{/* <PictureUpload />
