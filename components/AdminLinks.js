@@ -202,50 +202,36 @@ const AdminLinks = () => {
 								<h3>Links</h3>
 							</Col>
 						</Row>
-						<Row>
-							<Table className={styles.table} borderless>
-								<thead>
-									<tr>
-										<th>Picture</th>
-										<th>Title</th>
-										<th>Link</th>
-										<th>Active</th>
-									</tr>
-								</thead>
-								<tbody>
-									<FieldArray name="links">
-										{({ insert, remove, push, move }) => (
-											<>
-												{values.links.length > 0 &&
-													values.links.map((linkData, index) => (
-														<tr key={index}>
-															<td>{linkData.pictureUrl ? <Image width={50} height={50} src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}</td>
-															<td>
-																<h6>{linkData.title}</h6>
-															</td>
-															<td>
-																{/* <label htmlFor={`links.${index}.url`}>Link URL</label> */}
-																<Field className="form-control" name={`links.${index}.url`} placeholder="https://myPodcast.com" type="url" />
-																<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
-															</td>
-															<td>
-																<label className={styles.switch}>
-																	<Field type="checkbox" name={`links.${index}.activated`} />
-																	<span className={styles.slider}></span>
-																	<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
-																</label>
-															</td>
-														</tr>
-													))}
-												{/* <button type="button" className="secondary" onClick={() => push({ title: "", url: "", pictureUrl: "" })}>
-										Add Link
-									</button> */}
-											</>
-										)}
-									</FieldArray>
-								</tbody>
-							</Table>
-						</Row>
+						<FieldArray name="links">
+							{({ insert, remove, push, move }) => (
+								<>
+									{values.links.length > 0 &&
+										values.links.map((linkData, index) => (
+											<React.Fragment key={index}>
+												<Row>
+													<Col className={styles.serviceContainer} md={3}>
+														{linkData.pictureUrl ? <Image className={styles.serviceImage} width={30} height={30} src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}
+														<h6 className={styles.serviceTitle}>{linkData.title}</h6>
+													</Col>
+													<Col xs={10} md={7} className={styles.inputUrl}>
+														{/* <label htmlFor={`links.${index}.url`}>Link URL</label> */}
+														<Field className="form-control" name={`links.${index}.url`} placeholder="https://myPodcast.com" type="url" />
+														<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
+													</Col>
+													<Col xs={2} md={1} className={styles.switchCol}>
+														<label className={styles.switch}>
+															<Field type="checkbox" name={`links.${index}.activated`} />
+															<span className={styles.slider}></span>
+															<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
+														</label>
+													</Col>
+												</Row>
+												<hr className={styles.hr} />
+											</React.Fragment>
+										))}
+								</>
+							)}
+						</FieldArray>
 						<Navbar sticky="top" className={styles.submitBtn}>
 							<Button type="submit" block>
 								{submitAlert ? <Alert variant="primary">Successfully submitted</Alert> : ""}

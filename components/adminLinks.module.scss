@@ -27,12 +27,41 @@
 	color: $white !important;
 }
 
+.serviceContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 5px;
+}
+
+.inputUrl {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.serviceImage {
+	width: 50px;
+	height: 50px;
+}
+
+.serviceTitle {
+	margin: 0 0 0 10px;
+}
+
+.switchCol {
+	padding-left: 0;
+}
 .switch {
 	position: relative;
 	display: inline-block;
 	width: 60px;
 	height: 34px;
-	margin: 0 0;
+}
+
+.hr {
+	width: 100%;
+	border-top: 1px solid #dadada4d;
 }
 
 /* Hide default HTML checkbox */
