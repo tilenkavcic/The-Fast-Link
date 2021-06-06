@@ -238,7 +238,7 @@ const Page = () => {
 															</Row>
 															{confirmDelete == index ? (
 																<Row className={styles.row} key={index}>
-																	<Col>Are you sure, this is irreversible and will delete your podcast, all its pages as well as your analytics</Col>
+																	<Col>Are you sure, this is irreversible and will delete your podcast, all its pages as well as your analytics!</Col>
 																	<Col>
 																		<Button
 																			className="secondary"
