@@ -27,7 +27,7 @@ export default function Post({ postData, error }) {
 						<h1 className={styles.title}>{postData.title}</h1>
 					</Col>
 					{postData.pictureUrl ? (
-							<Col className={styles.picture} sm={1}>
+							<Col className={styles.picture} md={1}>
 								<img height="100px" width="100px" src={postData.pictureUrl} alt={postData.title}></img>
 							</Col>
 					) : (
