@@ -79,9 +79,9 @@ export default function AdminPageTitle() {
 		}));
 		window.location.reload();
 	}
-	const anchorFormData = {
-		url: pageData.links[2].url,
-	};
+	// const anchorFormData = {
+	// 	url: pageData.links[2].url,
+	// };
 	const formData = {
 		title: pageData.title,
 		description: pageData.description,
@@ -93,7 +93,7 @@ export default function AdminPageTitle() {
 		<>
 			{formData.name ? (
 				<>
-					<Formik initialValues={anchorFormData} onSubmit={submitFormAnchor}>
+					{/* <Formik initialValues={anchorFormData} onSubmit={submitFormAnchor}>
 						{({ values }) => (
 							<Form>
 								<Row className={styles.form}>
@@ -121,7 +121,7 @@ export default function AdminPageTitle() {
 							</Form>
 						)}
 					</Formik>
-					<hr />
+					<hr /> */}
 					<Formik initialValues={formData} onSubmit={submitForm}>
 						{({ values, setFieldValue }) => (
 							<Form>
