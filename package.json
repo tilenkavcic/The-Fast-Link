@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "cheerio": "*",
     "firebase": "^8.2.5",
     "firebase-admin": "^9.4.2",
     "formik": "^2.2.6",
