@@ -10,7 +10,7 @@ const handler = async (req, res) => {
 		res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
-	const pageName = req.headers.page;
+	const pageName = req.body.name;
 	const sentData = req.body;
 	const uid = req.headers.uid;
 	if (token != "unauthenticated") {
