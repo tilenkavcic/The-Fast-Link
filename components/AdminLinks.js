@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	AuthAction,
+} from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import { PageContext } from "../context/PageContext";
@@ -26,7 +31,11 @@ const AdminLinks = () => {
 			});
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(data)}`
+				);
 				return null;
 			}
 			return data;
@@ -39,7 +48,10 @@ const AdminLinks = () => {
 	};
 
 	const redirectToReviewPage = async (userData, pageIndex) => {
-		if (userData.pages[pageIndex].review && userData.pages[pageIndex].review != "") {
+		if (
+			userData.pages[pageIndex].review &&
+			userData.pages[pageIndex].review != ""
+		) {
 			router.push(`/admin/${userData.pages[pageIndex].review}`);
 		} else {
 			let newPageName = `${pageData.name}-review`;
@@ -102,7 +114,11 @@ const AdminLinks = () => {
 			});
 			const respData = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(respData)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(respData)}`
+				);
 				return null;
 			}
 			return respData;
@@ -132,7 +148,11 @@ const AdminLinks = () => {
 							</Col>
 
 							<Col sm={8}>
-								<Field class="form-control" name="title" placeholder="The page title" />
+								<Field
+									class="form-control"
+									name="title"
+									placeholder="The page title"
+								/>
 							</Col>
 						</Row>
 						<Row class="form-group" className={styles.formTitle}>
@@ -145,7 +165,14 @@ const AdminLinks = () => {
 								</Row>
 							</Col>
 							<Col sm={8}>
-								<Field class="form-control" name="description" placeholder="This is a description" type="text" rows="4" component="textarea" />
+								<Field
+									class="form-control"
+									name="description"
+									placeholder="This is a description"
+									type="text"
+									rows="4"
+									component="textarea"
+								/>
 							</Col>
 						</Row>
 						{/* <PictureUpload />
@@ -156,7 +183,9 @@ const AdminLinks = () => {
 								<h6>
 									Your link&nbsp;
 									<Link href={"/" + pageData.name}>
-										<a target="_blank">{"https://thefast.link/" + pageData.name}</a>
+										<a target="_blank">
+											{"https://thefast.link/" + pageData.name}
+										</a>
 									</Link>
 								</h6>
 							</Col>
@@ -164,8 +193,46 @@ const AdminLinks = () => {
 
 						<Row className={styles.row}>
 							<Col>
-								<Link href={"/admin/embed?name=" + encodeURIComponent(pageData.name)}>
+								<Link
+									href={
+										"/admin/embed?name=" + encodeURIComponent(pageData.name)
+									}
+								>
 									<Button className={styles.embedBtn} block>
+										<svg
+											width="20"
+											height="20"
+											viewBox="0 0 24 24"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<g clip-path="url(#clip0)">
+												<path
+													d="M7.29708 4.16836L1.2995 6.36674L1.73061 12.74"
+													stroke="#292929"
+													stroke-width="3"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M15.5464 19.8558L21.544 17.6574L21.1129 11.2842"
+													stroke="#292929"
+													stroke-width="3"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M18.1015 1.64722L4.74195 22.2191"
+													stroke="#292929"
+													stroke-width="3"
+													stroke-linecap="square"
+													stroke-linejoin="round"
+												/>
+											</g>
+											<defs>
+												<clipPath id="clip0">
+													<rect width="24" height="24" fill="white" />
+												</clipPath>
+											</defs>
+										</svg>{" "}
 										Embed the link
 									</Button>
 								</Link>
@@ -175,7 +242,36 @@ const AdminLinks = () => {
 						<Row className={styles.row}>
 							<Col>
 								<Link href={"/admin/" + pageData.name + "/analytics"}>
-									<Button block>Analytics</Button>
+									<Button block>
+										<svg
+											width="20"
+											height="20"
+											viewBox="0 0 24 24"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<g clip-path="url(#clip0)">
+												<path
+													d="M0.8125 22H22.1875"
+													stroke="#292929"
+													stroke-width="3"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M0.8125 16.375L5.3125 9.62501L12.0625 11.875L17.6875 4.00001L22.1875 7.37501"
+													stroke="#292929"
+													stroke-width="3"
+													stroke-linejoin="round"
+												/>
+											</g>
+											<defs>
+												<clipPath id="clip0">
+													<rect width="24" height="24" fill="white" />
+												</clipPath>
+											</defs>
+										</svg>{" "}
+										Analytics
+									</Button>
 								</Link>
 							</Col>
 						</Row>
@@ -184,12 +280,54 @@ const AdminLinks = () => {
 								<Row className={styles.row}>
 									<Col>
 										<Button onClick={reviewRedirect} block>
+											<svg
+												width="20"
+												height="20"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clip-path="url(#clip0)">
+													<path
+														d="M12 1.88154L14.4138 8.40461C14.6163 8.95205 15.0479 9.38367 15.5954 9.58625L22.1185 12L15.5954 14.4138C15.0479 14.6163 14.6163 15.0479 14.4138 15.5954L12 22.1185L9.58625 15.5954C9.38368 15.0479 8.95205 14.6163 8.40462 14.4138L1.88154 12L8.40461 9.58625C8.95205 9.38368 9.38367 8.95205 9.58625 8.40462L12 1.88154Z"
+														stroke="#292929"
+														stroke-width="3"
+													/>
+												</g>
+												<defs>
+													<clipPath id="clip0">
+														<rect width="24" height="24" fill="white" />
+													</clipPath>
+												</defs>
+											</svg>{" "}
 											Review
 										</Button>
 									</Col>
 									<Col>
 										<Link href={"/admin/" + pageData.name + "/episodes"}>
-											<Button block>Episodes</Button>
+											<Button block>
+												<svg
+													width="20"
+													height="20"
+													viewBox="0 0 24 24"
+													fill="none"
+													xmlns="http://www.w3.org/2000/svg"
+												>
+													<path
+														d="M10.7834 19.3021C9.32239 20.7631 7.1937 23.9914 3.47838 20.2761C-0.236948 16.5607 2.99137 14.432 4.93938 12.484L8.34839 9.56203C10.7834 7.61402 12.7314 7.61402 15.1664 10.049"
+														stroke="#292929"
+														stroke-width="3"
+														stroke-linejoin="round"
+													/>
+													<path
+														d="M13.2184 4.46794C14.6794 3.00693 16.8081 -0.221391 20.5234 3.49394C24.2387 7.20926 21.0104 9.33795 19.0624 11.286L15.6534 14.208C13.2184 16.156 11.2704 16.156 8.83537 13.721"
+														stroke="#292929"
+														stroke-width="3"
+														stroke-linejoin="round"
+													/>
+												</svg>{" "}
+												Episodes
+											</Button>
 										</Link>
 									</Col>
 								</Row>
@@ -209,20 +347,56 @@ const AdminLinks = () => {
 										values.links.map((linkData, index) => (
 											<React.Fragment key={index}>
 												<Row>
-													<Col className={styles.serviceContainer} md={3}>
-														{linkData.pictureUrl ? <Image className={styles.serviceImage} width={30} height={30} src={linkData.pictureUrl} alt={`links.${index}.title`} /> : ""}
-														<h6 className={styles.serviceTitle}>{linkData.title}</h6>
+													<Col className={styles.serviceContainer} 
+													xs={{ order: 0, span: 9 }}
+													md={{ order: 0, span: 3 }}>
+														{linkData.pictureUrl ? (
+															<Image
+																className={styles.serviceImage}
+																width={30}
+																height={30}
+																src={linkData.pictureUrl}
+																alt={`links.${index}.title`}
+															/>
+														) : (
+															""
+														)}
+														<h6 className={styles.serviceTitle}>
+															{linkData.title}
+														</h6>
 													</Col>
-													<Col xs={10} md={7} className={styles.inputUrl}>
+													<Col 
+													xs={{ order: 2, span: 12 }}
+													md={{ order: 1, span: 8 }} className={styles.inputUrl}>
 														{/* <label htmlFor={`links.${index}.url`}>Link URL</label> */}
-														<Field className="form-control" name={`links.${index}.url`} placeholder="https://myPodcast.com" type="url" />
-														<ErrorMessage name={`links.${index}.url`} component="div" className="field-error" />
+														<Field
+															className="form-control"
+															name={`links.${index}.url`}
+															placeholder="https://myPodcast.com"
+															type="url"
+														/>
+														<ErrorMessage
+															name={`links.${index}.url`}
+															component="div"
+															className="field-error"
+														/>
 													</Col>
-													<Col xs={2} md={1} className={styles.switchCol}>
+													<Col
+														xs={{ order: 1, span: 2 }}
+														md={{ order: 2, span: 1 }}
+														className={styles.switchCol}
+													>
 														<label className={styles.switch}>
-															<Field type="checkbox" name={`links.${index}.activated`} />
+															<Field
+																type="checkbox"
+																name={`links.${index}.activated`}
+															/>
 															<span className={styles.slider}></span>
-															<ErrorMessage name={`links.${index}.activated`} component="div" className="field-error" />
+															<ErrorMessage
+																name={`links.${index}.activated`}
+																component="div"
+																className="field-error"
+															/>
 														</label>
 													</Col>
 												</Row>
@@ -234,7 +408,11 @@ const AdminLinks = () => {
 						</FieldArray>
 						<Navbar sticky="top" className={styles.submitBtn}>
 							<Button type="submit" block>
-								{submitAlert ? <Alert variant="primary">Successfully submitted</Alert> : ""}
+								{submitAlert ? (
+									<Alert variant="primary">Successfully submitted</Alert>
+								) : (
+									""
+								)}
 								Save
 							</Button>
 						</Navbar>

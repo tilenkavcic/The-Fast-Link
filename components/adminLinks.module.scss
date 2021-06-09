@@ -30,8 +30,11 @@
 .serviceContainer {
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	margin-bottom: 5px;
+	@media (max-width: 768px) {
+		margin-left: 10px;
+		// justify-content: center;
+	}
 }
 
 .inputUrl {
