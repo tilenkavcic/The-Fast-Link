@@ -8,7 +8,7 @@ import {
 } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import { PageContext } from "../context/PageContext";
-import { Button, Row, Col, Table } from "react-bootstrap";
+import { Button, Row, Col, Alert } from "react-bootstrap";
 import styles from "./adminPageTitle.module.scss";
 
 export default function AdminPageTitle() {
@@ -103,11 +103,11 @@ export default function AdminPageTitle() {
 		};
 		let ret = await callApiEndpoint(uploadNew);
 		setPageData(newPage);
+		setSubmitAlert(true);
 	}
 
 	async function submitForm(values) {
 		const ret = await uploadData(values);
-		console.log(values);
 		setPageData((data) => ({
 			...data,
 			title: values.title,
@@ -118,6 +118,8 @@ export default function AdminPageTitle() {
 
 	const [formData, setFormData] = useState();
 	const [anchorFormData, setAnchorFormData] = useState();
+	const [submitAlert, setSubmitAlert] = useState(false);
+
 	useEffect(() => {
 		if (pageData && pageData.name) {
 			setFormData({
@@ -129,7 +131,6 @@ export default function AdminPageTitle() {
 			setAnchorFormData({
 				url: pageData.links[2].url,
 			});
-			console.log("neki", pageData.links);
 		}
 	}, [pageData]);
 
@@ -139,7 +140,7 @@ export default function AdminPageTitle() {
 				<>
 					{anchorFormData ? (
 						<>
-							<h2>Get links from Anchor</h2>
+							<h2>Import from Anchor</h2>
 							<Formik
 								initialValues={anchorFormData}
 								onSubmit={submitFormAnchor}
@@ -169,6 +170,13 @@ export default function AdminPageTitle() {
 										<Row>
 											<Col>
 												<Button type="submit" block>
+													{submitAlert ? (
+														<Alert variant="primary">
+															Successfully imported
+														</Alert>
+													) : (
+														""
+													)}
 													Save Anchor
 												</Button>
 											</Col>
@@ -184,7 +192,6 @@ export default function AdminPageTitle() {
 					{formData ? (
 						<>
 							<h2>Title of your page</h2>
-
 							<Formik initialValues={formData} onSubmit={submitForm}>
 								{({ values, setFieldValue }) => (
 									<Form>
