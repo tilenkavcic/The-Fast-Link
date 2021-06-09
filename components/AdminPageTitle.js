@@ -155,7 +155,8 @@ export default function AdminPageTitle() {
 													</label>
 												</Row>
 												<Row>
-													<small>If you have one</small>
+
+													<small>This will erase ALL your links</small>
 												</Row>
 											</Col>
 											<Col sm={8}>
