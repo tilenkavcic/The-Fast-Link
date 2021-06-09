@@ -112,7 +112,7 @@ const handler = async (req, res) => {
 					name: "stitcher",
 				},
 			];
-			const url = req.headers.page;
+			const url = req.body.url;
 			const response = await fetch(url);
 			const htmlString = await response.text();
 			const $ = cheerio.load(htmlString);
@@ -129,7 +129,6 @@ const handler = async (req, res) => {
           }
         }
 			});
-      console.log(links)
 			res.status(200).json(links);
 		} catch (e) {
 			console.error("Error scraping");
