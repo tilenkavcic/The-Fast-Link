@@ -45,6 +45,11 @@
 	}
 }
 
+.remove {
+	background-color: $background;
+	border-color: $lightText;
+}
+
 @keyframes wave {
 	50%,
 	75% {
