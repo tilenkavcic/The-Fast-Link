@@ -223,15 +223,15 @@ const Page = () => {
 																</Col>
 																<Col sm={2}>
 																	<Button
-																		className="secondary"
+																		className={styles.remove}
 																		onClick={() => {
 																			setConfirmDelete(index);
 																		}}
 																		block
 																	>
 																		<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-																			<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#292929" />
-																			<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#292929" />
+																			<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#fff" />
+																			<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#fff" />
 																		</svg>
 																	</Button>
 																</Col>
