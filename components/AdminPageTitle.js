@@ -138,7 +138,7 @@ export default function AdminPageTitle() {
 		<>
 			{pageData ? (
 				<>
-					{anchorFormData ? (
+					{anchorFormData && pageData.type == "podcast" ? (
 						<>
 							<h2>Import from Anchor</h2>
 							<Formik
