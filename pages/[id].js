@@ -1,9 +1,10 @@
-import { getPageData, logRedirect, getAllPageIds } from "../lib/pages";
+import { getPageData, logRedirect } from "../lib/pages";
 import styles from "./id.module.scss";
 import LayoutPage from "../components/LayoutPage";
 import MainLink from "../components/MainLink";
 import { Col, Container, Row } from "react-bootstrap";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -57,20 +58,9 @@ export default function Post({ postData, error }) {
 	);
 }
 
-export async function getStaticPaths() {
-	const paths = await getAllPageIds();
-	return {
-		paths,
-		fallback: false,
-	};
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
 	try {
 		let postData = await getPageData(params.id);
-		// if (postData.deleted) {
-		// 	throw "Page was deleted"
-		// }
 		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 		postData.links = filteredLinks;
 		let res = await logRedirect(params.id);
@@ -78,18 +68,13 @@ export async function getStaticProps({ params }) {
 			props: {
 				postData,
 			},
-			revalidate: 60, // ISR
 		};
 	} catch (e) {
 		return {
-			props: {},
-			revalidate: 60, // ISR
+			redirect: {
+				permanent: false,
+				destination: "/",
+			},
 		};
-		// return {
-		// 	redirect: {
-		// 		permanent: true,
-		// 		destination: "/",
-		// 	},
-		// };
 	}
 }
