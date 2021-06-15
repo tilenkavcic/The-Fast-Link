@@ -155,7 +155,6 @@ export default function AdminPageTitle() {
 													</label>
 												</Row>
 												<Row>
-
 													<small>This will erase ALL your links</small>
 												</Row>
 											</Col>
@@ -209,6 +208,7 @@ export default function AdminPageTitle() {
 													class="form-control"
 													name="title"
 													placeholder="The page title"
+													autoFocus={true}
 												/>
 											</Col>
 										</Row>
