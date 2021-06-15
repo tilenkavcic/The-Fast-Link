@@ -2,7 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 
@@ -13,10 +16,22 @@
 
 		<!-- Custom fonts for this template -->
 		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css" />
-		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
-		<link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
-		<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="vendor/simple-line-icons/css/simple-line-icons.css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Lato"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Muli"
+			rel="stylesheet"
+		/>
 
 		<!-- Plugin CSS -->
 		<link rel="stylesheet" href="device-mockups/device-mockups.min.css" />
@@ -29,18 +44,32 @@
 		<!-- Navigation -->
 		<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
 			<div class="container">
-				<a class="navbar-brand js-scroll-trigger" href="#page-top">Mobilna varnost</a>
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<a class="navbar-brand js-scroll-trigger" href="#page-top"
+					>Mobilna varnost</a
+				>
+				<button
+					class="navbar-toggler navbar-toggler-right"
+					type="button"
+					data-toggle="collapse"
+					data-target="#navbarResponsive"
+					aria-controls="navbarResponsive"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
 					Meni
 					<i class="fas fa-bars"></i>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="#download">Naložite si</a>
+							<a class="nav-link js-scroll-trigger" href="#download"
+								>Naložite si</a
+							>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="#features">Funkcionalnosti</a>
+							<a class="nav-link js-scroll-trigger" href="#features"
+								>Funkcionalnosti</a
+							>
 						</li>
 						<!--
           <li class="nav-item">
@@ -56,8 +85,15 @@
 				<div class="row h-100">
 					<div class="col-lg-7 my-auto">
 						<div class="header-content mx-auto">
-							<h1 class="mb-5">Mobilna varnost,<br />skupaj ojačajmo vez med nami - policijo in državljani!</h1>
-							<a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Naloži si</a>
+							<h1 class="mb-5">
+								Mobilna varnost,<br />skupaj ojačajmo vez med nami - policijo in
+								državljani!
+							</h1>
+							<a
+								href="#download"
+								class="btn btn-outline btn-xl js-scroll-trigger"
+								>Naloži si</a
+							>
 						</div>
 					</div>
 					<div class="col-lg-5 my-auto">
@@ -66,7 +102,11 @@
 								<div class="device">
 									<div class="screen">
 										<!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-										<img src="img/mapa.gif" class="img-fluid" alt="App animation" />
+										<img
+											src="img/mapa.gif"
+											class="img-fluid"
+											alt="App animation"
+										/>
 									</div>
 								</div>
 							</div>
@@ -80,6 +120,150 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 mx-auto">
+						<style>
+							.fastPopup {
+								z-index: 10000;
+								position: fixed;
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
+								width: 100vw;
+								height: 100vh;
+								background-color: rgba(0, 0, 0, 0.178);
+								display: none;
+								font-family: sans-serif;
+							}
+							.fastContentBox {
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
+
+								position: relative;
+								width: 80vw;
+								height: 80vh;
+								padding-top: 10vh;
+								background: #292929;
+								border-radius: 20px;
+								overflow-y: auto;
+							}
+							.fastContentBox h1 {
+								font-size: 60px;
+								color: #fff;
+								padding-top: 10px;
+								font-weight: 600;
+							}
+							.fastClose {
+								display: inline-block;
+								position: absolute;
+								top: 20px;
+								right: 20px;
+								width: 40px;
+								height: 40px;
+								margin: 0;
+
+								transition: background 150ms ease-in-out, transform 150ms ease;
+
+								border: none;
+								text-decoration: none;
+								background-color: rgba(255, 255, 255, 0);
+								cursor: pointer;
+							}
+							.fastCloseText {
+								display: inline-block;
+								border: none;
+								padding: 1rem 2rem;
+								margin: 0 0 10px 0;
+								text-decoration: none;
+								background: #000000;
+								border-radius: 10px;
+								color: #ffffff;
+								font-size: 1rem;
+								line-height: 1;
+								cursor: pointer;
+								text-align: center;
+								transition: background 150ms ease-in-out, transform 150ms ease;
+								-webkit-appearance: none;
+								-moz-appearance: none;
+							}
+							button:hover,
+							button:focus {
+								background: #464646;
+							}
+							@media (max-width: 767px) {
+								.fastContentBox {
+									height: 500px;
+									padding-top: 0;
+								}
+								.fastContentBox h1 {
+									font-size: 30px;
+								}
+								.fastClose {
+									top: 15px;
+									right: 15px;
+								}
+							}
+						</style>
+						<script>
+							window.onload = () => {
+								const fastPopup = document.querySelector(".fastPopup");
+								const fastClose = document.querySelector(".fastClose");
+								const fastCloseTxt = document.querySelector(".fastCloseText");
+								setTimeout(() => {
+									fastPopup.style.display = "block";
+
+									fastClose.addEventListener("click", () => {
+										fastPopup.style.display = "none";
+									});
+									fastCloseTxt.addEventListener("click", () => {
+										fastPopup.style.display = "none";
+									});
+								}, 3000);
+							};
+						</script>
+						<div class="fastPopup">
+							<div class="fastContentBox">
+								<button class="fastClose">
+									<svg
+										width="40"
+										height="40"
+										viewBox="0 0 40 40"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<title>Close popup</title>
+										<rect
+											x="3.62402"
+											y="33.8516"
+											width="41.6239"
+											height="4.16239"
+											rx="2.0812"
+											transform="rotate(-45 3.62402 33.8516)"
+											fill="#EBEBEB"
+										/>
+										<rect
+											x="6.39917"
+											y="3.32715"
+											width="41.6239"
+											height="4.16239"
+											rx="2.0812"
+											transform="rotate(45 6.39917 3.32715)"
+											fill="#EBEBEB"
+										/>
+									</svg>
+								</button>
+								<h1>Subscribe</h1>
+								<iframe
+									width="100%"
+									height="700px"
+									src="https://thefast.link/test/embed"
+									allowtransparency="true"
+									frameborder="0"
+									allowfullscreen
+								>
+								</iframe>
+								<button class="fastCloseText">CLOSE</button>
+							</div>
+						</div>
 						<h2 class="section-heading">Enostavna namestitev alpha verzije!</h2>
 						<p>Spodaj si lahko namestite začetno verzijo aplikacije</p>
 						<br />
@@ -122,7 +306,9 @@
 						<script>
 							(function () {
 								var js, q;
-								if (!document.getElementById.call(document, "typef_orm_share")) {
+								if (
+									!document.getElementById.call(document, "typef_orm_share")
+								) {
 									js = document.createElement.call(document, "script");
 									js.id = "typef_orm_share";
 									js.src = "https://embed.typeform.com/embed.js";
