@@ -83,7 +83,7 @@ export async function getStaticProps({ params }) {
 	} catch (e) {
 		return {
 			redirect: {
-				permanent: false,
+				permanent: true,
 				destination: "/",
 			},
 		};
