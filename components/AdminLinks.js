@@ -180,6 +180,7 @@ const AdminLinks = () => {
 						{pageData.pictureUrl ? <img src={pageData.pictureUrl} alt={pageData.title} /> : ""} */}
 						<Row>
 							<Col>
+								To achieve our fast load times your changes may take up to 60s to take effect. 
 								<h6>
 									Your link&nbsp;
 									<Link href={"/" + pageData.name}>
@@ -400,7 +401,7 @@ const AdminLinks = () => {
 						<Navbar sticky="top" className={styles.submitBtn}>
 							<Button type="submit" block>
 								{submitAlert ? (
-									<Alert variant="primary">Successfully submitted</Alert>
+									<Alert variant="primary">Successful! Please allow up to 60s for the page to update</Alert>
 								) : (
 									""
 								)}
