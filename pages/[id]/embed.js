@@ -17,14 +17,12 @@ export default function Post({ postData }) {
 
 			<Layout title={postData.title} className={styles.layout}>
 				<Row className={styles.links}>
-					{postData.links.map(({ title, url, pictureUrl, position, activated }, index) => (
+					{postData.links.map(({ name, title, url, pictureUrl, position, activated }, index) => (
 						<React.Fragment key={index}>
-								<a href={url} className={styles.rectangle}>
+								<a target="_blank" href={`/${postData.name}/redirect/${name}?url=${url}`} className={styles.rectangle}>
 								<h1 className={styles.title}>{title}</h1>
 								<div className={styles.pictureContainer}>{pictureUrl != "" ? <img src={pictureUrl} alt={title} className={styles.pictureInside} /> : ""}</div>
 							</a>
-
-							{/* <MainLink title={title} url={url} imgUrl={pictureUrl} position={position} /> */}
 						</React.Fragment>
 					))}
 				</Row>
