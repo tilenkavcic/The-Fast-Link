@@ -43,6 +43,8 @@
 	@include text-gradient;
 	text-align: center;
 	font-size: 1.4rem;
+	font-family: $font-logo;
+	font-variant-ligatures: historical-ligatures;
 }
 
 .hr {
