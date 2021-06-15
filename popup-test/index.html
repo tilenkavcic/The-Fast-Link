@@ -147,7 +147,7 @@
 								overflow-y: auto;
 							}
 							.fastContentBox h1 {
-								font-size: 60px;
+								font-size: 50px;
 								color: #fff;
 								padding-top: 10px;
 								font-weight: 600;
@@ -160,9 +160,8 @@
 								width: 40px;
 								height: 40px;
 								margin: 0;
-
-								transition: background 150ms ease-in-out, transform 150ms ease;
-
+								transition: background 150ms ease-in;
+								border-radius: 10px;
 								border: none;
 								text-decoration: none;
 								background-color: rgba(255, 255, 255, 0);
@@ -181,12 +180,13 @@
 								line-height: 1;
 								cursor: pointer;
 								text-align: center;
-								transition: background 150ms ease-in-out, transform 150ms ease;
+								transition: background 150ms ease-in;
 								-webkit-appearance: none;
 								-moz-appearance: none;
 							}
 							button:hover,
 							button:focus {
+								stroke: #080808;
 								background: #464646;
 							}
 							@media (max-width: 767px) {
@@ -217,7 +217,7 @@
 									fastCloseTxt.addEventListener("click", () => {
 										fastPopup.style.display = "none";
 									});
-								}, 3000);
+								}, 0);
 							};
 						</script>
 						<div class="fastPopup">
@@ -255,7 +255,7 @@
 								<iframe
 									width="100%"
 									height="700px"
-									src="https://thefast.link/test/embed"
+									src="http://localhost:3000/test/embed"
 									allowtransparency="true"
 									frameborder="0"
 									allowfullscreen
