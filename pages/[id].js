@@ -68,9 +68,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
 	try {
 		let postData = await getPageData(params.id);
-		if (postData.deleted) {
-			throw "Page was deleted"
-		}
+		// if (postData.deleted) {
+		// 	throw "Page was deleted"
+		// }
 		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
 		postData.links = filteredLinks;
 		let res = await logRedirect(params.id);
@@ -82,10 +82,14 @@ export async function getStaticProps({ params }) {
 		};
 	} catch (e) {
 		return {
-			redirect: {
-				permanent: true,
-				destination: "/",
-			},
+			props: {},
+			revalidate: 60, // ISR
 		};
+		// return {
+		// 	redirect: {
+		// 		permanent: true,
+		// 		destination: "/",
+		// 	},
+		// };
 	}
 }
