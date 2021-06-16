@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -112,24 +117,31 @@ const handler = async (req, res) => {
 					name: "stitcher",
 				},
 			];
-			const url = req.body.url;
-			const response = await fetch(url);
+			const anchorUrl = req.body.url;
+			const pageName = req.body.name;
+			const response = await fetch(anchorUrl);
 			const htmlString = await response.text();
 			const $ = cheerio.load(htmlString);
 
+			let profile = $(`div[data-cy="profileHeader"]`);
+			let imageUrl = profile.find("img").attr("src");
+
 			links.forEach((link) => {
 				if (link.title == "Anchor") {
-					link.url = url;
+					link.url = anchorUrl;
+				} else {
+					const aImage = $(`img[alt="${link.title} Logo"]`);
+					const text = aImage.parent().parent().parent().find("a").attr("href");
+					if (text && text.substring(0, 8) === "https://") {
+						link.url = text;
+					}
 				}
-        else {
-          const aImage = $(`img[alt="${link.title} Logo"]`);
-          const text = aImage.parent().parent().parent().find("a").attr("href");
-          if (text && text.substring(0, 8) === "https://") {
-            link.url = text;
-          }
-        }
 			});
-			res.status(200).json(links);
+			if (!imageUrl) {
+				imageUrl = "";
+			}
+
+			res.status(200).json({ pictureUrl: imageUrl, links: links });
 		} catch (e) {
 			console.error("Error scraping");
 			console.error(e);

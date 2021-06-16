@@ -8,14 +8,19 @@
 	background-color: $primary;
 	border-color: $primary;
 }
+.siteNameInfo {
+	font-size: 24px;
+	font-weight: 600;
+	@include text-gradient();
+}
 
 .loading {
 	// https://codepen.io/alphardex/pen/XWWWBmQ
 	$colors: #9fddff, #4d9ad1, #4d72d1, #4d5ad1, #774dd1;
 	display: flex;
-  align-items: center;
-  justify-content: center;
-  
+	align-items: center;
+	justify-content: center;
+
 	.dot {
 		position: relative;
 		width: 2em;

@@ -11,6 +11,7 @@ $primary1: #9FDDFF, 100%;
 $primary2: #774dd1 100.31%;
 $whiteBackground: #ffffff;
 $font-primary: Work Sans, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
+$font-logo: Montserrat, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
 
 @mixin bg-gradient() {
   background: linear-gradient(90deg, #9FDDFF 0.31%, #774DD1 100.31%);
