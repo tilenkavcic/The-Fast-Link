@@ -64,23 +64,14 @@ const Page = () => {
 					<Col>Include the following somewhere in your HTML</Col>
 				</Row>
 				<Row>
+					<Col>This will allow your visitors to subscribe after 3s on the page</Col>
+				</Row>
+				<Row>
 					<Col>
 						<pre className={styles.htmltxtPopup}>{popupTag}</pre>
 					</Col>
 				</Row>
 			</Container>
-			{/* <div className={inStyle.fastPopup}>
-				asdasd
-				<iframe width="100%" height="400" src="https://fast-link.vercel.app/neki" frameBorder="0" allowFullScreen></iframe>
-			</div>
-			<div className={inStyle.fastOverlay}></div> */}
-			{/* <iframe
-	width="100%"
-	height="500px"
-	src="http://localhost:3000/podkast/embed"
-	allowtransparency="true"
-	frameborder="0" allowfullscreen>
-</iframe> */}
 			<Footer />
 		</Layout>
 	);
