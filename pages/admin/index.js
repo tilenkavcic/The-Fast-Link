@@ -25,7 +25,11 @@ const Page = () => {
 			});
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(data)}`
+				);
 				throw data;
 			}
 			return data;
@@ -149,7 +153,17 @@ const Page = () => {
 		}
 	};
 	const adjustPageName = (newPageStr) => {
-		newPageStr = newPageStr.replaceAll(";", "").replaceAll(",", "").replaceAll("/", "").replaceAll("?", "").replaceAll(":", "").replaceAll("@", "").replaceAll("&", "").replaceAll("=", "").replaceAll("+", "").replaceAll("$", "");
+		newPageStr = newPageStr
+			.replaceAll(";", "")
+			.replaceAll(",", "")
+			.replaceAll("/", "")
+			.replaceAll("?", "")
+			.replaceAll(":", "")
+			.replaceAll("@", "")
+			.replaceAll("&", "")
+			.replaceAll("=", "")
+			.replaceAll("+", "")
+			.replaceAll("$", "");
 		newPageStr = newPageStr.replaceAll("-", " ");
 		newPageStr = newPageStr.replaceAll(" ", "-");
 		newPageStr = encodeURIComponent(newPageStr);
@@ -165,7 +179,10 @@ const Page = () => {
 	};
 
 	return (
-		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
+		<Layout
+			title="The Fast Link | Admin"
+			description="The Fast Link Admin Page, edit your beautiful, fast podcast links"
+		>
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 			<Container>
 				<Row className={styles.row}>
@@ -229,21 +246,50 @@ const Page = () => {
 																		}}
 																		block
 																	>
-																		<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-																			<rect x="0.0605469" y="11" width="15" height="2" rx="0.75" transform="rotate(-45 0.0605469 11)" fill="#fff" />
-																			<rect x="1.06055" width="15" height="2" rx="0.75" transform="rotate(45 1.06055 0)" fill="#fff" />
+																		<svg
+																			width="12"
+																			height="13"
+																			viewBox="0 0 12 13"
+																			fill="none"
+																			xmlns="http://www.w3.org/2000/svg"
+																		>
+																			<rect
+																				x="0.0605469"
+																				y="11"
+																				width="15"
+																				height="2"
+																				rx="0.75"
+																				transform="rotate(-45 0.0605469 11)"
+																				fill="#fff"
+																			/>
+																			<rect
+																				x="1.06055"
+																				width="15"
+																				height="2"
+																				rx="0.75"
+																				transform="rotate(45 1.06055 0)"
+																				fill="#fff"
+																			/>
 																		</svg>
 																	</Button>
 																</Col>
 															</Row>
 															{confirmDelete == index ? (
 																<Row className={styles.row} key={index}>
-																	<Col>Are you sure, this is irreversible and will delete your podcast, all its pages as well as your analytics!</Col>
+																	<Col>
+																		Are you sure, this is irreversible and will
+																		delete your podcast, all its pages as well
+																		as your analytics!
+																	</Col>
 																	<Col>
 																		<Button
 																			className="secondary"
 																			onClick={() => {
-																				removePage(values, { title: pageData.title }, index);
+																				removePage(
+																					values,
+																					{ title: pageData.title },
+																					index
+																				);
 																				remove(index);
 																			}}
 																			block
@@ -261,8 +307,15 @@ const Page = () => {
 										)}
 									</FieldArray>
 									<Row className={styles.row}>
-										<Col sm={10}>
-											<Field className="form-control" name="newPage" placeholder="yourPodcast" />
+										<Col className={styles.siteNameInfo} sm="auto">
+											thefast.link/
+										</Col>
+										<Col>
+											<Field
+												className="form-control"
+												name="newPage"
+												placeholder="yourPodcastLink"
+											/>
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>
