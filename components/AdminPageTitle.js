@@ -66,14 +66,15 @@ export default function AdminPageTitle() {
 		[AuthUser]
 	);
 
-	function combineLinks(ret) {
+	function combineScrapedWithOldPage(ret) {
 		let pg = pageData;
-		ret.forEach((link, index) => {
+		ret.links.forEach((link, index) => {
 			// Will reset everything
 			// Do this since if wrong url was given we don't want to merge
 			// if (link.url)
 			pg.links[index].url = link.url;
 		});
+		pg.pictureUrl = ret.pictureUrl
 		return pg;
 	}
 
@@ -86,11 +87,14 @@ export default function AdminPageTitle() {
 				Authorization: userToken,
 				uid: AuthUser.id,
 			},
-			body: values,
+			body: {
+				url: values.url,
+				name: pageData.name,
+			},
 			method: "POST",
 		};
 		const retLinks = await callApiEndpoint(getScrapedLinks);
-		const newPage = combineLinks(retLinks);
+		let newPage = combineScrapedWithOldPage(retLinks);
 		const uploadNew = {
 			endpointUrl: "/api/uploadPageData",
 			headers: {
@@ -129,6 +133,7 @@ export default function AdminPageTitle() {
 			});
 			console.log(pageData);
 			setAnchorFormData({
+				name: pageData.name,
 				url: pageData.links[2].url,
 			});
 		}
