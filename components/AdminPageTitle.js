@@ -117,7 +117,6 @@ export default function AdminPageTitle() {
 			title: values.title,
 			description: values.description,
 		}));
-		window.location.reload();
 	}
 
 	const [formData, setFormData] = useState();
