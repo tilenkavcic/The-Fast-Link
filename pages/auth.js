@@ -17,14 +17,14 @@ const Auth = () => (
 	<>
 		<Header auth="true" />
 		<Container>
-				<Row style={styles.content}>
-					<Col >
+			<Row style={styles.content}>
+				<Col>
 					<h1 style={styles.textContainer}>Sign in / Register</h1>
-					</Col>
-				</Row>
-				<Row style={styles.content}>
-					<FirebaseAuth />
-				</Row>
+				</Col>
+			</Row>
+			<Row style={styles.content}>
+				<FirebaseAuth />
+			</Row>
 		</Container>
 	</>
 );

@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -29,7 +34,10 @@ const handler = async (req, res) => {
 			const ref = firebase.firestore().collection("analytics");
 			let toTime = new Date();
 			let fromTime = new Date(toTime.setMonth(toTime.getMonth() - 1));
-			let snapshot = await ref.where("page", "==", pageName).where("timestamp", ">", fromTime).get();
+			let snapshot = await ref
+				.where("page", "==", pageName)
+				.where("timestamp", ">", fromTime)
+				.get();
 			if (snapshot.empty) {
 				res.status(404).json({ error: "No matching ducuments found" });
 			} else {

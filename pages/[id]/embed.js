@@ -10,21 +10,39 @@ export default function Post({ postData }) {
 	return (
 		<>
 			<style jsx global>{`
-				main, html, body {
-					background-color: rgb(255,255,255,0);
+				main,
+				html,
+				body {
+					background-color: rgb(255, 255, 255, 0);
 				}
 			`}</style>
 
 			<Layout title={postData.title} className={styles.layout}>
 				<Row className={styles.links}>
-					{postData.links.map(({ name, title, url, pictureUrl, position, activated }, index) => (
-						<React.Fragment key={index}>
-								<a target="_blank" href={`/${postData.name}/redirect/${name}?url=${url}`} className={styles.rectangle}>
-								<h1 className={styles.title}>{title}</h1>
-								<div className={styles.pictureContainer}>{pictureUrl != "" ? <img src={pictureUrl} alt={title} className={styles.pictureInside} /> : ""}</div>
-							</a>
-						</React.Fragment>
-					))}
+					{postData.links.map(
+						({ name, title, url, pictureUrl, position, activated }, index) => (
+							<React.Fragment key={index}>
+								<a
+									target="_blank"
+									href={`/${postData.name}/redirect/${name}?url=${url}`}
+									className={styles.rectangle}
+								>
+									<h1 className={styles.title}>{title}</h1>
+									<div className={styles.pictureContainer}>
+										{pictureUrl != "" ? (
+											<img
+												src={pictureUrl}
+												alt={title}
+												className={styles.pictureInside}
+											/>
+										) : (
+											""
+										)}
+									</div>
+								</a>
+							</React.Fragment>
+						)
+					)}
 				</Row>
 				{/* <Row className={styles.bottomLogo}>
 					<Link href="/">The Fast Link</Link>
@@ -38,7 +56,9 @@ export async function getServerSideProps({ params }) {
 	// if (params.id == "json") throw new Error("error");
 	try {
 		let postData = await getPageData(params.id);
-		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
+		let filteredLinks = postData.links.filter(
+			(link) => !(!link.activated || link.url == "")
+		);
 		postData.links = filteredLinks;
 		return {
 			props: {

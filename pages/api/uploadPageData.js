@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -27,7 +32,11 @@ const handler = async (req, res) => {
 		}
 		// Upload data to firestore
 		try {
-			let ret = await firebase.firestore().collection("homepage").doc(pageName).set(sentData);
+			let ret = await firebase
+				.firestore()
+				.collection("homepage")
+				.doc(pageName)
+				.set(sentData);
 			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error getting page data");

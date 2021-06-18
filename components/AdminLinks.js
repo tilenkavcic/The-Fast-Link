@@ -280,17 +280,26 @@ const AdminLinks = () => {
 								<Row className={styles.row}>
 									<Col>
 										<Button onClick={reviewRedirect} block>
-										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<g clip-path="url(#clip0)">
-										<path d="M12 1.76891L15.5588 6.96166C15.8189 7.34112 16.2018 7.61933 16.6431 7.74941L22.6814 9.5294L18.8425 14.5187C18.562 14.8833 18.4157 15.3334 18.4284 15.7933L18.6015 22.0861L12.6701 19.9769C12.2367 19.8228 11.7633 19.8228 11.3299 19.9769L5.39853 22.0861L5.5716 15.7933C5.58425 15.3334 5.43799 14.8833 5.15746 14.5187L1.3186 9.5294L7.35694 7.74941C7.79819 7.61933 8.18111 7.34112 8.44118 6.96166L12 1.76891Z" stroke="#292929" stroke-width="3"/>
-										</g>
-										<defs>
-										<clipPath id="clip0">
-										<rect width="24" height="24" fill="white"/>
-										</clipPath>
-										</defs>
-										</svg>
-										{" "}
+											<svg
+												width="20"
+												height="20"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clip-path="url(#clip0)">
+													<path
+														d="M12 1.76891L15.5588 6.96166C15.8189 7.34112 16.2018 7.61933 16.6431 7.74941L22.6814 9.5294L18.8425 14.5187C18.562 14.8833 18.4157 15.3334 18.4284 15.7933L18.6015 22.0861L12.6701 19.9769C12.2367 19.8228 11.7633 19.8228 11.3299 19.9769L5.39853 22.0861L5.5716 15.7933C5.58425 15.3334 5.43799 14.8833 5.15746 14.5187L1.3186 9.5294L7.35694 7.74941C7.79819 7.61933 8.18111 7.34112 8.44118 6.96166L12 1.76891Z"
+														stroke="#292929"
+														stroke-width="3"
+													/>
+												</g>
+												<defs>
+													<clipPath id="clip0">
+														<rect width="24" height="24" fill="white" />
+													</clipPath>
+												</defs>
+											</svg>{" "}
 											Review
 										</Button>
 									</Col>
@@ -338,9 +347,11 @@ const AdminLinks = () => {
 										values.links.map((linkData, index) => (
 											<React.Fragment key={index}>
 												<Row>
-													<Col className={styles.serviceContainer} 
-													xs={{ order: 0, span: 9 }}
-													md={{ order: 0, span: 3 }}>
+													<Col
+														className={styles.serviceContainer}
+														xs={{ order: 0, span: 9 }}
+														md={{ order: 0, span: 3 }}
+													>
 														{linkData.pictureUrl ? (
 															<Image
 																className={styles.serviceImage}
@@ -356,9 +367,11 @@ const AdminLinks = () => {
 															{linkData.title}
 														</h6>
 													</Col>
-													<Col 
-													xs={{ order: 2, span: 12 }}
-													md={{ order: 1, span: 8 }} className={styles.inputUrl}>
+													<Col
+														xs={{ order: 2, span: 12 }}
+														md={{ order: 1, span: 8 }}
+														className={styles.inputUrl}
+													>
 														{/* <label htmlFor={`links.${index}.url`}>Link URL</label> */}
 														<Field
 															className="form-control"

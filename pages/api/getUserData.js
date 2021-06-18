@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -11,7 +16,6 @@ const handler = async (req, res) => {
 	}
 	const token = req.headers.authorization;
 	const uid = req.headers.uid;
-
 	if (token != "unauthenticated") {
 		// verify login
 		try {

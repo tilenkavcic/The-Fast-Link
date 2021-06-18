@@ -64,7 +64,9 @@ const Page = () => {
 					<Col>Include the following somewhere in your HTML</Col>
 				</Row>
 				<Row>
-					<Col>This will allow your visitors to subscribe after 3s on the page</Col>
+					<Col>
+						This will allow your visitors to subscribe after 3s on the page
+					</Col>
 				</Row>
 				<Row>
 					<Col>

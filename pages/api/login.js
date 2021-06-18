@@ -1,17 +1,17 @@
-import { setAuthCookies } from 'next-firebase-auth'
-import initAuth from '../../utils/initAuth'
+import { setAuthCookies } from "next-firebase-auth";
+import initAuth from "../../utils/initAuth";
 
-initAuth()
+initAuth();
 
 const handler = async (req, res) => {
-  try {
-    await setAuthCookies(req, res)
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e)
-    res.status(500).json({ error: 'Unexpected error.' })
-  }
-  res.status(200).json({ status: true })
-}
+	try {
+		await setAuthCookies(req, res);
+	} catch (e) {
+		// eslint-disable-next-line no-console
+		console.error(e);
+		res.status(500).json({ error: "Unexpected error." });
+	}
+	res.status(200).json({ status: true });
+};
 
-export default handler
+export default handler;

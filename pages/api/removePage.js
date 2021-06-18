@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -7,7 +12,9 @@ initAuth();
 
 const handler = async (req, res) => {
 	if (!(req.headers && req.headers.authorization)) {
-		return res.status(400).json({ error: "Missing Authorization header value" });
+		return res
+			.status(400)
+			.json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
 	const uid = req.headers.uid;
@@ -27,12 +34,16 @@ const handler = async (req, res) => {
 		try {
 			const pageName = req.body.title;
 			// const ress = await firebase.firestore().collection("homepage").doc(pageName).delete();
-			const ress = await firebase.firestore().collection("homepage").doc(pageName).set(
-				{
-					deleted: true,
-				},
-				{ merge: true }
-			);
+			const ress = await firebase
+				.firestore()
+				.collection("homepage")
+				.doc(pageName)
+				.set(
+					{
+						deleted: true,
+					},
+					{ merge: true }
+				);
 			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error uploading data");

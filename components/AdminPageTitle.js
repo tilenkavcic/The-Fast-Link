@@ -74,7 +74,7 @@ export default function AdminPageTitle() {
 			// if (link.url)
 			pg.links[index].url = link.url;
 		});
-		pg.pictureUrl = ret.pictureUrl
+		pg.pictureUrl = ret.pictureUrl;
 		return pg;
 	}
 

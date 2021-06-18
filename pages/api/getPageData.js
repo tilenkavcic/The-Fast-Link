@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -26,9 +31,15 @@ const handler = async (req, res) => {
 		// Get data from firestore
 		try {
 			const pageName = req.headers.page;
-			let pageData = await firebase.firestore().collection("homepage").doc(pageName).get();
+			let pageData = await firebase
+				.firestore()
+				.collection("homepage")
+				.doc(pageName)
+				.get();
 			pageData = pageData.data();
-			pageData.links.sort((a, b) => (parseInt(a.position) > parseInt(b.position) ? 1 : -1));
+			pageData.links.sort((a, b) =>
+				parseInt(a.position) > parseInt(b.position) ? 1 : -1
+			);
 
 			if (pageData.author != uid) {
 				throw "Page outside of user scope";
