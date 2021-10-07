@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	AuthAction,
+} from "next-firebase-auth";
 import Link from "next/link";
 import Header from "../../../components/Header";
 import FullPageLoader from "../../../components/FullPageLoader";
@@ -30,7 +35,11 @@ const Page = () => {
 			});
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(data)}`
+				);
 				return null;
 			}
 			return data;
@@ -150,7 +159,10 @@ const Page = () => {
 	};
 
 	return (
-		<Layout title="The Fast Link | Analytics" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
+		<Layout
+			title="The Fast Link | Analytics"
+			description="The Fast Link Admin Page, edit your beautiful, fast podcast links"
+		>
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 			<Container>
 				<Row className={styles.row}>
@@ -189,7 +201,10 @@ const Page = () => {
 										return (
 											<Col key={idx} className={styles.linkWrapper}>
 												<h3 className={styles.linkTitle}>{link.title}</h3>
-												<AnalyticsLinkCount clicks={link.clicks} className={styles.linkCircle} />
+												<AnalyticsLinkCount
+													clicks={link.clicks}
+													className={styles.linkCircle}
+												/>
 											</Col>
 										);
 									})}

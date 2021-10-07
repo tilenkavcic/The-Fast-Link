@@ -20,32 +20,61 @@ export default function Post({ postData, error }) {
 	// 	console.log("referrer url",referrer);
 	// }, [])
 	return (
-		<LayoutPage title={postData.title} description={postData.description} pictureUrl={postData.pictureUrl} name={postData.name}>
+		<LayoutPage
+			title={postData.title}
+			description={postData.description}
+			pictureUrl={postData.pictureUrl}
+			name={postData.name}
+		>
 			<Container>
 				<Row>
 					<Col sm={9}>
 						<h1 className={styles.title}>{postData.title}</h1>
 					</Col>
 					{postData.pictureUrl ? (
-							<Col className={styles.picture} md={1}>
-								<img height="100px" width="100px" src={postData.pictureUrl} alt={postData.title}></img>
-							</Col>
+						<Col className={styles.picture} md={1}>
+							<img
+								height="100px"
+								width="100px"
+								src={postData.pictureUrl}
+								alt={postData.title}
+							></img>
+						</Col>
 					) : (
 						""
 					)}
 				</Row>
 				<Row>
-					<Col>{styles.description ? <h2 className={styles.description}>{postData.description}</h2> : ""}</Col>
+					<Col>
+						{styles.description ? (
+							<h2 className={styles.description}>{postData.description}</h2>
+						) : (
+							""
+						)}
+					</Col>
 				</Row>
 			</Container>
 
 			<Row className={styles.links}>
-				{postData.links.map(({ title, url, pictureUrl, position, activated, name }, index) => (
-					<React.Fragment key={index}>
-						<MainLink title={title} url={url} imgUrl={pictureUrl} position={position} pageName={postData.name} linkName={name} />
-						{index % 2 != 0 && index != postData.links.length - 1 ? <hr className={styles.hr} /> : ""}
-					</React.Fragment>
-				))}
+				{postData.links.map(
+					({ title, url, pictureUrl, position, activated, name }, index) => (
+						<React.Fragment key={index}>
+							<MainLink
+								title={title}
+								url={url}
+								imgUrl={pictureUrl}
+								position={position}
+								pageName={postData.name}
+								linkName={name}
+							/>
+							{index % 2 != 0 && index != postData.links.length - 1 ? (
+								<hr className={styles.hr} />
+							) : (
+								""
+							)}
+						</React.Fragment>
+					)
+				)}
 			</Row>
 			<Container>
 				<Row>
@@ -61,7 +90,9 @@ export default function Post({ postData, error }) {
 export async function getServerSideProps({ params }) {
 	try {
 		let postData = await getPageData(params.id);
-		let filteredLinks = postData.links.filter((link) => !(!link.activated || link.url == ""));
+		let filteredLinks = postData.links.filter(
+			(link) => !(!link.activated || link.url == "")
+		);
 		postData.links = filteredLinks;
 		let res = await logRedirect(params.id);
 		return {

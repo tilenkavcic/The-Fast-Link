@@ -171,7 +171,6 @@ const Page = () => {
 		newPageStr.split("-").forEach((w, index) => {
 			if (index != 0) {
 				let word = w.charAt(0).toUpperCase() + w.slice(1);
-				console.log(word);
 				ret[index] = word;
 			}
 		});

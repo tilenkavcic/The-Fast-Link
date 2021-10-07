@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	AuthAction,
+} from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
 import AdminLinks from "./AdminLinks";
 import AdminPageTitle from "./AdminPageTitle";
@@ -27,7 +32,11 @@ const PageBody = () => {
 			});
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(data)}`
+				);
 				return null;
 			}
 			return data;
@@ -49,7 +58,11 @@ const PageBody = () => {
 			});
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(data)}`
+				);
 				return null;
 			}
 			return data;
@@ -61,7 +74,7 @@ const PageBody = () => {
 		const fetchUserPageData = async () => {
 			const data = await fetchData("/api/getUserData");
 			setUserData(data);
-			console.log(pageName)
+			console.log(pageName);
 			const ret = await fetchPage("/api/getPageData", pageName);
 			setPageData(ret);
 		};

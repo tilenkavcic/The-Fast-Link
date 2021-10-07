@@ -5,18 +5,20 @@
 	margin: 10px 10px;
 
 	background: $whiteBackground;
-	box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.14), 0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.14),
+		0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
 
 	-webkit-transition: all 0.1s ease-out;
 	transition: all 0.1s ease-out;
 	text-decoration: none;
 
-  color: $black;
+	color: $black;
 
 	&:hover,
 	&:focus {
-		box-shadow: 0px 16px 24px #806ddc, 0px 6px 30px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.2);
+		box-shadow: 0px 16px 24px #806ddc, 0px 6px 30px rgba(0, 0, 0, 0.12),
+			0px 8px 10px rgba(0, 0, 0, 0.2);
 		text-decoration: none;
 		background: $background;
 

@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -7,7 +12,9 @@ initAuth();
 
 const handler = async (req, res) => {
 	if (!(req.headers && req.headers.authorization)) {
-		return res.status(400).json({ error: "Missing Authorization header value" });
+		return res
+			.status(400)
+			.json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
 	const uid = req.headers.uid;
@@ -27,13 +34,21 @@ const handler = async (req, res) => {
 		// Upload data to firestore
 		try {
 			// check if doc exists
-			const ret0 = await firebase.firestore().collection("homepage").doc(newPageName);
-			ret0.get()
+			const ret0 = await firebase
+				.firestore()
+				.collection("homepage")
+				.doc(newPageName);
+			ret0
+				.get()
 				.then(async (doc) => {
 					if (doc.exists) {
 						return res.status(403).json({ error: "Document exists" });
 					} else {
-						const ret1 = await firebase.firestore().collection("users").doc(uid).set(sentData);
+						const ret1 = await firebase
+							.firestore()
+							.collection("users")
+							.doc(uid)
+							.set(sentData);
 						const newPage = {
 							title: "",
 							description: "",
@@ -158,7 +173,11 @@ const handler = async (req, res) => {
 								},
 							],
 						};
-						const ret2 = await firebase.firestore().collection("homepage").doc(newPageName).set(newPage);
+						const ret2 = await firebase
+							.firestore()
+							.collection("homepage")
+							.doc(newPageName)
+							.set(newPage);
 						res.status(200).json({ resp: "success" });
 					}
 				})

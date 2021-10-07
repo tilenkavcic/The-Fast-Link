@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, AuthAction } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	AuthAction,
+} from "next-firebase-auth";
 import Link from "next/link";
 import Header from "../../../components/Header";
 import FullPageLoader from "../../../components/FullPageLoader";
@@ -24,7 +29,11 @@ const Page = () => {
 			});
 			const data = await response.json();
 			if (!response.ok) {
-				console.error(`Data fetching failed with status ${response.status}: ${JSON.stringify(data)}`);
+				console.error(
+					`Data fetching failed with status ${
+						response.status
+					}: ${JSON.stringify(data)}`
+				);
 				return null;
 			}
 			return data;
@@ -115,20 +124,23 @@ const Page = () => {
 	};
 
 	return (
-		<Layout title="The Fast Link | Admin" description="The Fast Link Admin Page, edit your beautiful, fast podcast links">
+		<Layout
+			title="The Fast Link | Admin"
+			description="The Fast Link Admin Page, edit your beautiful, fast podcast links"
+		>
 			<Header email={AuthUser.email} signOut={AuthUser.signOut} />
 			<Container>
 				<Row className={styles.row}>
 					<Col>
-						<h1>Hey</h1>
+						<h1>
+							Your <i>{router.query.pageName}</i> episodes
+						</h1>
 					</Col>
 				</Row>
 
 				<Row className={styles.row}>
 					<Col>
-						<h2>
-							Your <i>{router.query.pageName}</i> episodes
-						</h2>
+						<h3>Numbered</h3>
 					</Col>
 				</Row>
 
@@ -143,10 +155,14 @@ const Page = () => {
 								newPageStr = `${router.query.pageName}-ep-${newPageStr}`;
 								let newArr;
 								if (userData.pages[pageIndex].episodes) {
-									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
+									newArr = userData.pages[pageIndex].episodes.concat([
+										{ title: newPageStr },
+									]);
 								} else {
 									newArr = userData.pages[pageIndex].episodes = [];
-									newArr = userData.pages[pageIndex].episodes.concat([{ title: newPageStr }]);
+									newArr = userData.pages[pageIndex].episodes.concat([
+										{ title: newPageStr },
+									]);
 								}
 								let newPageArr = userData.pages;
 								newPageArr[pageIndex].episodes = newArr;
@@ -164,20 +180,27 @@ const Page = () => {
 											<>
 												{values.pages[pageIndex].episodes &&
 													values.pages[pageIndex].episodes.length > 0 &&
-													values.pages[pageIndex].episodes.map((pageData, index) => (
-														<Row className={styles.row} key={index}>
-															<Col>
-																<Link
-																	className="pageBtn"
-																	href={{
-																		pathname: "/admin/[pageName]",
-																		query: { pageName: pageData.title },
-																	}}
-																>
-																	<Button block>{pageData.title.split("-")[pageData.title.split("-").length - 1]}</Button>
-																</Link>
-															</Col>
-															{/* <Col sm={2}>
+													values.pages[pageIndex].episodes.map(
+														(pageData, index) => (
+															<Row className={styles.row} key={index}>
+																<Col>
+																	<Link
+																		className="pageBtn"
+																		href={{
+																			pathname: "/admin/[pageName]",
+																			query: { pageName: pageData.title },
+																		}}
+																	>
+																		<Button block>
+																			{
+																				pageData.title.split("-")[
+																					pageData.title.split("-").length - 1
+																				]
+																			}
+																		</Button>
+																	</Link>
+																</Col>
+																{/* <Col sm={2}>
 																<Button
 																	className="secondary"
 																	onClick={() => {
@@ -192,15 +215,23 @@ const Page = () => {
 																	</svg>
 																</Button>
 															</Col> */}
-														</Row>
-													))}
+															</Row>
+														)
+													)}
 											</>
 										)}
 									</FieldArray>
 									<Row className={styles.row}>
 										<Col sm={10}>
-											<Field className="form-control" name="newPage" validate={validateNumber} placeholder="Episode number" />
-											{errors.newPage && touched.newPage && <div>{errors.newPage}</div>}
+											<Field
+												className="form-control"
+												name="newPage"
+												validate={validateNumber}
+												placeholder="Episode number"
+											/>
+											{errors.newPage && touched.newPage && (
+												<div>{errors.newPage}</div>
+											)}
 										</Col>
 										<Col sm={2}>
 											<Button type="submit" className={styles.newBtn} block>

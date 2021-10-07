@@ -1,24 +1,26 @@
 $background: #292929;
-$white: #ffffff;
+$white: #eeeeee;
 
-$text: #ffffff;
+$text: #eeeeee;
 $lightText: #b1b1b1;
 
 $buttonText: #000000;
 $black: #000000;
-$primary: #9FDDFF;
-$primary1: #9FDDFF, 100%;
+$primary: #9fddff;
+$primary1: #9fddff, 100%;
 $primary2: #774dd1 100.31%;
 $whiteBackground: #ffffff;
-$font-primary: Work Sans, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
-$font-logo: Montserrat, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell, Fira Sans, Droid Sans, sans-serif;
+$font-primary: Work Sans, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell,
+	Fira Sans, Droid Sans, sans-serif;
+$font-logo: Montserrat, Helvetica Neue, Helvetica, Roboto, Ubuntu, Cantarell,
+	Fira Sans, Droid Sans, sans-serif;
 
 @mixin bg-gradient() {
-  background: linear-gradient(90deg, #9FDDFF 0.31%, #774DD1 100.31%);
+	background: linear-gradient(90deg, #9fddff 0.31%, #774dd1 100.31%);
 }
 
 @mixin text-gradient() {
-  background: -webkit-linear-gradient(0deg, #9FDDFF 0.31%, #774DD1 100.31%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: -webkit-linear-gradient(0deg, #9fddff 0.31%, #774dd1 100.31%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }

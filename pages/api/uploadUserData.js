@@ -1,4 +1,9 @@
-import { useAuthUser, withAuthUser, withAuthUserTokenSSR, verifyIdToken } from "next-firebase-auth";
+import {
+	useAuthUser,
+	withAuthUser,
+	withAuthUserTokenSSR,
+	verifyIdToken,
+} from "next-firebase-auth";
 import initAuth from "../../utils/initAuth";
 import firebase from "../../firebase/adminApp";
 import "firebase/firestore";
@@ -10,7 +15,7 @@ const handler = async (req, res) => {
 		res.status(400).json({ error: "Missing Authorization header value" });
 	}
 	const token = req.headers.authorization;
-	const userId = req.headers.uid; 
+	const userId = req.headers.uid;
 	if (token != "unauthenticated") {
 		// verify login
 		try {
@@ -25,7 +30,11 @@ const handler = async (req, res) => {
 		// Upload data to firestore
 		try {
 			const sentData = req.body;
-			let ret = await firebase.firestore().collection("users").doc(userId).set(sentData);
+			let ret = await firebase
+				.firestore()
+				.collection("users")
+				.doc(userId)
+				.set(sentData);
 			res.status(200).json({ resp: "success" });
 		} catch (e) {
 			console.error("Error uploading data");

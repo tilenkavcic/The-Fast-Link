@@ -33,5 +33,13 @@ export default function Thumb(nextProps) {
 		return <p>loading...</p>;
 	}
 
-	return <img src={thumb} alt={file.name} className="img-thumbnail mt-2" height={200} width={200} />;
+	return (
+		<img
+			src={thumb}
+			alt={file.name}
+			className="img-thumbnail mt-2"
+			height={200}
+			width={200}
+		/>
+	);
 }
