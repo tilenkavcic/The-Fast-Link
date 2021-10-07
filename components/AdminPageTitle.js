@@ -108,6 +108,7 @@ export default function AdminPageTitle() {
 		let ret = await callApiEndpoint(uploadNew);
 		setPageData(newPage);
 		setSubmitAlert(true);
+		setPageNum(2);
 	}
 
 	async function submitForm(values) {
@@ -122,6 +123,7 @@ export default function AdminPageTitle() {
 	const [formData, setFormData] = useState();
 	const [anchorFormData, setAnchorFormData] = useState();
 	const [submitAlert, setSubmitAlert] = useState(false);
+	const [pageNum, setPageNum] = useState(1);
 
 	useEffect(() => {
 		if (pageData && pageData.name) {
@@ -138,11 +140,16 @@ export default function AdminPageTitle() {
 		}
 	}, [pageData]);
 
+	function nextPage() {
+		console.log("neki");
+		setPageNum(2);
+	}
+
 	return (
 		<>
 			{pageData ? (
 				<>
-					{anchorFormData && pageData.type == "podcast" ? (
+					{anchorFormData && pageData.type == "podcast" && pageNum == 1 ? (
 						<>
 							<h2>Import from Anchor</h2>
 							<Formik
@@ -155,11 +162,9 @@ export default function AdminPageTitle() {
 											<Col sm={4}>
 												<Row>
 													<label className={styles.label} htmlFor="url">
-														Anchor link
+														If you have Anchor we can automatically fill in
+														subscription links for you
 													</label>
-												</Row>
-												<Row>
-													<small>This will erase ALL your links</small>
 												</Row>
 											</Col>
 											<Col sm={8}>
@@ -188,12 +193,18 @@ export default function AdminPageTitle() {
 									</Form>
 								)}
 							</Formik>
-							<hr />
+							<Row className={styles.form}>
+								
+									<Button onClick={nextPage} block>
+										I don't have Anchor
+									</Button>
+							
+							</Row>
 						</>
 					) : (
 						""
 					)}
-					{formData ? (
+					{formData && pageNum == 2 ? (
 						<>
 							<h2>Title of your page</h2>
 							<Formik initialValues={formData} onSubmit={submitForm}>
