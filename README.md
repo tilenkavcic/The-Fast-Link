@@ -1,65 +1,27 @@
 # The Fast Link
 
+## What is it?
 
-https://github.com/tilenkavcic/fast-link/projects/1
+Quickly make beautiful links that make subscribing to your podcast a breeze. We want to make it easier and more effective for you to promote your podcast on social media and elsewhere.
 
-- https://github.com/vercel/next.js/tree/master/examples/with-firebase-authentication
-- https://github.com/colinhacks/next-firebase-ssr
-- https://github.com/gladly-team/next-firebase-auth
+Here's a video of how creating a new podcast works and how you  can add custom links to any podcast platform.
 
-https://www.youtube.com/watch?v=1BUT7T9ThlU
+[![YouTube presentation video](/readmeResources/YouTubeThumb.png)](https://youtu.be/VJYZKGAoh0M)
 
-https://www.pluralsight.com/guides/generating-dynamic-forms-from-json-in-react
-https://formik.org/docs/examples/field-arrays
+## What can I expect?
 
-## TODO
+The Fast link is currently in alpha stage. As such you may experience bugs, slow loading or loss of data. 
 
-https://stackoverflow.com/questions/3064199/transparent-iframe-body
+Pointing out how we can improve the service and new ideas are greatly appreciated, just open a new [issue](https://github.com/tilenkavcic/fast-link/issues/new) or write in the [discussions](https://github.com/tilenkavcic/fast-link/discussions) tab. 
 
-- change img tags into nextjs images
-- delete analytics on podcast delete
+## Behind the scenes
 
-## popup embed
+This project uses
+- [Firebase](https://firebase.google.com/products-build) for database and user login hosting,
+- [Vercel](https://vercel.com/) for web hosting,
+- [next-firebase-auth](https://github.com/gladly-team/next-firebase-auth),
+- [Formik](https://formik.org/docs/examples/field-arrays) for formsm
+- [React Bootstrap](https://react-bootstrap.github.io/) for easier styling.
 
-https://www.youtube.com/watch?v=FoXzDp-qzvw
+Design docs are available on [Figma](https://www.figma.com/file/T39UBKSfAffRkvREsHiGFq/The-Fast-Link?node-id=0%3A1).
 
-```html
-<div class="full-screen-popup hidden flex-container-center"
-  <iframe width="100%" height="400" src="https://www.thefast.link/podcastName" frameborder="0" allowfullscreen>
-  </iframe>
-</div>
-```
-
-```css
-.full-screen-popup {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	background: rgba(0, 0, 0, 0.85);
-}
-
-.flex-container-center {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-
-.hidden {
-	display: none;
-}
-```
-
-```javascript
-const popup = document.querySelector(".full-screen-popup");
-
-function showPopup() {
-	popup.classList.remove("hidden");
-}
-
-function closePopup() {
-	popup.classList.add("hidden");
-}
-```
