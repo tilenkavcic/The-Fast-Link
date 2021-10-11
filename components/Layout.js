@@ -4,6 +4,7 @@ export default function Layout({ children, home, title, description }) {
 	return (
 		<>
 			<Head>
+				{/* facicon */}
 				<link
 					rel="apple-touch-icon"
 					sizes="180x180"
@@ -23,6 +24,18 @@ export default function Layout({ children, home, title, description }) {
 				/>
 				<link rel="manifest" href="/site.webmanifest" />
 				<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+				{/* fb sharing */}
+				<meta property="og:title" content={title} />
+				<meta property="og:description" content={description} />
+				<meta property="og:image" content="/homeShareThumb.png" />
+				<meta property="og:url" content="http://thefast.link/" />
+				<meta property="og:site_name" content="The Fast Link" />
+				{/* twitter sharing */}
+				<meta name="twitter:title" content={title} />
+				<meta name="twitter:description" content={description} />
+				<meta name="twitter:image" content="/homeShareThumb.png" />
+				<meta name="twitter:card" content="summary_large_image" />
+
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#ffffff" />
 				<meta name="description" content="Link" />
