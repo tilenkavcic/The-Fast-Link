@@ -20,7 +20,7 @@ This project uses
 - [Firebase](https://firebase.google.com/products-build) for database and user login hosting,
 - [Vercel](https://vercel.com/) for web hosting,
 - [next-firebase-auth](https://github.com/gladly-team/next-firebase-auth),
-- [Formik](https://formik.org/docs/examples/field-arrays) for formsm
+- [Formik](https://formik.org/docs/examples/field-arrays) for forms
 - [React Bootstrap](https://react-bootstrap.github.io/) for easier styling.
 
 Design docs are available on [Figma](https://www.figma.com/file/T39UBKSfAffRkvREsHiGFq/The-Fast-Link?node-id=0%3A1).
