@@ -11,17 +11,17 @@
 	"dependencies": {
 		"bootstrap": "^4.6.0",
 		"cheerio": "*",
-		"firebase": "^8.2.5",
-		"firebase-admin": "^9.4.2",
-		"formik": "^2.2.6",
-		"isomorphic-unfetch": "^3.1.0",
-		"next": "^10.2.0",
-		"next-firebase-auth": "^0.12.0",
-		"react": "^16.0.1",
+		"firebase": "^10.7.1",
+		"firebase-admin": "^11.11.1",
+		"formik": "^2.4.5",
+		"isomorphic-unfetch": "^4.0.2",
+		"next": "^14.0.4",
+		"next-firebase-auth": "^1.0.0",
+		"react": "^18.2.0",
 		"react-bootstrap": "^1.6.0",
-		"react-dom": "^16.0.1",
-		"react-firebaseui": "^4.1.0",
-		"sass": "^1.32.7"
+		"react-dom": "^18.2.0",
+		"react-firebaseui": "^6.0.0",
+		"sass": "^1.69.5"
 	},
 	"devDependencies": {
 		"prettier": "2.1.2"

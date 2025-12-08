@@ -25,7 +25,7 @@ const Header = ({ email, signOut, auth }) => (
 						>
 							Sign out
 						</Button>
-						<Link href="/admin">
+						<Link href="/admin" legacyBehavior>
 							<Button className={styles.buttonAdmin} variant="primary">
 								Admin
 							</Button>
@@ -33,7 +33,7 @@ const Header = ({ email, signOut, auth }) => (
 					</>
 				) : (
 					<>
-						<Link href="/auth">
+						<Link href="/auth" legacyBehavior>
 							<Button variant="primary">Try it out</Button>
 						</Link>
 					</>

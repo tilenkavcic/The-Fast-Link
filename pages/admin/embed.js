@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 	AuthAction,
 } from "next-firebase-auth";
 import Link from "next/link";
@@ -15,7 +15,7 @@ import styles from "./embed.module.scss";
 import Footer from "../../components/Footer";
 
 const Page = () => {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 	const router = useRouter();
 	const pageName = router.query.name;
 	const iframeTag = `<iframe
@@ -79,7 +79,7 @@ const Page = () => {
 	);
 };
 
-export default withAuthUser({
+export default withUser({
 	whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
 	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 	LoaderComponent: FullPageLoader,

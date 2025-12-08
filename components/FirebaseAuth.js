@@ -1,12 +1,10 @@
 /* globals window */
 import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import { EmailAuthProvider } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { Row } from "react-bootstrap";
-// Note that next-firebase-auth inits Firebase for us,
-// so we don't need to.
+import { auth, db } from "../firebase/clientApp";
 
 const firebaseAuthConfig = {
 	signInFlow: "popup",
@@ -14,7 +12,7 @@ const firebaseAuthConfig = {
 	// https://github.com/firebase/firebaseui-web#configure-oauth-providers
 	signInOptions: [
 		{
-			provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+			provider: EmailAuthProvider.PROVIDER_ID,
 			requireDisplayName: false,
 		},
 		// {
@@ -34,11 +32,8 @@ const firebaseAuthConfig = {
 				if (authResult.additionalUserInfo.isNewUser) {
 					const userId = authResult.user.uid;
 					const newUser = { email: authResult.user.email, pages: [] };
-					firebase
-						.firestore()
-						.collection("users")
-						.doc(userId)
-						.set(newUser)
+					const userRef = doc(db, "users", userId);
+					setDoc(userRef, newUser)
 						.then((ret) => {
 							return false;
 						})
@@ -52,6 +47,7 @@ const firebaseAuthConfig = {
 					return false;
 				}
 			});
+			return false;
 		},
 	},
 };
@@ -70,7 +66,7 @@ const FirebaseAuth = () => {
 			{renderAuth ? (
 				<StyledFirebaseAuth
 					uiConfig={firebaseAuthConfig}
-					firebaseAuth={firebase.auth()}
+					firebaseAuth={auth}
 				/>
 			) : null}
 		</Row>

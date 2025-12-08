@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 	AuthAction,
 } from "next-firebase-auth";
 import Link from "next/link";
@@ -17,7 +17,7 @@ import styles from "./episodes.module.scss";
 import Footer from "../../../components/Footer";
 
 const Page = () => {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 	const router = useRouter();
 	const callApiEndpoint = useCallback(
 		async ({ endpointUrl, headers, body = undefined, method }) => {
@@ -190,6 +190,7 @@ const Page = () => {
 																			pathname: "/admin/[pageName]",
 																			query: { pageName: pageData.title },
 																		}}
+																		legacyBehavior
 																	>
 																		<Button block>
 																			{
@@ -258,7 +259,7 @@ const Page = () => {
 	);
 };
 
-export default withAuthUser({
+export default withUser({
 	whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
 	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 	LoaderComponent: FullPageLoader,

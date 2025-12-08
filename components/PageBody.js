@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 	AuthAction,
 } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
@@ -12,7 +12,7 @@ import AdminPageTitle from "./AdminPageTitle";
 import { PageContext } from "../context/PageContext";
 
 const PageBody = () => {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 	const router = useRouter();
 	const { pageName } = router.query;
 

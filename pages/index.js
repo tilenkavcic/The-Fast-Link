@@ -1,8 +1,8 @@
 import React from "react";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 } from "next-firebase-auth";
 import Header from "../components/Header";
 import { Container, Row, Col } from "react-bootstrap";
@@ -11,7 +11,7 @@ import Layout from "../components/Layout";
 import Footer from "../components/Footer";
 
 const Home = () => {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 	return (
 		<>
 			<Layout
@@ -63,6 +63,6 @@ const Home = () => {
 	);
 };
 
-export const getServerSideProps = withAuthUserTokenSSR()();
+export const getServerSideProps = withUserTokenSSR()();
 
-export default withAuthUser()(Home);
+export default withUser()(Home);

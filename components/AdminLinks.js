@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 	AuthAction,
 } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const AdminLinks = () => {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 	const [pageData, setPageData] = useContext(PageContext);
 	const [submitAlert, setSubmitalert] = useState(false);
 	const isRequired = (message) => (value) => (!!value ? undefined : message);
@@ -182,7 +182,7 @@ const AdminLinks = () => {
 							<Col>
 								<h6>
 									Your link&nbsp;
-									<Link href={"/" + pageData.name}>
+									<Link href={"/" + pageData.name} legacyBehavior>
 										<a target="_blank">
 											{"https://thefast.link/" + pageData.name}
 										</a>
@@ -197,6 +197,7 @@ const AdminLinks = () => {
 									href={
 										"/admin/embed?name=" + encodeURIComponent(pageData.name)
 									}
+									legacyBehavior
 								>
 									<Button className={styles.embedBtn} block>
 										<svg
@@ -241,7 +242,7 @@ const AdminLinks = () => {
 
 						<Row className={styles.row}>
 							<Col>
-								<Link href={"/admin/" + pageData.name + "/analytics"}>
+								<Link href={"/admin/" + pageData.name + "/analytics"} legacyBehavior>
 									<Button block>
 										<svg
 											width="20"
@@ -304,7 +305,7 @@ const AdminLinks = () => {
 										</Button>
 									</Col>
 									<Col>
-										<Link href={"/admin/" + pageData.name + "/episodes"}>
+										<Link href={"/admin/" + pageData.name + "/episodes"} legacyBehavior>
 											<Button block>
 												<svg
 													width="20"

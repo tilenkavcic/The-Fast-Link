@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 	AuthAction,
 } from "next-firebase-auth";
 import Link from "next/link";
@@ -18,7 +18,7 @@ import AnalyticsPageCount from "../../../components/AnalyticsPageCount";
 import AnalyticsLinkCount from "../../../components/AnalyticsLinkCount";
 
 const Page = () => {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 	const router = useRouter();
 	const [analyticsData, setAnalyticsData] = useState();
 	const [pageAnalytics, setPageAnalytics] = useState(0);
@@ -229,7 +229,7 @@ const Page = () => {
 	);
 };
 
-export default withAuthUser({
+export default withUser({
 	whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
 	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 	LoaderComponent: FullPageLoader,

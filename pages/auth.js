@@ -1,5 +1,5 @@
 import React from "react";
-import { withAuthUser, AuthAction } from "next-firebase-auth";
+import { withUser, AuthAction } from "next-firebase-auth";
 import FirebaseAuth from "../components/FirebaseAuth";
 import Header from "../components/Header";
 import { Container, Row, Col } from "react-bootstrap";
@@ -29,7 +29,7 @@ const Auth = () => (
 	</>
 );
 
-export default withAuthUser({
+export default withUser({
 	whenAuthed: AuthAction.REDIRECT_TO_APP,
 	whenUnauthedBeforeInit: AuthAction.RETURN_NULL,
 	whenUnauthedAfterInit: AuthAction.RENDER,

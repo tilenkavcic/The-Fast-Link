@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import {
-	useAuthUser,
-	withAuthUser,
-	withAuthUserTokenSSR,
+	useUser,
+	withUser,
+	withUserTokenSSR,
 	AuthAction,
 } from "next-firebase-auth";
 import getAbsoluteURL from "../utils/getAbsoluteURL";
@@ -12,7 +12,7 @@ import { Button, Row, Col, Alert } from "react-bootstrap";
 import styles from "./adminPageTitle.module.scss";
 
 export default function AdminPageTitle() {
-	const AuthUser = useAuthUser();
+	const AuthUser = useUser();
 
 	const [pageData, setPageData] = useContext(PageContext);
 
